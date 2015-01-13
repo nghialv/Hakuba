@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86398C851A6569AC0014C50F /* BaseClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C841A6569AC0014C50F /* BaseClasses.swift */; };
+		86398C871A6569BC0014C50F /* MYTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C861A6569BC0014C50F /* MYTableViewManager.swift */; };
+		86398C891A6569CC0014C50F /* MYTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C881A6569CC0014C50F /* MYTableViewCell.swift */; };
+		86398C8B1A6569D90014C50F /* MYHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C8A1A6569D90014C50F /* MYHeaderFooterView.swift */; };
+		86398C8D1A6569EB0014C50F /* MYLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C8C1A6569EB0014C50F /* MYLabel.swift */; };
+		86398C8F1A6569F70014C50F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C8E1A6569F70014C50F /* StringExtension.swift */; };
+		86398C911A656AAC0014C50F /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C901A656AAC0014C50F /* CustomCell.swift */; };
+		86398C931A656AD40014C50F /* ChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86398C921A656AD40014C50F /* ChildViewController.swift */; };
 		86B1FFDE1A6568F1000E3772 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B1FFDD1A6568F1000E3772 /* AppDelegate.swift */; };
 		86B1FFE01A6568F1000E3772 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B1FFDF1A6568F1000E3772 /* ViewController.swift */; };
 		86B1FFE31A6568F1000E3772 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86B1FFE11A6568F1000E3772 /* Main.storyboard */; };
@@ -26,6 +34,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		86398C841A6569AC0014C50F /* BaseClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseClasses.swift; sourceTree = "<group>"; };
+		86398C861A6569BC0014C50F /* MYTableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYTableViewManager.swift; sourceTree = "<group>"; };
+		86398C881A6569CC0014C50F /* MYTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYTableViewCell.swift; sourceTree = "<group>"; };
+		86398C8A1A6569D90014C50F /* MYHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYHeaderFooterView.swift; sourceTree = "<group>"; };
+		86398C8C1A6569EB0014C50F /* MYLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYLabel.swift; sourceTree = "<group>"; };
+		86398C8E1A6569F70014C50F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		86398C901A656AAC0014C50F /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		86398C921A656AD40014C50F /* ChildViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildViewController.swift; sourceTree = "<group>"; };
 		86B1FFD81A6568F1000E3772 /* MYTableViewManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYTableViewManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86B1FFDC1A6568F1000E3772 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86B1FFDD1A6568F1000E3772 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,9 +72,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86398C831A6569810014C50F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				86398C841A6569AC0014C50F /* BaseClasses.swift */,
+				86398C861A6569BC0014C50F /* MYTableViewManager.swift */,
+				86398C881A6569CC0014C50F /* MYTableViewCell.swift */,
+				86398C8A1A6569D90014C50F /* MYHeaderFooterView.swift */,
+				86398C8C1A6569EB0014C50F /* MYLabel.swift */,
+				86398C8E1A6569F70014C50F /* StringExtension.swift */,
+			);
+			name = Source;
+			path = ../Source;
+			sourceTree = "<group>";
+		};
 		86B1FFCF1A6568F1000E3772 = {
 			isa = PBXGroup;
 			children = (
+				86398C831A6569810014C50F /* Source */,
 				86B1FFDA1A6568F1000E3772 /* MYTableViewManager */,
 				86B1FFF01A6568F1000E3772 /* MYTableViewManagerTests */,
 				86B1FFD91A6568F1000E3772 /* Products */,
@@ -77,8 +108,10 @@
 		86B1FFDA1A6568F1000E3772 /* MYTableViewManager */ = {
 			isa = PBXGroup;
 			children = (
+				86398C901A656AAC0014C50F /* CustomCell.swift */,
 				86B1FFDD1A6568F1000E3772 /* AppDelegate.swift */,
 				86B1FFDF1A6568F1000E3772 /* ViewController.swift */,
+				86398C921A656AD40014C50F /* ChildViewController.swift */,
 				86B1FFE11A6568F1000E3772 /* Main.storyboard */,
 				86B1FFE41A6568F1000E3772 /* Images.xcassets */,
 				86B1FFE61A6568F1000E3772 /* LaunchScreen.xib */,
@@ -212,8 +245,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86398C8D1A6569EB0014C50F /* MYLabel.swift in Sources */,
+				86398C931A656AD40014C50F /* ChildViewController.swift in Sources */,
+				86398C891A6569CC0014C50F /* MYTableViewCell.swift in Sources */,
 				86B1FFE01A6568F1000E3772 /* ViewController.swift in Sources */,
+				86398C851A6569AC0014C50F /* BaseClasses.swift in Sources */,
+				86398C911A656AAC0014C50F /* CustomCell.swift in Sources */,
+				86398C8F1A6569F70014C50F /* StringExtension.swift in Sources */,
 				86B1FFDE1A6568F1000E3772 /* AppDelegate.swift in Sources */,
+				86398C8B1A6569D90014C50F /* MYHeaderFooterView.swift in Sources */,
+				86398C871A6569BC0014C50F /* MYTableViewManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -325,7 +366,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -337,6 +378,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MYTableViewManager/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -347,6 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MYTableViewManager/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -405,6 +448,7 @@
 				86B1FFF91A6568F1000E3772 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		86B1FFFA1A6568F1000E3772 /* Build configuration list for PBXNativeTarget "MYTableViewManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +457,7 @@
 				86B1FFFC1A6568F1000E3772 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
