@@ -8,10 +8,10 @@ MYTableViewManager
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
 [![Issues](https://img.shields.io/github/issues/nghialv/MYTableViewManager.svg?style=flat
-)](https://github.com/nghialv/MaterialKit/issues?state=open)
+)](https://github.com/nghialv/MYTableViewManager/issues?state=open)
 
 I want to slim down my view controllers.
-I want to manage tableview without the code of `UITableViewDelegate` and `UITableViewDataSource`. 
+I want to manage tableview without the code of `UITableViewDelegate` and `UITableViewDataSource`.
 That is why I created `MYTableViewManager`.
 
 Feature
@@ -169,16 +169,17 @@ Usage
 
 TODO
 -----
-* [ ] prototyping
-* [ ] append/reset
-* [ ] insert
-* [ ] remove
-* [ ] update
-* [ ] header/footer
-* [ ] dynamic height for cells
-* [ ] dynamic height example
-* [ ] loadmore
-* [ ] create podfile
+
+- [ ] prototyping
+- [ ] append/reset
+- [ ] insert
+- [ ] remove
+- [ ] update
+- [ ] header/footer
+- [ ] dynamic height for cells
+- [ ] dynamic height example
+- [ ] loadmore
+- [ ] create podfile
 
 Installation
 -----
