@@ -67,7 +67,7 @@ Usage
  * Initilization
 
 ``` swift
-	private var tvManager = MYTableViewDataSource(tableView)   
+	private var tvManager = MYTableViewManager(tableView: tableView)   
 ```
 
 * Register cell with simple syntax
