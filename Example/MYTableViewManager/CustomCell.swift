@@ -11,8 +11,8 @@ import UIKit
 class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
-    override func setData(data: MYTableViewCellData) {
-        super.setData(data)
+    override func configureCell(data: MYTableViewCellData) {
+        super.configureCell(data)
         if let title = data.userData as? String {
             titleLabel.text = title
         }

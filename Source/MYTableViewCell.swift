@@ -12,6 +12,7 @@ public class MYTableViewCellData : MYBaseViewData {
     let identifier: String
     var cellHeight: CGFloat = 44
     var cellSelectionEnabled = true
+    var calculatedHeight: CGFloat?
     
     init(cellClass: AnyClass, userData: AnyObject?, actionHander: ActionHandler?) {
         self.identifier = String.className(cellClass)
@@ -46,7 +47,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func setup() {
     }
     
-    public func setData(data: MYTableViewCellData) {
+    public func configureCell(data: MYTableViewCellData) {
         self.delegate = data
         unhighlight(false)
     }

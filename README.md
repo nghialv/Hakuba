@@ -186,7 +186,7 @@ TODO
 - [ ] remove
 - [ ] update
 - [x] header/footer
-- [ ] dynamic height for cells
+- [x] dynamic height for cells
 - [ ] dynamic height example
 - [ ] loadmore
 - [ ] create podfile

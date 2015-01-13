@@ -25,6 +25,7 @@ public class MYTableViewManager : NSObject {
     private var footerViewData: [Int: MYHeaderFooterViewData] = [:]
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
+    private var heightCalculateCells: [String: MYTableViewCell] = [:]
     
     subscript(index: Int) -> [MYTableViewCellData] {
         get {
@@ -197,6 +198,14 @@ private extension MYTableViewManager {
             data.delegate = self
         }
     }
+    
+    func calculateHeightForConfiguredSizingCell(cell: MYTableViewCell) -> CGFloat {
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        return size.height + 1.0
+    }
 }
 
 // MARK - MYBaseViewDataDelegate
@@ -209,6 +218,23 @@ extension MYTableViewManager : MYBaseViewDataDelegate {
 // MARK - UITableViewDelegate
 extension MYTableViewManager : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+            if let h = cellData.calculatedHeight {
+                return h
+            }
+            if heightCalculateCells[cellData.identifier] == nil {
+                heightCalculateCells[cellData.identifier] = tableView.dequeueReusableCellWithIdentifier(cellData.identifier) as? MYTableViewCell
+            }
+            if let cell = heightCalculateCells[cellData.identifier] {
+                cell.configureCell(cellData)
+                cellData.calculatedHeight = calculateHeightForConfiguredSizingCell(cell)
+                return cellData.calculatedHeight!
+            }
+        }
+        return 0
+    }
+   
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellData = dataSource[indexPath.section]?[indexPath.row] {
             return cellData.cellHeight
         }
@@ -267,7 +293,7 @@ extension MYTableViewManager : UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellData = dataSource[indexPath.section]![indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellData.identifier, forIndexPath: indexPath) as MYTableViewCell
-        cell.setData(cellData)
+        cell.configureCell(cellData)
         return cell
     }
 }
