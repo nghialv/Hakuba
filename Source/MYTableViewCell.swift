@@ -13,9 +13,9 @@ public class MYTableViewCellData : MYBaseViewData {
     var cellHeight: CGFloat = 44
     var cellSelectionEnabled = true
     
-    init(identifier: String, actionHander: ActionHandler?) {
-        self.identifier = identifier
-        super.init(actionHander: actionHander)
+    init(cellClass: AnyClass, userData: AnyObject?, actionHander: ActionHandler?) {
+        self.identifier = String.className(cellClass)
+        super.init(userData: userData, actionHander: actionHander)
     }
 }
 

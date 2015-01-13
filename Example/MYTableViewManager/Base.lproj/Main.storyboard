@@ -20,32 +20,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="67" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BcM-CL-hAq">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomCell" rowHeight="67" id="ctY-MR-kgT" customClass="CustomCell" customModule="MYTableViewManager" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ctY-MR-kgT" id="sE0-FY-l6y">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM1-ta-q2J">
-                                                    <rect key="frame" x="16" y="12" width="568" height="43"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="RM1-ta-q2J" firstAttribute="top" secondItem="sE0-FY-l6y" secondAttribute="top" constant="12" id="PPt-Ih-DHu"/>
-                                                <constraint firstAttribute="bottom" secondItem="RM1-ta-q2J" secondAttribute="bottom" constant="12" id="Tdb-s2-d4s"/>
-                                                <constraint firstAttribute="trailing" secondItem="RM1-ta-q2J" secondAttribute="trailing" constant="16" id="hKa-sR-euJ"/>
-                                                <constraint firstItem="RM1-ta-q2J" firstAttribute="leading" secondItem="sE0-FY-l6y" secondAttribute="leading" constant="16" id="srb-N1-5R1"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="RM1-ta-q2J" id="bfg-L4-iTR"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

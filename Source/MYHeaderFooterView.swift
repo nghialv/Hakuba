@@ -13,9 +13,9 @@ public class MYHeaderFooterViewData : MYBaseViewData {
     var viewHeight: CGFloat = 44
     var isEnabled = true
     
-    init(identifier: String, actionHandler: ActionHandler?) {
-        self.identifier = identifier
-        super.init(actionHander: actionHandler)
+    init(viewClass: AnyClass, userData: AnyObject?, actionHandler: ActionHandler?) {
+        self.identifier = String.className(viewClass)
+        super.init(userData: userData, actionHander: actionHandler)
     }
 }
 

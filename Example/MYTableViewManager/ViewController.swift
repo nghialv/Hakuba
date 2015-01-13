@@ -10,28 +10,26 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private var tableViewManager = MYTableViewManager()
+    private var tableViewManager: MYTableViewManager!
     
     override func viewWillAppear(animated: Bool) {
-        tableViewManager.deselectAllCells()
+        tableViewManager?.deselectAllCells()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableViewManager.setup(tableView)
+        tableViewManager = MYTableViewManager(tableView: tableView)
+        tableViewManager.registerCellNib(CustomCell)
         
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5"]
         
         let cellData = titles.map { [weak self] title -> MYTableViewCellData in
-            let textCellData = MYTableViewCellData(identifier: CustomCell.identifier) {
+            return MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
                 println("Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
-            textCellData.userData = title
-            return textCellData
         }
-        tableViewManager.resetDataForSection(0, data: cellData, reloadSection: true)
+        tableViewManager.resetDataInSection(0, data: cellData, reloadSection: true)
     }
     
     func pushChildViewController() {

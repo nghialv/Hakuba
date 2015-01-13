@@ -40,14 +40,48 @@ public class MYTableViewManager : NSObject {
             dataSource[index] = newValue
         }
     }
-    
-    public func setup(tableView: UITableView) {
+   
+    init(tableView: UITableView) {
+        super.init()
         self.tableView = tableView
         tableView.delegate = self
         tableView.dataSource = self
     }
+}
+
+// MARK - register cell and header/footer
+public extension MYTableViewManager {
+    func registerCellClass(cellClass: AnyClass) {
+        let identifier = String.className(cellClass)
+        tableView?.registerClass(cellClass, forCellReuseIdentifier: identifier)
+    }
     
-    public func appendDataForSection(section: Int, data: [MYTableViewCellData], reloadType: MYReloadType) {
+    func registerCellNib(cellClass: AnyClass) {
+        let identifier = String.className(cellClass)
+        let nib = UINib(nibName: identifier, bundle: nil)
+        tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
+    }
+
+    func registerHeadFooterClass(viewClass: AnyClass) {
+        let identifier = String.className(viewClass)
+        tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
+    }
+    
+    func registerHeaderFooterNib(viewClass: AnyClass) {
+        let identifier = String.className(viewClass)
+        let nib = UINib(nibName: identifier, bundle: nil)
+        tableView?.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+    }
+}
+
+// MARK - append/reset/insert/remove/update cell
+public extension MYTableViewManager {
+    public func appendDataInSection(section: Int, data: MYTableViewCellData, reloadType: MYReloadType) {
+        let cellData = [data]
+        self.appendDataInSection(section, data: cellData, reloadType: reloadType)
+    }
+    
+    public func appendDataInSection(section: Int, data: [MYTableViewCellData], reloadType: MYReloadType) {
         if dataSource.indexForKey(section) != nil {
             self.setBaseViewDataDelegate(data)
             dataSource[section]! += data
@@ -71,10 +105,10 @@ public class MYTableViewManager : NSObject {
             return
         }
         
-        resetDataForSection(section, data: data, reloadSection: true)
+        resetDataInSection(section, data: data, reloadSection: true)
     }
     
-    public func resetDataForSection(section: Int, data: [MYTableViewCellData], reloadSection: Bool = false) {
+    public func resetDataInSection(section: Int, data: [MYTableViewCellData], reloadSection: Bool = false) {
         self.setBaseViewDataDelegate(data)
         
         let insertAction = numberOfSections < section + 1
@@ -90,33 +124,33 @@ public class MYTableViewManager : NSObject {
         }
     }
     
-    public func setHeaderDataForSection(section: Int, data: MYHeaderFooterViewData) {
+    public func setHeaderDataInSection(section: Int, data: MYHeaderFooterViewData) {
         headerViewData[section] = data
     }
     
-    public func setFooterDataForSection(section: Int, data: MYHeaderFooterViewData) {
+    public func setFooterDataInSection(section: Int, data: MYHeaderFooterViewData) {
         footerViewData[section] = data
     }
     
-    public func enableHeaderViewForSection(section: Int) {
+    public func enableHeaderViewInSection(section: Int) {
         if let data = headerViewData[section] {
             data.isEnabled = true
         }
     }
     
-    public func disableHeaderViewForSection(section: Int) {
+    public func disableHeaderViewInSection(section: Int) {
         if let data = headerViewData[section] {
             data.isEnabled = false
         }
     }
     
-    public func enableFooterViewForSection(section: Int) {
+    public func enableFooterViewInSection(section: Int) {
         if let data = footerViewData[section] {
             data.isEnabled = true
         }
     }
     
-    public func disableFooterViewForSection(section: Int) {
+    public func disableFooterViewInSection(section: Int) {
         if let data = footerViewData[section] {
             data.isEnabled = false
         }

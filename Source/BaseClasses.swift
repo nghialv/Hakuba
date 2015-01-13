@@ -28,7 +28,8 @@ public class MYBaseViewData : NSObject, MYBaseViewDelegate {
     weak var delegate: MYBaseViewDataDelegate?
     var userData: AnyObject?
     
-    init(actionHander: ActionHandler?) {
+    init(userData: AnyObject? = nil, actionHander: ActionHandler?) {
+        self.userData = userData
         self.action = actionHander
     }
     

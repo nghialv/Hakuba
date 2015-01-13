@@ -22,7 +22,7 @@ Feature
 * Easy to append/remove/reset the cell
 * Easy to implement header/footer view
 * Support dynamic cell height from **ios7**
-* Support for creating cells from Xibs or Storyboards
+* Support for creating cells from Nibs or Storyboards
 * Easy to implement loadmore
 * Complete example
 
@@ -38,7 +38,7 @@ Feature
 		tnManager = MYTableViewManager(tableView)
 		
 		let title = "Cell Title"
-		let cellData = MYTableViewCellData(cell: TextCell.self, userData: title) {
+		let cellData = MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
 			println("Did select cell with title = \(title)")
 		}
 		tvManager.appendDataInSection(0, data: cellData, reloadType: .InsertRows(.Fade))
@@ -46,8 +46,8 @@ Feature
 	}       
 ```
 ``` swift
-	// cell class
-	class TextCell : MYTableViewCell {
+	// your custom cell class
+	class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     override func configureCell(data: MYTableViewCellData) {
@@ -81,7 +81,7 @@ Usage
 * Append a new cell with `Fade` animation
 
 ``` swift
-	let cellData = MYTableViewCellData(cell: CellClass.self, userData: yourCellData) {
+	let cellData = MYTableViewCellData(cellClass: CustomClass.self, userData: yourCellData) {
 		println("Did select cell")
 	}
 	tvManager.appendDataInSection(0, data: cellData, reloadType: .InsertRows(.Fade))
@@ -93,7 +93,7 @@ Usage
 	let items = [...] // or your data from API
 
 	let cellData = items.map { item -> MYTableViewCellData in
-		return MYTableViewCellData(cell: TextCell.self, userData: item) {
+		return MYTableViewCellData(cellClass: CustomCell.self, userData: item) {
 			println("Did select cell")
 		}
 	}
