@@ -121,7 +121,9 @@ Usage
 * Insert data
 
 ``` swift
-	manager.insertDataInSection(0, atRow: 1, data: cellData)
+	tvManager.insertDataInSection(0, atRow: 1, data: cellData)
+	// insert a list of cellData
+	tvManager.insertDataInsection(0, atRow: 2, data: [cellData1, cellData2])
 ```
 
 * Remove data 
@@ -180,7 +182,7 @@ TODO
 
 - [x] prototyping
 - [x] append/reset
-- [ ] insert
+- [x] insert
 - [ ] remove
 - [ ] update
 - [x] header/footer

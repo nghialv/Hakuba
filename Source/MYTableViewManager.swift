@@ -130,6 +130,24 @@ public extension MYTableViewManager {
             }
         }
     }
+    
+    public func insertDataInSection(section: Int, data: MYTableViewCellData, atRow row: Int) -> Bool {
+        return self.insertDataInSection(section, data: [data], atRow: row)
+    }
+    
+    public func insertDataInSection(section: Int, data: [MYTableViewCellData], atRow row: Int) -> Bool {
+        if dataSource[section] != nil {
+            return false
+        }
+        self.setBaseViewDataDelegate(data)
+        
+        if (row >= 0) && (row <= dataSource[section]!.count) {
+            dataSource[section]?.insert(data, atIndex: row)
+            return true
+        }
+        
+        return false
+    }
 }
 
 // MARK - header/footer 
