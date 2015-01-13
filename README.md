@@ -35,7 +35,7 @@ Feature
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		tnManager = MYTableViewManager(tableView)
+		tnManager = MYTableViewManager(tableView: tableView)
 		
 		let title = "Cell Title"
 		let cellData = MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
@@ -170,8 +170,8 @@ Usage
 TODO
 -----
 
-- [ ] prototyping
-- [ ] append/reset
+- [x] prototyping
+- [x] append/reset
 - [ ] insert
 - [ ] remove
 - [ ] update
