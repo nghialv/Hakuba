@@ -29,7 +29,7 @@ class ViewController: UIViewController {
                 self?.pushChildViewController()
             }
         }
-        tableViewManager.resetDataInSection(0, data: cellData, reloadSection: true)
+        tableViewManager.resetDataInSection(0, newData: cellData, reloadSection: true)
     }
     
     func pushChildViewController() {

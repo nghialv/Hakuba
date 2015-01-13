@@ -78,6 +78,9 @@ Usage
 
 	//of cource you don't need to register cell if your cell is included in the tableview storyboard
 
+	// register header/footer view
+	tvManager.registerHeaderFooterClass(MyHeaderClass)
+	tvManager.registerHeaderFooterNib(MyHeaderClass)
 ```
 
 * Append a new cell with `Fade` animation
@@ -138,9 +141,12 @@ Usage
 * set header/footer view
 
 ``` swift
-	tvManager.registerHeaderFooterClass(MyHeaderClass)
-	tvManager.registerHeaderFooterNib(MyHeaderClass)
+	let headerData = MYHeaderFooterViewData(viewClass: CustomHeaderView.self, userData: nil) {
+		println("Did select header view")
+	}
+	tvManager.setHeaderDataInSection(0, data: headerData)
 
+	// you can enable/disable header in section
 	tvManager.enableHeaderInSection(0)
 	tvManager.disableFooterInSection(1)
 ```
@@ -177,7 +183,7 @@ TODO
 - [ ] insert
 - [ ] remove
 - [ ] update
-- [ ] header/footer
+- [x] header/footer
 - [ ] dynamic height for cells
 - [ ] dynamic height example
 - [ ] loadmore

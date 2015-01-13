@@ -47,6 +47,13 @@ public class MYTableViewManager : NSObject {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    public func deselectAllCells() {
+        for view in selectedCells {
+            view.unhighlight(true)
+        }
+        selectedCells.removeAll(keepCapacity: false)
+    }
 }
 
 // MARK - register cell and header/footer
@@ -105,15 +112,15 @@ public extension MYTableViewManager {
             return
         }
         
-        resetDataInSection(section, data: data, reloadSection: true)
+        resetDataInSection(section, newData: data, reloadSection: true)
     }
     
-    public func resetDataInSection(section: Int, data: [MYTableViewCellData], reloadSection: Bool = false) {
-        self.setBaseViewDataDelegate(data)
+    public func resetDataInSection(section: Int, newData: [MYTableViewCellData], reloadSection: Bool = false) {
+        self.setBaseViewDataDelegate(newData)
         
         let insertAction = numberOfSections < section + 1
         numberOfSections = max(numberOfSections, section + 1)
-        dataSource[section] = data
+        dataSource[section] = newData
         if reloadSection {
             let indexSet = NSIndexSet(index: section)
             if insertAction {
@@ -123,7 +130,10 @@ public extension MYTableViewManager {
             }
         }
     }
-    
+}
+
+// MARK - header/footer 
+public extension MYTableViewManager {
     public func setHeaderDataInSection(section: Int, data: MYHeaderFooterViewData) {
         headerViewData[section] = data
     }
@@ -154,13 +164,6 @@ public extension MYTableViewManager {
         if let data = footerViewData[section] {
             data.isEnabled = false
         }
-    }
-    
-    public func deselectAllCells() {
-        for view in selectedCells {
-            view.unhighlight(true)
-        }
-        selectedCells.removeAll(keepCapacity: false)
     }
 }
 
