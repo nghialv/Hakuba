@@ -11,7 +11,9 @@ MYTableViewManager
 )](https://github.com/nghialv/MYTableViewManager/issues?state=open)
 
 I want to slim down my view controllers.
+
 I want to manage tableview without the code of `UITableViewDelegate` and `UITableViewDataSource`.
+
 That is why I created `MYTableViewManager`.
 
 Feature
