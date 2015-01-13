@@ -7,7 +7,7 @@ MYTableViewManager
 )](https://developer.apple.com/swift)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
-[![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg?style=flat
+[![Issues](https://img.shields.io/github/issues/nghialv/MYTableViewManager.svg?style=flat
 )](https://github.com/nghialv/MaterialKit/issues?state=open)
 
 I want to slim down my view controllers.
@@ -19,7 +19,7 @@ Feature
 * Don't have to write the code for `UITableViewDelegate` and `UITableViewDataSource` protocols
 * Don't have to set cell identifier
 * Handling cell selection by trailing closure
-* Easy to append/remove/reset the cell
+* Easy to manage your cells (append/reset/insert/remove/update)
 * Easy to implement header/footer view
 * Support dynamic cell height from **ios7**
 * Support for creating cells from Nibs or Storyboards
@@ -151,7 +151,7 @@ Usage
 	}
 ```
 
-* Reload type: MYTableViewManager supports some reload types as following:
+* Reload type: MYTableViewManager supports some reload types as follows:
 	- `InsertRows(UITableViewRowAnimation)`
 	- `DeleteRows(UITableViewRowAnimation)`
 	- `ReloadSection`
@@ -199,4 +199,4 @@ Requirements
 License
 -----
 
-MYDataSource is released under the MIT license. See LICENSE for details.
+MYTableViewManager is released under the MIT license. See LICENSE for details.
