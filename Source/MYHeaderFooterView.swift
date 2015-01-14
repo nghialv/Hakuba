@@ -49,6 +49,10 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     func configureView(data: MYHeaderFooterViewData) {
         self.delegate = data
     }
+    
+    public func emitSelectedEvent(view: MYBaseViewProtocol) {
+        delegate?.didSelect(view)
+    }
 }
 
 // MARK - Hightlight
@@ -74,6 +78,6 @@ public extension MYHeaderFooterView {
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
-        delegate?.didSelect(self)
+        emitSelectedEvent(self)
     }
 }

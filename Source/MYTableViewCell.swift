@@ -57,6 +57,10 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
         self.delegate = data
         unhighlight(false)
     }
+   
+    public func emitSelectedEvent(view: MYBaseViewProtocol) {
+        delegate?.didSelect(view)
+    }
 }
 
 // MARK - Hightlight
@@ -91,6 +95,6 @@ public extension MYTableViewCell {
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
-        delegate?.didSelect(self)
+        emitSelectedEvent(self)
     }
 }

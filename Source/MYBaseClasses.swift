@@ -13,6 +13,7 @@ typealias MYSelectionHandler = () -> ()
 public protocol MYBaseViewProtocol {
     func highlight(Bool)
     func unhighlight(Bool)
+    func emitSelectedEvent(MYBaseViewProtocol)
 }
 
 public protocol MYBaseViewDataDelegate : class {
