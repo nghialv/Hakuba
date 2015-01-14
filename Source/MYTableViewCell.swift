@@ -13,6 +13,11 @@ public class MYTableViewCellData : MYBaseViewData {
     var cellHeight: CGFloat = 44
     var cellSelectionEnabled = true
     var calculatedHeight: CGFloat?
+    var dynamicHeightEnabled: Bool = false {
+        didSet {
+            calculatedHeight = nil
+        }
+    }
     
     init(cellClass: AnyClass, userData: AnyObject?, actionHander: ActionHandler?) {
         self.identifier = String.className(cellClass)

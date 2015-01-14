@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomCell : MYTableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: MYLabel!
     
     override func configureCell(data: MYTableViewCellData) {
         super.configureCell(data)

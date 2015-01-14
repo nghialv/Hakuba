@@ -258,6 +258,7 @@ private extension MYTableViewManager {
     }
     
     func calculateHeightForConfiguredSizingCell(cell: MYTableViewCell) -> CGFloat {
+        cell.bounds = CGRectMake(0, 0, tableView?.bounds.width ?? UIScreen.mainScreen().bounds.width, cell.bounds.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
@@ -277,6 +278,9 @@ extension MYTableViewManager : MYBaseViewDataDelegate {
 extension MYTableViewManager : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+            if !cellData.dynamicHeightEnabled {
+                return cellData.cellHeight
+            }
             if let h = cellData.calculatedHeight {
                 return h
             }

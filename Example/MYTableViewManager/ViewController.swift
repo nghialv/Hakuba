@@ -20,14 +20,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         tableViewManager = MYTableViewManager(tableView: tableView)
         tableViewManager.registerCellNib(CustomCell)
+       
+        let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
+        let longTitle2 = "Support dynamic cell height from ios7"
         
-        let titles = ["title 1", "title 2", "title 3", "title 4", "title 5"]
+        let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
         let cellData = titles.map { [weak self] title -> MYTableViewCellData in
-            return MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
+            let data = MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
                 println("Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
+            data.dynamicHeightEnabled = true
+            return data
         }
         tableViewManager.resetDataInSection(0, newData: cellData, reloadSection: true)
         
@@ -41,7 +46,6 @@ class ViewController: UIViewController {
             }
             self.tableViewManager.insertDataInSection(0, data: newCellData, atRow: 1, reloadType: .InsertRows(.Middle))
         }
-        
         
         delay(2.0) {
             self.tableViewManager.removeDataInSection(0, atRow: 2)

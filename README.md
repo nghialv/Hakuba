@@ -190,7 +190,7 @@ TODO
 - [x] update
 - [x] header/footer
 - [x] dynamic height for cells
-- [ ] dynamic height example
+- [x] dynamic height example
 - [ ] loadmore
 - [ ] create podfile
 
