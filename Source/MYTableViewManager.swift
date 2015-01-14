@@ -127,13 +127,18 @@ public extension MYTableViewManager {
     
     public func resetDataInSection(section: Int, newData: [MYTableViewCellData], reloadType: MYReloadType = .ReloadSection(.None)) {
         self.setBaseViewDataDelegate(newData)
-        
+       
+        let insertSection = numberOfSections < section + 1
         numberOfSections = max(numberOfSections, section + 1)
         dataSource[section] = newData
         switch reloadType {
         case .ReloadSection(let animation):
             let indexSet = NSIndexSet(index: section)
-            tableView?.reloadSections(indexSet, withRowAnimation: animation)
+            if insertSection {
+                tableView?.insertSections(indexSet, withRowAnimation: animation)
+            } else {
+                tableView?.reloadSections(indexSet, withRowAnimation: animation)
+            }
         default:
             tableView?.reloadData()
         }
