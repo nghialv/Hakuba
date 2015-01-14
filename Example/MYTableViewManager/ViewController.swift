@@ -34,7 +34,7 @@ class ViewController: UIViewController {
             data.dynamicHeightEnabled = true
             return data
         }
-        tableViewManager.resetDataInSection(0, newData: cellData, reloadSection: true)
+        tableViewManager.resetDataInSection(0, newData: cellData)
         
         delay(1.0) {
             let titles = ["new cell 1", "new cell 2"]
