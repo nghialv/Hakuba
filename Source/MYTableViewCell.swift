@@ -19,7 +19,7 @@ public class MYTableViewCellData : MYBaseViewData {
         }
     }
     
-    init(cellClass: AnyClass, userData: AnyObject?, actionHander: ActionHandler?) {
+    init(cellClass: AnyClass, userData: AnyObject?, actionHander: MYActionHandler?) {
         self.identifier = String.className(cellClass)
         super.init(userData: userData, actionHander: actionHander)
     }

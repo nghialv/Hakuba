@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         }
         
         delay(3.0) {
-            self.tableViewManager.updateUserDataInSection(0, atRow: 5, userData: "Last cell")
+            self.tableViewManager.updateUserDataInSection(0, atRow: 6, userData: "Last cell")
         }
     }
     

@@ -9,6 +9,14 @@
 
 import UIKit
 
+private extension Array {
+    mutating func insert(newArray: Array, atIndex index: Int) {
+        let left = self[0..<Swift.max(0, index)]
+        let right = index > count ? [] : self[index..<count]
+        self = left + newArray + right
+    }
+}
+
 public enum MYReloadType {
     case InsertRows(UITableViewRowAnimation)
     case DeleteRows(UITableViewRowAnimation)
@@ -192,7 +200,8 @@ public extension MYTableViewManager {
     func updateUserDataInSection(section: Int, atRow row: Int, userData: AnyObject?, reloadType: MYReloadType = .ReloadRows(.None)) {
         if dataSource[section] != nil  {
             dataSource[section]![row].userData = userData
-           
+            dataSource[section]![row].calculatedHeight = nil
+            
             switch reloadType {
             case .ReloadRows(let animation):
                 let indexPath = NSIndexPath(forRow: row, inSection: section)
