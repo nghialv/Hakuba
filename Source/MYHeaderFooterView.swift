@@ -13,9 +13,9 @@ public class MYHeaderFooterViewData : MYBaseViewData {
     var viewHeight: CGFloat = 44
     var isEnabled = true
     
-    init(viewClass: AnyClass, userData: AnyObject?, actionHandler: MYActionHandler?) {
+    init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler?) {
         self.identifier = String.className(viewClass)
-        super.init(userData: userData, actionHandler: actionHandler)
+        super.init(userData: userData, selectionHandler: selectionHandler)
     }
 }
 

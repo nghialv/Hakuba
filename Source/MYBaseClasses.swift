@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias MYActionHandler = () -> ()
+typealias MYSelectionHandler = () -> ()
 
 public protocol MYBaseViewProtocol {
     func highlight(Bool)
@@ -24,13 +24,13 @@ public protocol MYBaseViewDelegate : class {
 }
 
 public class MYBaseViewData : NSObject, MYBaseViewDelegate {
-    var action: MYActionHandler?
+    var action: MYSelectionHandler?
     weak var delegate: MYBaseViewDataDelegate?
     var userData: AnyObject?
     
-    init(userData: AnyObject? = nil, actionHandler: MYActionHandler?) {
+    init(userData: AnyObject? = nil, selectionHandler: MYSelectionHandler?) {
         self.userData = userData
-        self.action = actionHandler
+        self.action = selectionHandler
     }
     
     public func didSelect(view: MYBaseViewProtocol) {

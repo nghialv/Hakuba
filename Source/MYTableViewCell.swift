@@ -19,10 +19,10 @@ public class MYTableViewCellData : MYBaseViewData {
         }
     }
     
-    init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, actionHander: MYActionHandler?) {
+    init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, selectionHandler: MYSelectionHandler?) {
         self.identifier = String.className(cellClass)
         self.cellHeight = height
-        super.init(userData: userData, actionHandler: actionHander)
+        super.init(userData: userData, selectionHandler: selectionHandler)
     }
 }
 
