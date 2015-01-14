@@ -46,6 +46,10 @@ class ViewController: UIViewController {
         delay(2.0) {
             self.tableViewManager.removeDataInSection(0, atRow: 2)
         }
+        
+        delay(3.0) {
+            self.tableViewManager.updateUserDataInSection(0, atRow: 5, userData: "Last cell")
+        }
     }
     
     func pushChildViewController() {

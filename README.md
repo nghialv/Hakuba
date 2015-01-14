@@ -166,6 +166,7 @@ Usage
 * Reload type: MYTableViewManager supports some reload types as follows:
 	- `InsertRows(UITableViewRowAnimation)`
 	- `DeleteRows(UITableViewRowAnimation)`
+	- `ReloadRows(UITableViewRowAnimation)`
 	- `ReloadSection`
 	- `ReleadTableView`
 
@@ -186,7 +187,7 @@ TODO
 - [x] append/reset
 - [x] insert
 - [x] remove
-- [ ] update
+- [x] update
 - [x] header/footer
 - [x] dynamic height for cells
 - [ ] dynamic height example

@@ -12,6 +12,7 @@ import UIKit
 public enum MYReloadType {
     case InsertRows(UITableViewRowAnimation)
     case DeleteRows(UITableViewRowAnimation)
+    case ReloadRows(UITableViewRowAnimation)
     case ReloadSection
     case ReleadTableView
 }
@@ -132,11 +133,11 @@ public extension MYTableViewManager {
         }
     }
     
-    public func insertDataInSection(section: Int, data: MYTableViewCellData, atRow row: Int, reloadType: MYReloadType = .ReloadSection) -> Bool {
+    public func insertDataInSection(section: Int, data: MYTableViewCellData, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
         return self.insertDataInSection(section, data: [data], atRow: row)
     }
     
-    public func insertDataInSection(section: Int, data: [MYTableViewCellData], atRow row: Int, reloadType: MYReloadType = .ReloadSection) -> Bool {
+    public func insertDataInSection(section: Int, data: [MYTableViewCellData], atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
         self.setBaseViewDataDelegate(data)
         
         if dataSource[section] == nil {
@@ -177,6 +178,25 @@ public extension MYTableViewManager {
             case .DeleteRows(let animation):
                 let indexPath = NSIndexPath(forRow: row, inSection: section)
                 tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+                
+            case .ReloadSection:
+                let indexSet = NSIndexSet(index: section)
+                tableView?.reloadSections(indexSet, withRowAnimation: .None)
+                
+            default:
+                tableView?.reloadData()
+            }
+        }
+    }
+    
+    func updateUserDataInSection(section: Int, atRow row: Int, userData: AnyObject?, reloadType: MYReloadType = .ReloadRows(.None)) {
+        if dataSource[section] != nil  {
+            dataSource[section]![row].userData = userData
+           
+            switch reloadType {
+            case .ReloadRows(let animation):
+                let indexPath = NSIndexPath(forRow: row, inSection: section)
+                tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
                 
             case .ReloadSection:
                 let indexSet = NSIndexSet(index: section)
