@@ -168,6 +168,25 @@ public extension MYTableViewManager {
         
         return false
     }
+    
+    func removeDataInSection(section: Int, atRow row: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
+        if dataSource[section] != nil {
+            dataSource[section]!.removeAtIndex(row)
+            
+            switch reloadType {
+            case .DeleteRows(let animation):
+                let indexPath = NSIndexPath(forRow: row, inSection: section)
+                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+                
+            case .ReloadSection:
+                let indexSet = NSIndexSet(index: section)
+                tableView?.reloadSections(indexSet, withRowAnimation: .None)
+                
+            default:
+                tableView?.reloadData()
+            }
+        }
+    }
 }
 
 // MARK - header/footer 

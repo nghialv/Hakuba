@@ -185,7 +185,7 @@ TODO
 - [x] prototyping
 - [x] append/reset
 - [x] insert
-- [ ] remove
+- [x] remove
 - [ ] update
 - [x] header/footer
 - [x] dynamic height for cells

@@ -41,6 +41,11 @@ class ViewController: UIViewController {
             }
             self.tableViewManager.insertDataInSection(0, data: newCellData, atRow: 1, reloadType: .InsertRows(.Middle))
         }
+        
+        
+        delay(2.0) {
+            self.tableViewManager.removeDataInSection(0, atRow: 2)
+        }
     }
     
     func pushChildViewController() {
