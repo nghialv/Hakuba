@@ -132,18 +132,37 @@ public extension MYTableViewManager {
         }
     }
     
-    public func insertDataInSection(section: Int, data: MYTableViewCellData, atRow row: Int) -> Bool {
+    public func insertDataInSection(section: Int, data: MYTableViewCellData, atRow row: Int, reloadType: MYReloadType = .ReloadSection) -> Bool {
         return self.insertDataInSection(section, data: [data], atRow: row)
     }
     
-    public func insertDataInSection(section: Int, data: [MYTableViewCellData], atRow row: Int) -> Bool {
-        if dataSource[section] != nil {
-            return false
-        }
+    public func insertDataInSection(section: Int, data: [MYTableViewCellData], atRow row: Int, reloadType: MYReloadType = .ReloadSection) -> Bool {
         self.setBaseViewDataDelegate(data)
         
+        if dataSource[section] == nil {
+            self.resetDataInSection(section, newData: [], reloadSection: false)
+        }
+       
         if (row >= 0) && (row <= dataSource[section]!.count) {
             dataSource[section]?.insert(data, atIndex: row)
+            
+            switch reloadType {
+            case .InsertRows(let animation):
+                let startRowIndex = row
+                let endRowIndex = startRowIndex + data.count
+                let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
+                    return NSIndexPath(forRow: index, inSection: section)
+                }
+                tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+                
+            case .ReloadSection:
+                let indexSet = NSIndexSet(index: section)
+                tableView?.reloadSections(indexSet, withRowAnimation: .None)
+                
+            default:
+                tableView?.reloadData()
+            }
+
             return true
         }
         

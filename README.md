@@ -123,7 +123,9 @@ Usage
 ``` swift
 	tvManager.insertDataInSection(0, atRow: 1, data: cellData)
 	// insert a list of cellData
-	tvManager.insertDataInsection(0, atRow: 2, data: [cellData1, cellData2])
+	tvManager.insertDataInSection(0, atRow: 2, data: [cellData1, cellData2])
+	// setting insert animation
+	tvManager.insertDataInSection(0, atRow: 2, data: [cellData1, cellData2], reloadType: .InsertRows(.Middle))
 ```
 
 * Remove data 

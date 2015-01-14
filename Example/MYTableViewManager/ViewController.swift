@@ -30,12 +30,32 @@ class ViewController: UIViewController {
             }
         }
         tableViewManager.resetDataInSection(0, newData: cellData, reloadSection: true)
+        
+        delay(1.0) {
+            let titles = ["new cell 1", "new cell 2"]
+            let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
+                return MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
+                    println("Did select new cell : \(title)")
+                    self?.pushChildViewController()
+                }
+            }
+            self.tableViewManager.insertDataInSection(0, data: newCellData, atRow: 1, reloadType: .InsertRows(.Middle))
+        }
     }
     
     func pushChildViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewControllerWithIdentifier("ChildViewController") as ChildViewController
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
 }
 
