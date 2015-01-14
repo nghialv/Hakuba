@@ -15,7 +15,7 @@ public class MYHeaderFooterViewData : MYBaseViewData {
     
     init(viewClass: AnyClass, userData: AnyObject?, actionHandler: MYActionHandler?) {
         self.identifier = String.className(viewClass)
-        super.init(userData: userData, actionHander: actionHandler)
+        super.init(userData: userData, actionHandler: actionHandler)
     }
 }
 
@@ -46,7 +46,7 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     func setup() {
     }
     
-    func setData(data: MYHeaderFooterViewData) {
+    func configureView(data: MYHeaderFooterViewData) {
         self.delegate = data
     }
 }

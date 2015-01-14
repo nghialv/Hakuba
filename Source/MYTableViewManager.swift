@@ -79,12 +79,12 @@ public extension MYTableViewManager {
         tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
     }
 
-    func registerHeadFooterClass(viewClass: AnyClass) {
+    func registerHeadFooterViewClass(viewClass: AnyClass) {
         let identifier = String.className(viewClass)
         tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
     }
     
-    func registerHeaderFooterNib(viewClass: AnyClass) {
+    func registerHeaderFooterViewNib(viewClass: AnyClass) {
         let identifier = String.className(viewClass)
         let nib = UINib(nibName: identifier, bundle: nil)
         tableView?.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
@@ -325,7 +325,7 @@ extension MYTableViewManager : UITableViewDelegate {
                 return nil
             }
             let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(data.identifier) as MYHeaderFooterView
-            headerView.setData(data)
+            headerView.configureView(data)
             return headerView
         }
         return nil
@@ -344,7 +344,7 @@ extension MYTableViewManager : UITableViewDelegate {
                 return nil
             }
             let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(data.identifier) as MYHeaderFooterView
-            footerView.setData(data)
+            footerView.configureView(data)
             return footerView
         }
         return nil

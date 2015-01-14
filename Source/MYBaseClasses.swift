@@ -28,9 +28,9 @@ public class MYBaseViewData : NSObject, MYBaseViewDelegate {
     weak var delegate: MYBaseViewDataDelegate?
     var userData: AnyObject?
     
-    init(userData: AnyObject? = nil, actionHander: MYActionHandler?) {
+    init(userData: AnyObject? = nil, actionHandler: MYActionHandler?) {
         self.userData = userData
-        self.action = actionHander
+        self.action = actionHandler
     }
     
     public func didSelect(view: MYBaseViewProtocol) {

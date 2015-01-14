@@ -179,6 +179,15 @@ Usage
 	tvManager.deselectAllCells(animated: true)
 ```
  
+* Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the `height` parameter and set `dynamicHeightEnabled = true`
+
+``` swift
+let cellData = MYTableViewCellData(cellClass: CustomClass.self, height: 50, userData: yourCellData) {
+		println("Did select cell")
+	}
+	cellData.dynamicHeightEnabled = true
+	
+```
 
 TODO
 -----
