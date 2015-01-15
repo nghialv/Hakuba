@@ -11,7 +11,7 @@ import UIKit
 
 private extension Array {
     mutating func insert(newArray: Array, atIndex index: Int) {
-        let left = self[0..<Swift.max(0, index)]
+        let left = self[0..<max(0, index)]
         let right = index > count ? [] : self[index..<count]
         self = left + newArray + right
     }
@@ -34,7 +34,7 @@ public class MYTableViewManager : NSObject {
     private var footerViewData: [Int: MYHeaderFooterViewData] = [:]
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
-    private var heightCalculateCells: [String: MYTableViewCell] = [:]
+    private var heightCalculationCells: [String: MYTableViewCell] = [:]
     
     subscript(index: Int) -> [MYTableViewCellData] {
         get {
@@ -296,10 +296,10 @@ extension MYTableViewManager : UITableViewDelegate {
             if let h = cellData.calculatedHeight {
                 return h
             }
-            if heightCalculateCells[cellData.identifier] == nil {
-                heightCalculateCells[cellData.identifier] = tableView.dequeueReusableCellWithIdentifier(cellData.identifier) as? MYTableViewCell
+            if heightCalculationCells[cellData.identifier] == nil {
+                heightCalculationCells[cellData.identifier] = tableView.dequeueReusableCellWithIdentifier(cellData.identifier) as? MYTableViewCell
             }
-            if let cell = heightCalculateCells[cellData.identifier] {
+            if let cell = heightCalculationCells[cellData.identifier] {
                 cell.configureCell(cellData)
                 cellData.calculatedHeight = calculateHeightForConfiguredSizingCell(cell)
                 return cellData.calculatedHeight!
