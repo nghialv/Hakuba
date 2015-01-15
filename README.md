@@ -109,7 +109,7 @@ Usage
 
 ``` swift
 	// replace current data in section by new data
-	tvManager.resetDataInSection(0, newData: [yourData], reloadType: .ReloadSection)
+	tvManager.resetDataInSection(0, newData: [yourData], reloadType: .ReloadSection(.Middle))
 
 	// or reload all tableview
 	tvManager.resetDataInSection(0, newData: [yourData], reloadType: .ReloadTableView)
@@ -208,7 +208,7 @@ Installation
 * Installation with CocoaPods
 
 ```
-	// comming soon
+	// coming soon
 ```
 
 * Copying all the files into your project
