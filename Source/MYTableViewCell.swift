@@ -61,6 +61,14 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func emitSelectedEvent(view: MYBaseViewProtocol) {
         delegate?.didSelect(view)
     }
+    
+    public func willAppear(data: MYTableViewCellData) {
+        
+    }
+    
+    public func didDisappear(data: MYTableViewCellData) {
+        
+    }
 }
 
 // MARK - Hightlight

@@ -352,6 +352,22 @@ extension MYTableViewManager : UITableViewDelegate {
         }
         return nil
     }
+    
+    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+            if let myCell = cell as? MYTableViewCell {
+                myCell.willAppear(cellData)
+            }
+        }
+    }
+    
+    public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+            if let myCell = cell as? MYTableViewCell {
+                myCell.didDisappear(cellData)
+            }
+        }
+    }
 }
 
 // MARK - MYTableViewManager
