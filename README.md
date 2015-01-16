@@ -112,7 +112,7 @@ Usage
 	tvManager.resetWithData([yourData], inSection: 0, reloadType: .ReloadSection(.Middle))
 
 	// or reload all tableview
-	tvManager.resetWithData([yourData], inSection: 0, reloadType: .ReloadTableView)
+	tvManager.resetWithData(yourData, inSection: 0, reloadType: .ReloadTableView)
 
 	// or without reload
 	tvManager.resetWithData([yourData], inSection: 0, reloadType: nil)
@@ -121,11 +121,13 @@ Usage
 * Insert data
 
 ``` swift
-	tvManager.insertDataInSection(0, atRow: 1, data: cellData)
+	tvManager.insertData(cellData, inSection: 0, atRow: 1)
 	// insert a list of cellData
 	tvManager.insertData([cellData1, cellData2], inSection: 0, atRow: 2)
 	// setting insert animation
 	tvManager.insertData([cellData1, cellData2], inSection: 0, atRow: 2, reloadType: .InsertRows(.Middle))
+
+	tvManager.insertDataBeforeLastRow(cellData, inSection: 0, reloadType: .InsertRows(.Middle))
 ```
 
 * Remove data 
@@ -148,7 +150,7 @@ Usage
 	let headerData = MYHeaderFooterViewData(viewClass: CustomHeaderView.self, userData: nil) {
 		println("Did select header view")
 	}
-	tvManager.setHeaderDataInSection(0, data: headerData)
+	tvManager.setHeaderData(headerData, inSection: 0)
 
 	// you can enable/disable header in section
 	tvManager.enableHeaderInSection(0)
@@ -189,6 +191,12 @@ let cellData = MYTableViewCellData(cellClass: CustomClass.self, height: 50, user
 	
 ```
 
+* Cell callback
+
+``` swift
+	func willAppear(data: MYTableViewCellData)
+	func didDisappear(data: MYTableViewCellData)
+```
 TODO
 -----
 

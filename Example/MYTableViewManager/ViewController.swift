@@ -54,6 +54,17 @@ class ViewController: UIViewController {
         delay(3.0) {
             self.tableViewManager.updateUserData("Last cell", inSection: 0, atRow: 6)
         }
+        
+        delay(5.0) {
+            let titles = ["inserted cell 1", "inserted cell 2"]
+            let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
+                return MYTableViewCellData(cellClass: CustomCell.self, userData: title) { _ in
+                    println("Did select new cell : \(title)")
+                    self?.pushChildViewController()
+                }
+            }
+            self.tableViewManager.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
+        }
     }
     
     func pushChildViewController() {

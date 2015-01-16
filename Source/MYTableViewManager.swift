@@ -124,6 +124,10 @@ public extension MYTableViewManager {
         
         resetWithData(data, inSection: section, reloadType: reloadType)
     }
+   
+    public func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+        resetWithData([data], inSection: section, reloadType: reloadType)
+    }
     
     public func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
         self.setBaseViewDataDelegate(data)
@@ -181,6 +185,14 @@ public extension MYTableViewManager {
         return false
     }
     
+    public func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
+        if dataSource[section] != nil {
+            let lastRow = max(dataSource[section]!.count - 1, 0)
+            return insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
+        }
+        return false
+    }
+    
     func removeDataInSection(section: Int, atRow row: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
         if dataSource[section] != nil {
             dataSource[section]!.removeAtIndex(row)
@@ -223,11 +235,11 @@ public extension MYTableViewManager {
 
 // MARK - header/footer 
 public extension MYTableViewManager {
-    public func setHeaderDataInSection(section: Int, data: MYHeaderFooterViewData) {
+    public func setHeaderData(data: MYHeaderFooterViewData, inSection section: Int) {
         headerViewData[section] = data
     }
     
-    public func setFooterDataInSection(section: Int, data: MYHeaderFooterViewData) {
+    public func setFooterData(data: MYHeaderFooterViewData, inSection section: Int) {
         footerViewData[section] = data
     }
     
