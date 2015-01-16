@@ -43,7 +43,7 @@ Feature
 		let cellData = MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
 			println("Did select cell with title = \(title)")
 		}
-		tvManager.appendDataInSection(0, data: cellData, reloadType: .InsertRows(.Fade))
+		tvManager.appendData(cellData, inSection: 0, reloadType: .InsertRows(.Fade))
 		//a cell of TextCell will be appended to tableView with Fade animation
 	}       
 ```
@@ -102,20 +102,20 @@ Usage
 			println("Did select cell")
 		}
 	}
-	tvManager.appendDataInSection(1, data: cellData, reloadType: .InsertRows(.None))
+	tvManager.appendData(cellData, inSection: 1, reloadType: .InsertRows(.None))
 ```
 
 * Reset section data
 
 ``` swift
 	// replace current data in section by new data
-	tvManager.resetDataInSection(0, newData: [yourData], reloadType: .ReloadSection(.Middle))
+	tvManager.resetWithData([yourData], inSection: 0, reloadType: .ReloadSection(.Middle))
 
 	// or reload all tableview
-	tvManager.resetDataInSection(0, newData: [yourData], reloadType: .ReloadTableView)
+	tvManager.resetWithData([yourData], inSection: 0, reloadType: .ReloadTableView)
 
 	// or without reload
-	tvManager.resetDataInSection(0, newData: [yourData], reloadType: nil)
+	tvManager.resetWithData([yourData], inSection: 0, reloadType: nil)
 ```
 
 * Insert data
@@ -123,9 +123,9 @@ Usage
 ``` swift
 	tvManager.insertDataInSection(0, atRow: 1, data: cellData)
 	// insert a list of cellData
-	tvManager.insertDataInSection(0, atRow: 2, data: [cellData1, cellData2])
+	tvManager.insertData([cellData1, cellData2], inSection: 0, atRow: 2)
 	// setting insert animation
-	tvManager.insertDataInSection(0, atRow: 2, data: [cellData1, cellData2], reloadType: .InsertRows(.Middle))
+	tvManager.insertData([cellData1, cellData2], inSection: 0, atRow: 2, reloadType: .InsertRows(.Middle))
 ```
 
 * Remove data 
@@ -139,7 +139,7 @@ Usage
 
 ``` swift
 	let newdata = tmp
-	tvManager.updateUserDataInSection(0, row: 1, userData: newdata, reloadCell: true)
+	tvManager.updateUserData(newData, inSection: 0, atRow: 1, reloadCell: true)
 ```
 
 * set header/footer view
