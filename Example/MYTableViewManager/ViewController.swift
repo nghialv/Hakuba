@@ -27,24 +27,24 @@ class ViewController: UIViewController {
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
         let cellData = titles.map { [weak self] title -> MYTableViewCellData in
-            let data = MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
+            let data = MYTableViewCellData(cellClass: CustomCell.self, userData: title) { _ in
                 println("Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
             data.dynamicHeightEnabled = true
             return data
         }
-        tableViewManager.resetDataInSection(0, newData: cellData)
+        tableViewManager.resetWithData(cellData, inSection: 0)
         
         delay(1.0) {
             let titles = ["new cell 1", "new cell 2"]
             let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
-                return MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
+                return MYTableViewCellData(cellClass: CustomCell.self, userData: title) { _ in
                     println("Did select new cell : \(title)")
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.insertDataInSection(0, data: newCellData, atRow: 1, reloadType: .InsertRows(.Middle))
+            self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
         }
         
         delay(2.0) {
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         }
         
         delay(3.0) {
-            self.tableViewManager.updateUserDataInSection(0, atRow: 6, userData: "Last cell")
+            self.tableViewManager.updateUserData("Last cell", inSection: 0, atRow: 6)
         }
     }
     

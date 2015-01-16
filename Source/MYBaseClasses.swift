@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias MYSelectionHandler = () -> ()
+typealias MYSelectionHandler = (MYBaseViewProtocol) -> ()
 
 public protocol MYBaseViewProtocol {
     func highlight(Bool)
@@ -35,7 +35,7 @@ public class MYBaseViewData : NSObject, MYBaseViewDelegate {
     }
     
     public func didSelect(view: MYBaseViewProtocol) {
-        action?()
+        action?(view)
         delegate?.didSelectView(view)
     }
 }

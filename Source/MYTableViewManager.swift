@@ -79,7 +79,7 @@ public extension MYTableViewManager {
         tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
     }
 
-    func registerHeadFooterViewClass(viewClass: AnyClass) {
+    func registerHeaderFooterViewClass(viewClass: AnyClass) {
         let identifier = String.className(viewClass)
         tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
     }
@@ -93,12 +93,12 @@ public extension MYTableViewManager {
 
 // MARK - append/reset/insert/remove/update cell
 public extension MYTableViewManager {
-    public func appendDataInSection(section: Int, data: MYTableViewCellData, reloadType: MYReloadType) {
+    public func appendData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType) {
         let cellData = [data]
-        self.appendDataInSection(section, data: cellData, reloadType: reloadType)
+        self.appendData(cellData, inSection: section, reloadType: reloadType)
     }
     
-    public func appendDataInSection(section: Int, data: [MYTableViewCellData], reloadType: MYReloadType) {
+    public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType) {
         if dataSource.indexForKey(section) != nil {
             self.setBaseViewDataDelegate(data)
             dataSource[section]! += data
@@ -122,15 +122,15 @@ public extension MYTableViewManager {
             return
         }
         
-        resetDataInSection(section, newData: data, reloadType: reloadType)
+        resetWithData(data, inSection: section, reloadType: reloadType)
     }
     
-    public func resetDataInSection(section: Int, newData: [MYTableViewCellData], reloadType: MYReloadType = .ReloadSection(.None)) {
-        self.setBaseViewDataDelegate(newData)
+    public func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+        self.setBaseViewDataDelegate(data)
        
         let insertSection = numberOfSections < section + 1
         numberOfSections = max(numberOfSections, section + 1)
-        dataSource[section] = newData
+        dataSource[section] = data
         switch reloadType {
         case .ReloadSection(let animation):
             let indexSet = NSIndexSet(index: section)
@@ -144,15 +144,15 @@ public extension MYTableViewManager {
         }
     }
     
-    public func insertDataInSection(section: Int, data: MYTableViewCellData, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
-        return self.insertDataInSection(section, data: [data], atRow: row)
+    public func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
+        return self.insertData([data], inSection: section, atRow: row)
     }
     
-    public func insertDataInSection(section: Int, data: [MYTableViewCellData], atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
+    public func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
         self.setBaseViewDataDelegate(data)
         
         if dataSource[section] == nil {
-            self.resetDataInSection(section, newData: [], reloadType: .ReloadSection(.None))
+            self.resetWithData([], inSection: section, reloadType: .ReloadSection(.None))
         }
        
         if (row >= 0) && (row <= dataSource[section]!.count) {
@@ -200,7 +200,7 @@ public extension MYTableViewManager {
         }
     }
     
-    func updateUserDataInSection(section: Int, atRow row: Int, userData: AnyObject?, reloadType: MYReloadType = .ReloadRows(.None)) {
+    func updateUserData(userData: AnyObject?, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .ReloadRows(.None)) {
         if dataSource[section] != nil  {
             dataSource[section]![row].userData = userData
             dataSource[section]![row].calculatedHeight = nil
