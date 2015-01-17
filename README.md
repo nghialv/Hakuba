@@ -210,6 +210,7 @@ TODO
 - [x] header/footer
 - [x] dynamic height for cells
 - [x] dynamic height example
+- [ ] update table on the main thread
 - [ ] loadmore
 - [ ] create podfile
 
