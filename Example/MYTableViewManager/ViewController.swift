@@ -65,6 +65,11 @@ class ViewController: UIViewController {
             }
             self.tableViewManager.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
         }
+        
+        delay(6.0) {
+            self.tableViewManager.removeLastDataInSection(0)
+            //self.tableViewManager.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
+        }
     }
     
     func pushChildViewController() {

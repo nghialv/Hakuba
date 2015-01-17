@@ -134,6 +134,8 @@ Usage
 
 ``` swift
 	tvManager.removeDataInSection(0, row: 1)
+	tvManager.removeLastDataInSection(0, reloadType: .DeleteRows(.Middle))
+	tvManager.removeDataInsection(0, inRange: (2..<5), reloadType: .DeleteRows(.Middle))
 	tvManager.removeData(cellData)
 ```
 

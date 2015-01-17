@@ -15,6 +15,10 @@ private extension Array {
         let right = index > count ? [] : self[index..<count]
         self = left + newArray + right
     }
+    
+    func get(index: Int) -> T? {
+        return 0 <= index && index < count ? self[index] : nil
+    }
 }
 
 public enum MYReloadType {
@@ -194,13 +198,25 @@ public extension MYTableViewManager {
     }
     
     func removeDataInSection(section: Int, atRow row: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
+        removeDataInSection(section, inRange: (row...row), reloadType: reloadType)
+    }
+  
+    func removeLastDataInSection(section: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
+        let lastIndex = (dataSource[section]?.count ?? 0) - 1
+        removeDataInSection(section, atRow: lastIndex, reloadType: reloadType)
+    }
+    
+    func removeDataInSection(section: Int, inRange range: Range<Int>, reloadType: MYReloadType = .DeleteRows(.None)) {
         if dataSource[section] != nil {
-            dataSource[section]!.removeAtIndex(row)
-            
+            let start = max(0, range.startIndex)
+            let end = min(dataSource[section]!.count, range.endIndex)
+            let safeRange = Range(start: start, end: end)
+            dataSource[section]!.removeRange(safeRange)
+        
             switch reloadType {
             case .DeleteRows(let animation):
-                let indexPath = NSIndexPath(forRow: row, inSection: section)
-                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+                let indexPaths = safeRange.map { NSIndexPath(forRow: $0, inSection: section) }
+                tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
                 
             case .ReloadSection(let animation):
                 let indexSet = NSIndexSet(index: section)
@@ -301,7 +317,7 @@ extension MYTableViewManager : MYBaseViewDataDelegate {
 // MARK - UITableViewDelegate
 extension MYTableViewManager : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             if !cellData.dynamicHeightEnabled {
                 return cellData.cellHeight
             }
@@ -321,7 +337,7 @@ extension MYTableViewManager : UITableViewDelegate {
     }
    
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             return cellData.cellHeight
         }
         return 0
@@ -366,7 +382,7 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             if let myCell = cell as? MYTableViewCell {
                 myCell.willAppear(cellData)
             }
@@ -374,7 +390,7 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             if let myCell = cell as? MYTableViewCell {
                 myCell.didDisappear(cellData)
             }
