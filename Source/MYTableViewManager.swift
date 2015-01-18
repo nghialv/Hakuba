@@ -40,6 +40,9 @@ public class MYTableViewManager : NSObject {
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
+    var loadmoreHandler: (() -> ())?
+    var loadmoreEnabled = false
+    var loadmoreThreshold: CGFloat = 25
     
     subscript(index: Int) -> [MYTableViewCellData] {
         get {
@@ -460,5 +463,22 @@ extension MYTableViewManager : UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellData.identifier, forIndexPath: indexPath) as MYTableViewCell
         cell.configureCell(cellData)
         return cell
+    }
+}
+
+// MARK - loadmore
+extension MYTableViewManager {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        if !loadmoreEnabled {
+            return
+        }
+        
+        let offset = scrollView.contentOffset
+        let y = offset.y + scrollView.bounds.height - scrollView.contentInset.bottom
+        let h = scrollView.contentSize.height
+        if y > h - loadmoreThreshold {
+            loadmoreEnabled = false
+            self.loadmoreHandler?()
+        }
     }
 }

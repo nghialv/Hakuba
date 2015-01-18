@@ -35,6 +35,14 @@ class ViewController: UIViewController {
             return data
         }
         tableViewManager.resetWithData(cellData, inSection: 0)
+       
+        tableViewManager.loadmoreHandler = { [weak self] in
+            println("Loadmore")
+            self?.delay(1) {
+                self?.tableViewManager.loadmoreEnabled = true
+                return
+            }
+        }
         
         delay(1.0) {
             let titles = ["new cell 1", "new cell 2"]
@@ -57,9 +65,9 @@ class ViewController: UIViewController {
         }
         
         delay(5.0) {
-            let titles = ["inserted cell 1", "inserted cell 2"]
+            let titles = ["inserted cell 1", "inserted cell 2", "inserted cell 3"]
             let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
-                return MYTableViewCellData(cellClass: CustomCell.self, userData: title) { _ in
+                return MYTableViewCellData(cellClass: CustomCell.self, height: 100, userData: title) { _ in
                     println("Did select new cell : \(title)")
                     self?.pushChildViewController()
                 }
@@ -71,6 +79,8 @@ class ViewController: UIViewController {
             self.tableViewManager.removeLastDataInSection(0)
             //self.tableViewManager.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
         }
+        
+        tableViewManager.loadmoreEnabled = true
     }
     
     func pushChildViewController() {
