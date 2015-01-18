@@ -174,14 +174,14 @@ public extension MYTableViewManager {
             self.setBaseViewDataDelegate(data)
         
             if self.dataSource[section] == nil {
-                var rt: MYReloadType!
+                var rt: MYReloadType = .None
                 switch reloadType {
                 case .None:
                     rt = .None
                 default:
                     rt = .ReloadSection(.None)
                 }
-                self.resetWithData([], inSection: section, reloadType: rt)
+                return self.resetWithData(data, inSection: section, reloadType: rt)
             }
             if row < 0 ||  row > self.dataSource[section]!.count {
                 return
@@ -212,10 +212,8 @@ public extension MYTableViewManager {
     
     public func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         dispatch_async(dispatch_get_main_queue()) {
-            if self.dataSource[section] != nil {
-                let lastRow = max(self.dataSource[section]!.count - 1, 0)
-                self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
-            }
+            let lastRow = max((self.dataSource[section]?.count ?? 0) - 1, 0)
+            self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
         }
     }
     
