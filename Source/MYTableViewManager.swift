@@ -104,8 +104,8 @@ public extension MYTableViewManager {
     }
     
     public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType) {
-        if self.dataSource.indexForKey(section) != nil {
-            dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.dataSource.indexForKey(section) != nil {
                 self.setBaseViewDataDelegate(data)
                 self.dataSource[section]! += data
             
@@ -130,8 +130,8 @@ public extension MYTableViewManager {
                 }
                 return
             }
+            self.resetWithData(data, inSection: section, reloadType: reloadType)
         }
-        resetWithData(data, inSection: section, reloadType: reloadType)
     }
    
     public func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
@@ -211,9 +211,11 @@ public extension MYTableViewManager {
     }
     
     public func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        if dataSource[section] != nil {
-            let lastRow = max(dataSource[section]!.count - 1, 0)
-            insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.dataSource[section] != nil {
+                let lastRow = max(self.dataSource[section]!.count - 1, 0)
+                self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
+            }
         }
     }
     
