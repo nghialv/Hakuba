@@ -44,7 +44,8 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
+            self.tableViewManager.resetWithData(newCellData, inSection: 5)
+            //self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
         }
         
         delay(2.0) {
@@ -52,7 +53,7 @@ class ViewController: UIViewController {
         }
         
         delay(3.0) {
-            self.tableViewManager.updateUserData("Last cell", inSection: 0, atRow: 6)
+            self.tableViewManager.updateUserData("Last cell", inSection: 5, atRow: 1)
         }
         
         delay(5.0) {
