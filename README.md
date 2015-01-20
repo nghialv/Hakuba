@@ -70,26 +70,13 @@ Usage
 	private var tvManager = MYTableViewManager(tableView: tableView)   
 ```
 
-* Register cell with simple syntax
-
-``` swift
-	tvManager.registerCellClass(YourCellClassName)
-	tvManager.regsiterCellNib(YourCellClassName)
-
-	//of cource you don't need to register cell if your cell is included in the tableview storyboard
-
-	// register header/footer view
-	tvManager.registerHeaderFooterClass(MyHeaderClass)
-	tvManager.registerHeaderFooterNib(MyHeaderClass)
-```
-
 * Append a new cell with `Fade` animation
 
 ``` swift
 	let cellData = MYTableViewCellData(cellClass: CustomClass.self, userData: yourCellData) {
 		println("Did select cell")
 	}
-	tvManager.appendDataInSection(0, data: cellData, reloadType: .InsertRows(.Fade))
+	tvManager.appendData(cellData, inSection: 0, reloadType: .InsertRows(.Fade))
 ```
 
 * Append a list of cells
@@ -175,7 +162,6 @@ Usage
 	- `ReleadTableView`
 
 
-
 * Handling cell
 
 ``` swift
@@ -193,12 +179,32 @@ let cellData = MYTableViewCellData(cellClass: CustomClass.self, height: 50, user
 	
 ```
 
-* Cell callback
+* Callback methods in the cell class
 
 ``` swift
 	func willAppear(data: MYTableViewCellData)
 	func didDisappear(data: MYTableViewCellData)
 ```
+
+* Register cell with simple syntax
+
+	- `func registerCellClass(cellClass)`
+	- `func registerCellNib(cellClass)`
+	- `func registerHeaderFooterViewClass(viewClass)`
+	- `func registerHeaderFooterViewNib(viewClass)`
+
+``` swift
+	// example
+	tvManager.registerCellClass(YourCellClassName)
+	tvManager.regsiterCellNib(YourCellClassName)
+
+	//of cource you don't need to register cell if your cell is included in the tableview storyboard
+
+	// register header/footer view
+	tvManager.registerHeaderFooterClass(MyHeaderClass)
+	tvManager.registerHeaderFooterNib(MyHeaderClass)
+```
+
 TODO
 -----
 
@@ -211,7 +217,7 @@ TODO
 - [x] dynamic height for cells
 - [x] dynamic height example
 - [x] update data on the main thread
-- [ ] loadmore
+- [x] loadmore
 - [ ] create podfile
 
 Installation
