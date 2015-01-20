@@ -297,6 +297,11 @@ public extension MYTableViewManager {
     func numberRowsInSection(section: Int) -> Int {
         return dataSource[section]?.count ?? 0
     }
+    
+    func cellForRowAtSection(section: Int, row: Int) -> MYTableViewCell? {
+        let indexPath = NSIndexPath(forRow: row, inSection: section)
+        return tableView?.cellForRowAtIndexPath(indexPath) as? MYTableViewCell
+    }
 }
 
 // MARK - header/footer 
