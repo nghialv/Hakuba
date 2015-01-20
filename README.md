@@ -149,7 +149,8 @@ Usage
 * loadmore
 
 ``` swift
-	tvManager.loadmore(delay: 0.2) {
+	tvManager.loadmoreEnabled = true
+	tvManager.loadmoreHandler = {
 		
 	}
 ```
