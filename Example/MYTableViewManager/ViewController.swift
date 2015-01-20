@@ -35,6 +35,14 @@ class ViewController: UIViewController {
             return data
         }
         tableViewManager.resetWithData(cellData, inSection: 0)
+       
+        tableViewManager.loadmoreHandler = { [weak self] in
+            println("Loadmore")
+            self?.delay(1) {
+                self?.tableViewManager.loadmoreEnabled = true
+                return
+            }
+        }
         
         delay(1.0) {
             let titles = ["new cell 1", "new cell 2"]
@@ -44,7 +52,8 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
+            self.tableViewManager.resetWithData(newCellData, inSection: 5)
+            //self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
         }
         
         delay(2.0) {
@@ -52,8 +61,26 @@ class ViewController: UIViewController {
         }
         
         delay(3.0) {
-            self.tableViewManager.updateUserData("Last cell", inSection: 0, atRow: 6)
+            self.tableViewManager.updateUserData("Last cell", inSection: 5, atRow: 1)
         }
+        
+        delay(5.0) {
+            let titles = ["inserted cell 1", "inserted cell 2", "inserted cell 3"]
+            let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
+                return MYTableViewCellData(cellClass: CustomCell.self, height: 100, userData: title) { _ in
+                    println("Did select new cell : \(title)")
+                    self?.pushChildViewController()
+                }
+            }
+            self.tableViewManager.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
+        }
+        
+        delay(6.0) {
+            self.tableViewManager.removeLastDataInSection(0)
+            //self.tableViewManager.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
+        }
+        
+        tableViewManager.loadmoreEnabled = true
     }
     
     func pushChildViewController() {

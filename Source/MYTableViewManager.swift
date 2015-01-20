@@ -15,6 +15,10 @@ private extension Array {
         let right = index > count ? [] : self[index..<count]
         self = left + newArray + right
     }
+    
+    func get(index: Int) -> T? {
+        return 0 <= index && index < count ? self[index] : nil
+    }
 }
 
 public enum MYReloadType {
@@ -23,6 +27,7 @@ public enum MYReloadType {
     case ReloadRows(UITableViewRowAnimation)
     case ReloadSection(UITableViewRowAnimation)
     case ReleadTableView
+    case None
 }
 
 public class MYTableViewManager : NSObject {
@@ -35,6 +40,9 @@ public class MYTableViewManager : NSObject {
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
+    var loadmoreHandler: (() -> ())?
+    var loadmoreEnabled = false
+    var loadmoreThreshold: CGFloat = 25
     
     subscript(index: Int) -> [MYTableViewCellData] {
         get {
@@ -99,64 +107,89 @@ public extension MYTableViewManager {
     }
     
     public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType) {
-        if dataSource.indexForKey(section) != nil {
-            self.setBaseViewDataDelegate(data)
-            dataSource[section]! += data
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.dataSource.indexForKey(section) != nil {
+                self.setBaseViewDataDelegate(data)
+                self.dataSource[section]! += data
             
-            switch reloadType {
-            case .InsertRows(let animation):
-                let startRowIndex = dataSource[section]!.count - data.count
-                let endRowIndex = startRowIndex + data.count
-                let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
-                    return NSIndexPath(forRow: index, inSection: section)
+                switch reloadType {
+                case .InsertRows(let animation):
+                    let startRowIndex = self.dataSource[section]!.count - data.count
+                    let endRowIndex = startRowIndex + data.count
+                    let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
+                        return NSIndexPath(forRow: index, inSection: section)
+                    }
+                    self.tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+                
+                case .ReloadSection(let animation):
+                    let indexSet = NSIndexSet(index: section)
+                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                
+                case .None:
+                    break
+                
+                default:
+                    self.tableView?.reloadData()
                 }
-                tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-                
-            case .ReloadSection(let animation):
-                let indexSet = NSIndexSet(index: section)
-                tableView?.reloadSections(indexSet, withRowAnimation: animation)
-                
-            default:
-                tableView?.reloadData()
+                return
             }
-            return
+            self.resetWithData(data, inSection: section, reloadType: reloadType)
         }
-        
-        resetWithData(data, inSection: section, reloadType: reloadType)
+    }
+   
+    public func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+        resetWithData([data], inSection: section, reloadType: reloadType)
     }
     
     public func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
-        self.setBaseViewDataDelegate(data)
-       
-        let insertSection = numberOfSections < section + 1
-        numberOfSections = max(numberOfSections, section + 1)
-        dataSource[section] = data
-        switch reloadType {
-        case .ReloadSection(let animation):
-            let indexSet = NSIndexSet(index: section)
-            if insertSection {
-                tableView?.insertSections(indexSet, withRowAnimation: animation)
-            } else {
-                tableView?.reloadSections(indexSet, withRowAnimation: animation)
-            }
-        default:
-            tableView?.reloadData()
-        }
-    }
-    
-    public func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
-        return self.insertData([data], inSection: section, atRow: row)
-    }
-    
-    public func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) -> Bool {
-        self.setBaseViewDataDelegate(data)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setBaseViewDataDelegate(data)
         
-        if dataSource[section] == nil {
-            self.resetWithData([], inSection: section, reloadType: .ReloadSection(.None))
+            let length = section + 1 - self.numberOfSections
+            let insertSections: NSIndexSet? = length > 0 ? NSIndexSet(indexesInRange: NSMakeRange(self.numberOfSections, length)) : nil
+            self.numberOfSections = max(self.numberOfSections, section + 1)
+            self.dataSource[section] = data
+        
+            switch reloadType {
+            case .ReloadSection(let animation):
+                if insertSections != nil {
+                    self.tableView?.insertSections(insertSections!, withRowAnimation: animation)
+                } else {
+                    let indexSet = NSIndexSet(index: section)
+                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                }
+            
+            case .None:
+                break
+            
+            default:
+                self.tableView?.reloadData()
+            }
         }
-       
-        if (row >= 0) && (row <= dataSource[section]!.count) {
-            dataSource[section]?.insert(data, atIndex: row)
+    }
+    
+    public func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        self.insertData([data], inSection: section, atRow: row)
+    }
+    
+    public func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setBaseViewDataDelegate(data)
+        
+            if self.dataSource[section] == nil {
+                var rt: MYReloadType = .None
+                switch reloadType {
+                case .None:
+                    rt = .None
+                default:
+                    rt = .ReloadSection(.None)
+                }
+                return self.resetWithData(data, inSection: section, reloadType: rt)
+            }
+            if row < 0 ||  row > self.dataSource[section]!.count {
+                return
+            }
+            self.dataSource[section]?.insert(data, atIndex: row)
             
             switch reloadType {
             case .InsertRows(let animation):
@@ -165,69 +198,114 @@ public extension MYTableViewManager {
                 let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
                     return NSIndexPath(forRow: index, inSection: section)
                 }
-                tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+                self.tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
                 
             case .ReloadSection(let animation):
                 let indexSet = NSIndexSet(index: section)
-                tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                
+            case .None:
+                break
                 
             default:
-                tableView?.reloadData()
+                self.tableView?.reloadData()
             }
-
-            return true
         }
-        
-        return false
+    }
+    
+    public func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let lastRow = max((self.dataSource[section]?.count ?? 0) - 1, 0)
+            self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
+        }
     }
     
     func removeDataInSection(section: Int, atRow row: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
-        if dataSource[section] != nil {
-            dataSource[section]!.removeAtIndex(row)
+        removeDataInSection(section, inRange: (row...row), reloadType: reloadType)
+    }
+  
+    func removeLastDataInSection(section: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
+        let lastIndex = (dataSource[section]?.count ?? 0) - 1
+        removeDataInSection(section, atRow: lastIndex, reloadType: reloadType)
+    }
+    
+    func removeDataInSection(section: Int, inRange range: Range<Int>, reloadType: MYReloadType = .DeleteRows(.None)) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.dataSource[section] != nil {
+                let start = max(0, range.startIndex)
+                let end = min(self.dataSource[section]!.count, range.endIndex)
+                let safeRange = Range(start: start, end: end)
+                self.dataSource[section]!.removeRange(safeRange)
+        
+                switch reloadType {
+                case .DeleteRows(let animation):
+                    let indexPaths = safeRange.map { NSIndexPath(forRow: $0, inSection: section) }
+                    self.tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+                
+                case .ReloadSection(let animation):
+                    let indexSet = NSIndexSet(index: section)
+                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
             
-            switch reloadType {
-            case .DeleteRows(let animation):
-                let indexPath = NSIndexPath(forRow: row, inSection: section)
-                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+                case .None:
+                    break
                 
-            case .ReloadSection(let animation):
-                let indexSet = NSIndexSet(index: section)
-                tableView?.reloadSections(indexSet, withRowAnimation: animation)
-                
-            default:
-                tableView?.reloadData()
+                default:
+                    self.tableView?.reloadData()
+                }
             }
         }
     }
     
     func updateUserData(userData: AnyObject?, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .ReloadRows(.None)) {
-        if dataSource[section] != nil  {
-            dataSource[section]![row].userData = userData
-            dataSource[section]![row].calculatedHeight = nil
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.dataSource[section] != nil  {
+                if let data = self.dataSource[section]?.get(row) {
+                    data.userData = userData
+                    data.calculatedHeight = nil
             
-            switch reloadType {
-            case .ReloadRows(let animation):
-                let indexPath = NSIndexPath(forRow: row, inSection: section)
-                tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+                    switch reloadType {
+                    case .ReloadRows(let animation):
+                        let indexPath = NSIndexPath(forRow: row, inSection: section)
+                        self.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
                 
-            case .ReloadSection(let animation):
-                let indexSet = NSIndexSet(index: section)
-                tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                    case .ReloadSection(let animation):
+                        let indexSet = NSIndexSet(index: section)
+                        self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
                 
-            default:
-                tableView?.reloadData()
+                    case .None:
+                        break
+                    
+                    default:
+                        self.tableView?.reloadData()
+                    }
+                }
             }
         }
     }
 }
 
+// MARK - tableView methods
+public extension MYTableViewManager {
+    func reloadTableView() {
+        tableView?.reloadData()
+    }
+    
+    func reloadSection(section: Int, animation: UITableViewRowAnimation) {
+        tableView?.reloadSections(NSIndexSet(index: section), withRowAnimation: animation)
+    }
+    
+    func numberRowsInSection(section: Int) -> Int {
+        return dataSource[section]?.count ?? 0
+    }
+}
+
 // MARK - header/footer 
 public extension MYTableViewManager {
-    public func setHeaderDataInSection(section: Int, data: MYHeaderFooterViewData) {
+    public func setHeaderData(data: MYHeaderFooterViewData, inSection section: Int) {
         headerViewData[section] = data
     }
     
-    public func setFooterDataInSection(section: Int, data: MYHeaderFooterViewData) {
+    public func setFooterData(data: MYHeaderFooterViewData, inSection section: Int) {
         footerViewData[section] = data
     }
     
@@ -289,7 +367,7 @@ extension MYTableViewManager : MYBaseViewDataDelegate {
 // MARK - UITableViewDelegate
 extension MYTableViewManager : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             if !cellData.dynamicHeightEnabled {
                 return cellData.cellHeight
             }
@@ -309,7 +387,7 @@ extension MYTableViewManager : UITableViewDelegate {
     }
    
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             return cellData.cellHeight
         }
         return 0
@@ -354,7 +432,7 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             if let myCell = cell as? MYTableViewCell {
                 myCell.willAppear(cellData)
             }
@@ -362,7 +440,7 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cellData = dataSource[indexPath.section]?[indexPath.row] {
+        if let cellData = dataSource[indexPath.section]?.get(indexPath.row) {
             if let myCell = cell as? MYTableViewCell {
                 myCell.didDisappear(cellData)
             }
@@ -385,5 +463,22 @@ extension MYTableViewManager : UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellData.identifier, forIndexPath: indexPath) as MYTableViewCell
         cell.configureCell(cellData)
         return cell
+    }
+}
+
+// MARK - loadmore
+extension MYTableViewManager {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        if !loadmoreEnabled {
+            return
+        }
+        
+        let offset = scrollView.contentOffset
+        let y = offset.y + scrollView.bounds.height - scrollView.contentInset.bottom
+        let h = scrollView.contentSize.height
+        if y > h - loadmoreThreshold {
+            loadmoreEnabled = false
+            self.loadmoreHandler?()
+        }
     }
 }
