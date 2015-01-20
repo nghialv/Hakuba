@@ -159,9 +159,9 @@ Usage
 	- `InsertRows(UITableViewRowAnimation)`
 	- `DeleteRows(UITableViewRowAnimation)`
 	- `ReloadRows(UITableViewRowAnimation)`
-	- `ReloadSection`
+	- `ReloadSection(UITableViewRowAnimation)`
 	- `ReleadTableView`
-
+	- `None`
 
 * Handling cell
 
