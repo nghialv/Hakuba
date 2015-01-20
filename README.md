@@ -158,7 +158,8 @@ Usage
 * loadmore
 
 ``` swift
-	tvManager.loadmore(delay: 0.2) {
+	tvManager.loadmoreEnabled = true
+	tvManager.loadmoreHandler = {
 		
 	}
 ```
@@ -200,7 +201,7 @@ TODO
 - [x] header/footer
 - [x] dynamic height for cells
 - [x] dynamic height example
-- [ ] loadmore
+- [x] loadmore
 - [ ] create podfile
 
 Installation
