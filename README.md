@@ -219,14 +219,14 @@ TODO
 - [x] dynamic height example
 - [x] update data on the main thread
 - [x] loadmore
-- [ ] create podfile
+- [x] create podfile
 
 Installation
 -----
 * Installation with CocoaPods
 
 ```
-	// coming soon
+	pod 'MYTableViewManager'
 ```
 
 * Copying all the files into your project
