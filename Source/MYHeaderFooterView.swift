@@ -53,6 +53,10 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     public func emitSelectedEvent(view: MYBaseViewProtocol) {
         delegate?.didSelect(view)
     }
+    
+    func didChangeFloatingState(isFloating: Bool) {
+        
+    }
 }
 
 // MARK - Hightlight

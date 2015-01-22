@@ -40,6 +40,7 @@ public class MYTableViewManager : NSObject {
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
+    private var currentTopSection = 0
     var loadmoreHandler: (() -> ())?
     var loadmoreEnabled = false
     var loadmoreThreshold: CGFloat = 25
@@ -474,6 +475,18 @@ extension MYTableViewManager : UITableViewDataSource {
 // MARK - loadmore
 extension MYTableViewManager {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let indexPath = tableView?.indexPathsForVisibleRows()?.first as? NSIndexPath {
+            if currentTopSection != indexPath.section {
+                if let headerView = tableView?.headerViewForSection(currentTopSection) as? MYHeaderFooterView {
+                    headerView.didChangeFloatingState(false)
+                }
+                if let headerView = tableView?.headerViewForSection(indexPath.section) as? MYHeaderFooterView {
+                    headerView.didChangeFloatingState(true)
+                }
+                currentTopSection = indexPath.section
+            }
+        }
+        
         if !loadmoreEnabled {
             return
         }
