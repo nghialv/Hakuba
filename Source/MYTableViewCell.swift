@@ -29,6 +29,7 @@ public class MYTableViewCellData : MYBaseViewData {
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     class var identifier: String { return String.className(self) }
     private weak var delegate: MYBaseViewDelegate?
+    weak var cellData: MYTableViewCellData?
     
     override init() {
         super.init()
@@ -54,7 +55,8 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     }
     
     public func configureCell(data: MYTableViewCellData) {
-        self.delegate = data
+        cellData = data
+        delegate = data
         unhighlight(false)
     }
    

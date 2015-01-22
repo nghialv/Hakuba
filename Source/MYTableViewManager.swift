@@ -100,14 +100,14 @@ public extension MYTableViewManager {
     }
 }
 
-// MARK - append/reset/insert/remove/update cell
+// MARK - Append
 public extension MYTableViewManager {
-    public func appendData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType) {
+    public func appendData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         let cellData = [data]
         self.appendData(cellData, inSection: section, reloadType: reloadType)
     }
     
-    public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType) {
+    public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.dataSource.indexForKey(section) != nil {
                 self.setBaseViewDataDelegate(data)
@@ -137,7 +137,10 @@ public extension MYTableViewManager {
             self.resetWithData(data, inSection: section, reloadType: reloadType)
         }
     }
-   
+}
+
+// MARK - Reset
+extension MYTableViewManager {
     public func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
         resetWithData([data], inSection: section, reloadType: reloadType)
     }
@@ -168,7 +171,10 @@ public extension MYTableViewManager {
             }
         }
     }
-    
+}
+
+// MARK - Insert
+public extension MYTableViewManager {
     public func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         self.insertData([data], inSection: section, atRow: row)
     }
@@ -220,7 +226,10 @@ public extension MYTableViewManager {
             self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
         }
     }
-    
+}
+
+// MARK - Remove
+public extension MYTableViewManager {
     func removeDataInSection(section: Int, atRow row: Int, reloadType: MYReloadType = .DeleteRows(.None)) {
         removeDataInSection(section, inRange: (row...row), reloadType: reloadType)
     }
@@ -256,7 +265,10 @@ public extension MYTableViewManager {
             }
         }
     }
-    
+}
+
+// MARK - Update user info
+public extension MYTableViewManager {
     func updateUserData(userData: AnyObject?, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .ReloadRows(.None)) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.dataSource[section] != nil  {
