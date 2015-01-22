@@ -41,6 +41,7 @@ public class MYTableViewManager : NSObject {
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
     private var currentTopSection = 0
+    private var willFloatingSection = -1
     var loadmoreHandler: (() -> ())?
     var loadmoreEnabled = false
     var loadmoreThreshold: CGFloat = 25
@@ -495,6 +496,9 @@ extension MYTableViewManager {
                 if let headerView = tableView?.headerViewForSection(indexPath.section) as? MYHeaderFooterView {
                     headerView.didChangeFloatingState(true)
                 }
+                if currentTopSection > indexPath.section {
+                    willFloatingSection = indexPath.section
+                }
                 currentTopSection = indexPath.section
             }
         }
@@ -509,6 +513,15 @@ extension MYTableViewManager {
         if y > h - loadmoreThreshold {
             loadmoreEnabled = false
             self.loadmoreHandler?()
+        }
+    }
+    
+    public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == willFloatingSection {
+            if let view = view as? MYHeaderFooterView {
+                view.didChangeFloatingState(true)
+                willFloatingSection = -1
+            }
         }
     }
 }
