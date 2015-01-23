@@ -28,6 +28,7 @@ public class MYTableViewCellData : MYBaseViewData {
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     class var identifier: String { return String.className(self) }
+    var cellSelectionEnabled = true
     private weak var delegate: MYBaseViewDelegate?
     weak var cellData: MYTableViewCellData?
     
@@ -57,6 +58,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func configureCell(data: MYTableViewCellData) {
         cellData = data
         delegate = data
+        cellSelectionEnabled = data.cellSelectionEnabled
         unhighlight(false)
     }
    
@@ -95,16 +97,22 @@ public extension MYTableViewCell {
 public extension MYTableViewCell {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
-        highlight(false)
+        if cellSelectionEnabled {
+            highlight(false)
+        }
     }
     
     override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
         super.touchesCancelled(touches, withEvent: event)
-        unhighlight(false)
+        if cellSelectionEnabled {
+            unhighlight(false)
+        }
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
-        emitSelectedEvent(self)
+        if cellSelectionEnabled {
+            emitSelectedEvent(self)
+        }
     }
 }
