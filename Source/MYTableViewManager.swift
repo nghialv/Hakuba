@@ -74,6 +74,17 @@ public class MYTableViewManager : NSObject {
         }
         selectedCells.removeAll(keepCapacity: false)
     }
+    
+    public func resetAllData() {
+        dataSource = [:]
+        headerViewData = [:]
+        footerViewData = [:]
+        numberOfSections = 0
+        selectedCells = []
+        heightCalculationCells = [:]
+        currentTopSection = 0
+        willFloatingSection = -1
+    }
 }
 
 // MARK - register cell and header/footer
