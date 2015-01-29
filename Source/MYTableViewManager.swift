@@ -26,7 +26,7 @@ public enum MYReloadType {
     case DeleteRows(UITableViewRowAnimation)
     case ReloadRows(UITableViewRowAnimation)
     case ReloadSection(UITableViewRowAnimation)
-    case ReleadTableView
+    case ReloadTableView
     case None
 }
 
@@ -120,7 +120,7 @@ public extension MYTableViewManager {
     }
     
     public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             if self.dataSource.indexForKey(section) != nil {
                 self.setBaseViewDataDelegate(data)
                 self.dataSource[section]! += data
@@ -147,18 +147,20 @@ public extension MYTableViewManager {
                 return
             }
             self.resetWithData(data, inSection: section, reloadType: reloadType)
-        }
+        //}
     }
 }
 
 // MARK - Reset
 extension MYTableViewManager {
+    /*
     public func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
         resetWithData([data], inSection: section, reloadType: reloadType)
     }
+    */
     
     public func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             self.setBaseViewDataDelegate(data)
         
             let length = section + 1 - self.numberOfSections
@@ -181,7 +183,7 @@ extension MYTableViewManager {
             default:
                 self.tableView?.reloadData()
             }
-        }
+        //}
     }
 }
 
@@ -192,7 +194,7 @@ public extension MYTableViewManager {
     }
     
     public func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             self.setBaseViewDataDelegate(data)
         
             if self.dataSource[section] == nil {
@@ -229,14 +231,14 @@ public extension MYTableViewManager {
             default:
                 self.tableView?.reloadData()
             }
-        }
+        //}
     }
     
     public func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             let lastRow = max((self.dataSource[section]?.count ?? 0) - 1, 0)
             self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
-        }
+        //}
     }
 }
 
@@ -252,7 +254,7 @@ public extension MYTableViewManager {
     }
     
     func removeDataInSection(section: Int, inRange range: Range<Int>, reloadType: MYReloadType = .DeleteRows(.None)) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             if self.dataSource[section] != nil {
                 let start = max(0, range.startIndex)
                 let end = min(self.dataSource[section]!.count, range.endIndex)
@@ -275,14 +277,14 @@ public extension MYTableViewManager {
                     self.tableView?.reloadData()
                 }
             }
-        }
+        //}
     }
 }
 
 // MARK - Update user info
 public extension MYTableViewManager {
     func updateUserData(userData: AnyObject?, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .ReloadRows(.None)) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             if self.dataSource[section] != nil  {
                 if let data = self.dataSource[section]?.get(row) {
                     data.userData = userData
@@ -305,7 +307,7 @@ public extension MYTableViewManager {
                     }
                 }
             }
-        }
+        //}
     }
 }
 
