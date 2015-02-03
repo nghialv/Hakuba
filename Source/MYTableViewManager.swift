@@ -32,6 +32,7 @@ public enum MYReloadType {
 
 @objc protocol MYTableViewManagerDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
+    optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
 }
 
 public class MYTableViewManager : NSObject {
@@ -543,5 +544,12 @@ extension MYTableViewManager {
                 willFloatingSection = -1
             }
         }
+    }
+}
+
+// MARK - UIScrollViewDelegate
+extension MYTableViewManager {
+    public func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        delegate?.scrollViewWillBeginDecelerating?(scrollView)
     }
 }
