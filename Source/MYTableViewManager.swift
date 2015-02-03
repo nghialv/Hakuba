@@ -33,6 +33,7 @@ public enum MYReloadType {
 @objc protocol MYTableViewManagerDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
     optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
+    optional func scrollViewWillBeginDragging(scrollView: UIScrollView)
 }
 
 public class MYTableViewManager : NSObject {
@@ -551,5 +552,9 @@ extension MYTableViewManager {
 extension MYTableViewManager {
     public func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDecelerating?(scrollView)
+    }
+    
+    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        delegate?.scrollViewWillBeginDragging?(scrollView)
     }
 }
