@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewManager = MYTableViewManager(tableView: tableView)
+        tableViewManager.delegate = self
+        
         tableViewManager.registerCellNib(CustomCell)
        
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
@@ -96,6 +98,12 @@ class ViewController: UIViewController {
                 Int64(delay * Double(NSEC_PER_SEC))
             ),
             dispatch_get_main_queue(), closure)
+    }
+}
+
+extension ViewController : MYTableViewManagerDelegate {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        println("OK")
     }
 }
 

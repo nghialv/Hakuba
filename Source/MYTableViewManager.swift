@@ -30,8 +30,13 @@ public enum MYReloadType {
     case None
 }
 
+@objc protocol MYTableViewManagerDelegate : class {
+    optional func scrollViewDidScroll(scrollView: UIScrollView)
+}
+
 public class MYTableViewManager : NSObject {
     typealias MYTableViewCellDataList = [MYTableViewCellData]
+    weak var delegate: MYTableViewManagerDelegate?
     
     private weak var tableView: UITableView?
     private var dataSource: [Int: MYTableViewCellDataList] = [:]
@@ -501,6 +506,8 @@ extension MYTableViewManager : UITableViewDataSource {
 // MARK - loadmore
 extension MYTableViewManager {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
+        delegate?.scrollViewDidScroll?(scrollView)
+        
         if let indexPath = tableView?.indexPathsForVisibleRows()?.first as? NSIndexPath {
             if currentTopSection != indexPath.section {
                 if let headerView = tableView?.headerViewForSection(currentTopSection) as? MYHeaderFooterView {
