@@ -348,27 +348,15 @@ public extension MYTableViewManager {
         footerViewData[section] = data
     }
     
-    public func enableHeaderViewInSection(section: Int) {
+    public func setHeaderViewInSection(section: Int, hidden: Bool) {
         if let data = headerViewData[section] {
-            data.isEnabled = true
+            data.isEnabled = !hidden
         }
     }
     
-    public func disableHeaderViewInSection(section: Int) {
-        if let data = headerViewData[section] {
-            data.isEnabled = false
-        }
-    }
-    
-    public func enableFooterViewInSection(section: Int) {
+    public func setFooterViewInSection(section: Int, hidden: Bool) {
         if let data = footerViewData[section] {
-            data.isEnabled = true
-        }
-    }
-    
-    public func disableFooterViewInSection(section: Int) {
-        if let data = footerViewData[section] {
-            data.isEnabled = false
+            data.isEnabled = !hidden
         }
     }
 }
