@@ -19,7 +19,7 @@ public class MYTableViewCellData : MYBaseViewData {
         }
     }
     
-    init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
+    public init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.className(cellClass)
         self.cellHeight = height
         super.init(userData: userData, selectionHandler: selectionHandler)
@@ -32,7 +32,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     private weak var delegate: MYBaseViewDelegate?
     weak var cellData: MYTableViewCellData?
     
-    override init() {
+    public override init() {
         super.init()
         setup()
     }
@@ -42,12 +42,12 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
         setup()
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }

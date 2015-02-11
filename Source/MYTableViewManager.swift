@@ -30,7 +30,7 @@ public enum MYReloadType {
     case None
 }
 
-@objc protocol MYTableViewManagerDelegate : class {
+@objc public protocol MYTableViewManagerDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
     optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
     optional func scrollViewWillBeginDragging(scrollView: UIScrollView)
@@ -53,22 +53,7 @@ public class MYTableViewManager : NSObject {
     var loadmoreEnabled = false
     var loadmoreThreshold: CGFloat = 25
     
-    subscript(index: Int) -> [MYTableViewCellData] {
-        get {
-            if dataSource.indexForKey(index) != nil {
-                return dataSource[index]!
-            } else {
-                numberOfSections = max(numberOfSections, index + 1)
-                dataSource[index] = []
-                return dataSource[index]!
-            }
-        }
-        set(newValue) {
-            dataSource[index] = newValue
-        }
-    }
-   
-    init(tableView: UITableView) {
+    public init(tableView: UITableView) {
         super.init()
         self.tableView = tableView
         tableView.delegate = self

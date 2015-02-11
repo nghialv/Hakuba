@@ -13,7 +13,7 @@ public class MYHeaderFooterViewData : MYBaseViewData {
     var viewHeight: CGFloat = 44
     var isEnabled = true
     
-    init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
+    public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.className(viewClass)
         super.init(userData: userData, selectionHandler: selectionHandler)
     }
@@ -23,7 +23,7 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     class var identifier: String { return String.className(self) }
     private weak var delegate: MYBaseViewDelegate?
     
-    override init() {
+    public override init() {
         super.init()
         setup()
     }
@@ -33,20 +33,20 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
         setup()
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
     
-    override init(reuseIdentifier: String?) {
+    public override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setup()
     }
     
-    func setup() {
+    public func setup() {
     }
     
-    func configureView(data: MYHeaderFooterViewData) {
+    public func configureView(data: MYHeaderFooterViewData) {
         self.delegate = data
     }
     
@@ -61,10 +61,10 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
 
 // MARK - Hightlight
 public extension MYHeaderFooterView {
-    public func highlight(animated: Bool) {
+    func highlight(animated: Bool) {
     }
     
-    public func unhighlight(animated: Bool) {
+    func unhighlight(animated: Bool) {
     }
 }
 

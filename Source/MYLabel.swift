@@ -8,8 +8,8 @@
 
 import UIKit
 
-class MYLabel : UILabel {
-    override var bounds: CGRect {
+public class MYLabel : UILabel {
+    override public var bounds: CGRect {
         didSet {
             self.preferredMaxLayoutWidth = self.bounds.width
         }
