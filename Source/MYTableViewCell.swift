@@ -84,11 +84,11 @@ public extension MYTableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
     }
     
-    func highlight(animated: Bool) {
+    public func highlight(animated: Bool) {
         super.setHighlighted(true, animated: animated)
     }
     
-    func unhighlight(animated: Bool) {
+    public func unhighlight(animated: Bool) {
         super.setHighlighted(false, animated: animated)
     }
 }

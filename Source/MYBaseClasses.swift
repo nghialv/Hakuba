@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias MYSelectionHandler = (MYBaseViewProtocol) -> ()
+public typealias MYSelectionHandler = (MYBaseViewProtocol) -> ()
 
 public protocol MYBaseViewProtocol {
     func highlight(Bool)

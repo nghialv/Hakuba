@@ -121,107 +121,19 @@ public extension MYTableViewManager {
 
 // MARK - Append
 public extension MYTableViewManager {
-    public func appendData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+    func appendData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         let cellData = [data]
         self.appendData(cellData, inSection: section, reloadType: reloadType)
     }
     
-    public func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        //dispatch_async(dispatch_get_main_queue()) {
-            if self.dataSource.indexForKey(section) != nil {
-                self.setBaseViewDataDelegate(data)
-                self.dataSource[section]! += data
-            
-                switch reloadType {
-                case .InsertRows(let animation):
-                    let startRowIndex = self.dataSource[section]!.count - data.count
-                    let endRowIndex = startRowIndex + data.count
-                    let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
-                        return NSIndexPath(forRow: index, inSection: section)
-                    }
-                    self.tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-                
-                case .ReloadSection(let animation):
-                    let indexSet = NSIndexSet(index: section)
-                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
-                
-                case .None:
-                    break
-                
-                default:
-                    self.tableView?.reloadData()
-                }
-                return
-            }
-            self.resetWithData(data, inSection: section, reloadType: reloadType)
-        //}
-    }
-}
-
-// MARK - Reset
-extension MYTableViewManager {
-    /*
-    public func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
-        resetWithData([data], inSection: section, reloadType: reloadType)
-    }
-    */
-    
-    public func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
-        //dispatch_async(dispatch_get_main_queue()) {
+    func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        if self.dataSource.indexForKey(section) != nil {
             self.setBaseViewDataDelegate(data)
-        
-            let length = section + 1 - self.numberOfSections
-            let insertSections: NSIndexSet? = length > 0 ? NSIndexSet(indexesInRange: NSMakeRange(self.numberOfSections, length)) : nil
-            self.numberOfSections = max(self.numberOfSections, section + 1)
-            self.dataSource[section] = data
-        
-            switch reloadType {
-            case .ReloadSection(let animation):
-                if insertSections != nil {
-                    self.tableView?.insertSections(insertSections!, withRowAnimation: animation)
-                } else {
-                    let indexSet = NSIndexSet(index: section)
-                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
-                }
-            
-            case .None:
-                break
-            
-            default:
-                self.tableView?.reloadData()
-            }
-        //}
-    }
-}
-
-// MARK - Insert
-public extension MYTableViewManager {
-    public func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        self.insertData([data], inSection: section, atRow: row)
-    }
-    
-    public func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        //dispatch_async(dispatch_get_main_queue()) {
-            self.setBaseViewDataDelegate(data)
-        
-            if self.dataSource[section] == nil {
-                var rt: MYReloadType = .None
-                switch reloadType {
-                case .None:
-                    rt = .None
-                default:
-                    rt = .ReloadSection(.None)
-                }
-                return self.resetWithData(data, inSection: section, reloadType: rt)
-            }
-            if row < 0 ||  row > self.dataSource[section]!.count {
-                return
-            }
-            self.dataSource[section]?.insert(data, atIndex: row)
+            self.dataSource[section]! += data
             
             switch reloadType {
             case .InsertRows(let animation):
-                let startRowIndex = row
+                let startRowIndex = self.dataSource[section]!.count - data.count
                 let endRowIndex = startRowIndex + data.count
                 let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
                     return NSIndexPath(forRow: index, inSection: section)
@@ -238,14 +150,92 @@ public extension MYTableViewManager {
             default:
                 self.tableView?.reloadData()
             }
-        //}
+            return
+        }
+        self.resetWithData(data, inSection: section, reloadType: reloadType)
+    }
+}
+
+// MARK - Reset
+public extension MYTableViewManager {
+    func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+        resetWithData([data], inSection: section, reloadType: reloadType)
     }
     
-    public func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
-        //dispatch_async(dispatch_get_main_queue()) {
-            let lastRow = max((self.dataSource[section]?.count ?? 0) - 1, 0)
-            self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
-        //}
+    func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+        self.setBaseViewDataDelegate(data)
+    
+        let length = section + 1 - self.numberOfSections
+        let insertSections: NSIndexSet? = length > 0 ? NSIndexSet(indexesInRange: NSMakeRange(self.numberOfSections, length)) : nil
+        self.numberOfSections = max(self.numberOfSections, section + 1)
+        self.dataSource[section] = data
+        
+        switch reloadType {
+        case .ReloadSection(let animation):
+            if insertSections != nil {
+                self.tableView?.insertSections(insertSections!, withRowAnimation: animation)
+            } else {
+                let indexSet = NSIndexSet(index: section)
+                self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+            }
+            
+        case .None:
+            break
+        
+        default:
+            self.tableView?.reloadData()
+        }
+    }
+}
+
+// MARK - Insert
+public extension MYTableViewManager {
+    func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        self.insertData([data], inSection: section, atRow: row)
+    }
+    
+    func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        self.setBaseViewDataDelegate(data)
+        
+        if self.dataSource[section] == nil {
+            var rt: MYReloadType = .None
+            switch reloadType {
+            case .None:
+                rt = .None
+            default:
+                rt = .ReloadSection(.None)
+            }
+            return self.resetWithData(data, inSection: section, reloadType: rt)
+        }
+        if row < 0 ||  row > self.dataSource[section]!.count {
+            return
+        }
+        self.dataSource[section]?.insert(data, atIndex: row)
+            
+        switch reloadType {
+        case .InsertRows(let animation):
+            let startRowIndex = row
+            let endRowIndex = startRowIndex + data.count
+            let indexPaths = (startRowIndex..<endRowIndex).map { index -> NSIndexPath in
+                return NSIndexPath(forRow: index, inSection: section)
+            }
+            self.tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+                
+        case .ReloadSection(let animation):
+            let indexSet = NSIndexSet(index: section)
+            self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                
+        case .None:
+            break
+                
+        default:
+            self.tableView?.reloadData()
+        }
+    }
+    
+    func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+        let lastRow = max((self.dataSource[section]?.count ?? 0) - 1, 0)
+        self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
     }
 }
 
@@ -261,60 +251,56 @@ public extension MYTableViewManager {
     }
     
     func removeDataInSection(section: Int, inRange range: Range<Int>, reloadType: MYReloadType = .DeleteRows(.None)) {
-        //dispatch_async(dispatch_get_main_queue()) {
-            if self.dataSource[section] != nil {
-                let start = max(0, range.startIndex)
-                let end = min(self.dataSource[section]!.count, range.endIndex)
-                let safeRange = Range(start: start, end: end)
-                self.dataSource[section]!.removeRange(safeRange)
-        
-                switch reloadType {
-                case .DeleteRows(let animation):
-                    let indexPaths = safeRange.map { NSIndexPath(forRow: $0, inSection: section) }
-                    self.tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-                
-                case .ReloadSection(let animation):
-                    let indexSet = NSIndexSet(index: section)
-                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+        if self.dataSource[section] != nil {
+            let start = max(0, range.startIndex)
+            let end = min(self.dataSource[section]!.count, range.endIndex)
+            let safeRange = Range(start: start, end: end)
+            self.dataSource[section]!.removeRange(safeRange)
+    
+            switch reloadType {
+            case .DeleteRows(let animation):
+                let indexPaths = safeRange.map { NSIndexPath(forRow: $0, inSection: section) }
+                self.tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
             
-                case .None:
-                    break
-                
-                default:
-                    self.tableView?.reloadData()
-                }
+            case .ReloadSection(let animation):
+                let indexSet = NSIndexSet(index: section)
+                self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+        
+            case .None:
+                break
+            
+            default:
+                self.tableView?.reloadData()
             }
-        //}
+        }
     }
 }
 
 // MARK - Update user info
 public extension MYTableViewManager {
     func updateUserData(userData: AnyObject?, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .ReloadRows(.None)) {
-        //dispatch_async(dispatch_get_main_queue()) {
-            if self.dataSource[section] != nil  {
-                if let data = self.dataSource[section]?.get(row) {
-                    data.userData = userData
-                    data.calculatedHeight = nil
+        if self.dataSource[section] != nil  {
+            if let data = self.dataSource[section]?.get(row) {
+                data.userData = userData
+                data.calculatedHeight = nil
             
-                    switch reloadType {
-                    case .ReloadRows(let animation):
-                        let indexPath = NSIndexPath(forRow: row, inSection: section)
-                        self.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+                switch reloadType {
+                case .ReloadRows(let animation):
+                    let indexPath = NSIndexPath(forRow: row, inSection: section)
+                    self.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
                 
-                    case .ReloadSection(let animation):
-                        let indexSet = NSIndexSet(index: section)
-                        self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
+                case .ReloadSection(let animation):
+                    let indexSet = NSIndexSet(index: section)
+                    self.tableView?.reloadSections(indexSet, withRowAnimation: animation)
                 
-                    case .None:
-                        break
+                case .None:
+                    break
                     
-                    default:
-                        self.tableView?.reloadData()
-                    }
+                default:
+                    self.tableView?.reloadData()
                 }
             }
-        //}
+        }
     }
 }
 
@@ -340,21 +326,21 @@ public extension MYTableViewManager {
 
 // MARK - header/footer 
 public extension MYTableViewManager {
-    public func setHeaderData(data: MYHeaderFooterViewData, inSection section: Int) {
+    func setHeaderData(data: MYHeaderFooterViewData, inSection section: Int) {
         headerViewData[section] = data
     }
     
-    public func setFooterData(data: MYHeaderFooterViewData, inSection section: Int) {
+    func setFooterData(data: MYHeaderFooterViewData, inSection section: Int) {
         footerViewData[section] = data
     }
     
-    public func setHeaderViewInSection(section: Int, hidden: Bool) {
+    func setHeaderViewInSection(section: Int, hidden: Bool) {
         if let data = headerViewData[section] {
             data.isEnabled = !hidden
         }
     }
     
-    public func setFooterViewInSection(section: Int, hidden: Bool) {
+    func setFooterViewInSection(section: Int, hidden: Bool) {
         if let data = footerViewData[section] {
             data.isEnabled = !hidden
         }
@@ -363,12 +349,12 @@ public extension MYTableViewManager {
 
 // MARK - private methods
 private extension MYTableViewManager {
-    private func addSelectedView(view: MYBaseViewProtocol) {
+    func addSelectedView(view: MYBaseViewProtocol) {
         deselectAllCells()
         selectedCells = [view]
     }
     
-    private func setBaseViewDataDelegate(dataList: [MYBaseViewData]) {
+    func setBaseViewDataDelegate(dataList: [MYBaseViewData]) {
         for data in dataList {
             data.delegate = self
         }

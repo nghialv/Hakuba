@@ -54,17 +54,17 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
         delegate?.didSelect(view)
     }
     
-    func didChangeFloatingState(isFloating: Bool) {
+    public func didChangeFloatingState(isFloating: Bool) {
         
     }
 }
 
 // MARK - Hightlight
 public extension MYHeaderFooterView {
-    func highlight(animated: Bool) {
+    public func highlight(animated: Bool) {
     }
     
-    func unhighlight(animated: Bool) {
+    public func unhighlight(animated: Bool) {
     }
 }
 
