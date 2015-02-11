@@ -38,7 +38,7 @@ public enum MYReloadType {
 
 public class MYTableViewManager : NSObject {
     typealias MYTableViewCellDataList = [MYTableViewCellData]
-    weak var delegate: MYTableViewManagerDelegate?
+    public weak var delegate: MYTableViewManagerDelegate?
     
     private weak var tableView: UITableView?
     private var dataSource: [Int: MYTableViewCellDataList] = [:]
@@ -49,9 +49,9 @@ public class MYTableViewManager : NSObject {
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
     private var currentTopSection = 0
     private var willFloatingSection = -1
-    var loadmoreHandler: (() -> ())?
-    var loadmoreEnabled = false
-    var loadmoreThreshold: CGFloat = 25
+    public var loadmoreHandler: (() -> ())?
+    public var loadmoreEnabled = false
+    public var loadmoreThreshold: CGFloat = 25
     
     public init(tableView: UITableView) {
         super.init()
