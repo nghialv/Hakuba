@@ -9,23 +9,28 @@
 import Foundation
 
 protocol MYSectionDelegate : class {
+    func reloadTableView()
+    func reloadSections(range: Range<Int>, animation: MYAnimation)
+    func reloadRows(section: Int, range: Range<Int>, animation: MYAnimation)
     
+    func willAddCellViewModels(viewmodels: [MYCellViewModel])
 }
 
 public class MYSection {
-    var header: MYHeaderFooterViewModel?
-    var footer: MYHeaderFooterViewModel?
-    var delegate: MYSectionDelegate?
-    
+    var index: Int = 0
+    weak var delegate: MYSectionDelegate?
     private var items: [MYCellViewModel] = []
     
+    public var header: MYHeaderFooterViewModel?
+    public var footer: MYHeaderFooterViewModel?
+
     public subscript(index: Int) -> MYCellViewModel? {
         get {
             return items.hasIndex(index) ? items[index] : nil
         }
     }
     
-    init() {
+    public init() {
     }
 }
 
@@ -41,6 +46,7 @@ public extension MYSection {
     }
     
     func reset(viewmodels: [MYCellViewModel]) -> Self {
+        delegate?.willAddCellViewModels(viewmodels)
         items = viewmodels
         return self
     }
@@ -87,7 +93,8 @@ public extension MYSection {
     }
     
     // MARK - fire
-    func fire() -> Self {
+    func fire(_ animation: MYAnimation = .None) -> Self {
+        delegate?.reloadTableView()
         return self
     }
 }

@@ -8,6 +8,10 @@
 
 import Foundation
 
+public protocol MYBaseViewDataDelegate : class {
+    func didCallSelectionHandler(view: MYBaseViewProtocol)
+}
+
 public class MYViewModel : NSObject, MYBaseViewDelegate {
     var action: MYSelectionHandler?
     weak var delegate: MYBaseViewDataDelegate?
@@ -20,6 +24,6 @@ public class MYViewModel : NSObject, MYBaseViewDelegate {
     
     public func didSelect(view: MYBaseViewProtocol) {
         action?(view)
-        delegate?.didSelectView(view)
+        delegate?.didCallSelectionHandler(view)
     }
 }

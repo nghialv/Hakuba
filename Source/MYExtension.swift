@@ -14,6 +14,13 @@ extension String {
     }
 }
 
+extension NSRange {
+    init(range: Range<Int>) {
+        self.location = range.startIndex
+        self.length = range.endIndex - range.startIndex
+    }
+}
+
 extension Array {
     func hasIndex(index: Int) -> Bool {
         return index >= 0 && index < count

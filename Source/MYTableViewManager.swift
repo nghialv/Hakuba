@@ -17,18 +17,20 @@ import UIKit
 
 public class MYTableViewManager : NSObject {
     public weak var delegate: MYTableViewManagerDelegate?
+    public var loadmoreHandler: (() -> ())?
+    public var loadmoreEnabled = false
+    public var loadmoreThreshold: CGFloat = 25
+    public var sectionCount: Int {
+        return sections.count
+    }
     
     private weak var tableView: UITableView?
-    private var sections: [Int: MYSection] = [:]
-    private var numberOfSections: Int = 0
+    private var sections: [MYSection] = []
     
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
     private var currentTopSection = 0
     private var willFloatingSection = -1
-    public var loadmoreHandler: (() -> ())?
-    public var loadmoreEnabled = false
-    public var loadmoreThreshold: CGFloat = 25
     
     public init(tableView: UITableView) {
         super.init()
@@ -45,24 +47,31 @@ public class MYTableViewManager : NSObject {
     }
     
     public func resetAllData() {
-        sections = [:]
-        numberOfSections = 0
+        sections = []
         selectedCells = []
         heightCalculationCells = [:]
         currentTopSection = 0
         willFloatingSection = -1
+        // TODO : need to reload table view
     }
     
     public subscript(index: Int) -> MYSection {
         get {
-            if let s = sections[index] {
+            if let s = sections.get(index) {
                 return s
             }
-            // TODO : update number of sections
-            numberOfSections = index + 1
-            let ns = MYSection()
-            sections[index] = ns
-            return ns
+            let length = index + 1 - sectionCount
+            let insertSet: NSIndexSet = NSIndexSet(indexesInRange: NSMakeRange(sectionCount, length))
+            
+            let newSections = (sectionCount...index).map { i -> MYSection in
+                let ns = MYSection()
+                ns.delegate = self
+                ns.index = i
+                return ns
+            }
+            sections += newSections
+            tableView?.insertSections(insertSet, withRowAnimation: .None)
+            return sections[index]
         }
     }
 }
@@ -79,61 +88,35 @@ public extension MYTableViewManager {
     func removeAllSections() {
         
     }
+    
+    func fire(animation: MYAnimation = .None) {
+        
+    }
 }
 
-// MARK - tableView methods
-public extension MYTableViewManager {
+// MARK - MYSectionDelegate
+extension MYTableViewManager : MYSectionDelegate {
     func reloadTableView() {
         tableView?.reloadData()
     }
-    
-    func reloadSection(section: Int, animation: UITableViewRowAnimation) {
-        tableView?.reloadSections(NSIndexSet(index: section), withRowAnimation: animation)
-    }
-    
-    func cellForRowAtSection(section: Int, row: Int) -> MYTableViewCell? {
-        let indexPath = NSIndexPath(forRow: row, inSection: section)
-        return tableView?.cellForRowAtIndexPath(indexPath) as? MYTableViewCell
-    }
-}
 
-// MARK - header/footer 
-public extension MYTableViewManager {
-    func setHeaderData(data: MYHeaderFooterViewModel, inSection section: Int) {
-        self.sections[section]?.header = data
+    func reloadSections(range: Range<Int>, animation: MYAnimation) {
+        let indexSet = NSIndexSet(indexesInRange: NSRange(range))
+        tableView?.reloadSections(indexSet, withRowAnimation: animation)
     }
     
-    func setFooterData(data: MYHeaderFooterViewModel, inSection section: Int) {
-        self.sections[section]?.footer = data
-    }
-}
-
-// MARK - private methods
-private extension MYTableViewManager {
-    func addSelectedView(view: MYBaseViewProtocol) {
-        deselectAllCells()
-        selectedCells = [view]
-    }
-    
-    func setBaseViewDataDelegate(dataList: [MYViewModel]) {
-        for data in dataList {
-            data.delegate = self
-        }
-    }
-    
-    func calculateHeightForConfiguredSizingCell(cell: MYTableViewCell) -> CGFloat {
-        cell.bounds = CGRectMake(0, 0, tableView?.bounds.width ?? UIScreen.mainScreen().bounds.width, cell.bounds.height)
-        cell.setNeedsLayout()
-        cell.layoutIfNeeded()
+    func reloadRows(section: Int, range: Range<Int>, animation: MYAnimation) {
         
-        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-        return size.height + 1.0
+    }
+    
+    func willAddCellViewModels(viewmodels: [MYCellViewModel]) {
+        setBaseViewDataDelegate(viewmodels)
     }
 }
 
 // MARK - MYBaseViewDataDelegate
 extension MYTableViewManager : MYBaseViewDataDelegate {
-    public func didSelectView(view: MYBaseViewProtocol) {
+    public func didCallSelectionHandler(view: MYBaseViewProtocol) {
         addSelectedView(view)
     }
 }
@@ -168,14 +151,14 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let header = self.sections[section]?.header {
+        if let header = self.sections.get(section)?.header {
             return header.isEnabled ? header.viewHeight : 0
         }
         return 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let header = self.sections[section]?.header {
+        if let header = self.sections.get(section)?.header {
             if !header.isEnabled {
                 return nil
             }
@@ -187,14 +170,14 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let footer = self.sections[section]?.footer {
+        if let footer = self.sections.get(section)?.footer {
             return footer.isEnabled ? footer.viewHeight : 0
         }
         return 0
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let footer = self.sections[section]?.footer {
+        if let footer = self.sections.get(section)?.footer {
             if !footer.isEnabled {
                 return nil
             }
@@ -222,14 +205,14 @@ extension MYTableViewManager : UITableViewDelegate {
     }
 }
 
-// MARK - MYTableViewManager
+// MARK - UITableViewDataSource
 extension MYTableViewManager : UITableViewDataSource {
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return numberOfSections
+        return sectionCount
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sections[section]?.count ?? 0
+        return self.sections.get(section)?.count ?? 0
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -242,7 +225,7 @@ extension MYTableViewManager : UITableViewDataSource {
     }
 }
 
-// MARK - register cell and header/footer
+// MARK - register cell and header/footer view
 public extension MYTableViewManager {
     func registerCellClass(cellClass: AnyClass) {
         let identifier = String.className(cellClass)
@@ -267,7 +250,7 @@ public extension MYTableViewManager {
     }
 }
 
-// MARK - loadmore
+// MARK - UIScrollViewDelegate
 extension MYTableViewManager {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
@@ -308,10 +291,7 @@ extension MYTableViewManager {
             }
         }
     }
-}
 
-// MARK - UIScrollViewDelegate
-extension MYTableViewManager {
     public func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDecelerating?(scrollView)
     }
@@ -324,6 +304,26 @@ extension MYTableViewManager {
 // MARK - private methods
 private extension MYTableViewManager {
     func cellViewModelAtIndexPath(indexPath: NSIndexPath) -> MYCellViewModel? {
-        return self.sections[indexPath.section]?[indexPath.row]
+        return self.sections.get(indexPath.section)?[indexPath.row]
+    }
+    
+    func addSelectedView(view: MYBaseViewProtocol) {
+        deselectAllCells()
+        selectedCells = [view]
+    }
+    
+    func setBaseViewDataDelegate(dataList: [MYViewModel]) {
+        for data in dataList {
+            data.delegate = self
+        }
+    }
+    
+    func calculateHeightForConfiguredSizingCell(cell: MYTableViewCell) -> CGFloat {
+        cell.bounds = CGRectMake(0, 0, tableView?.bounds.width ?? UIScreen.mainScreen().bounds.width, cell.bounds.height)
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        return size.height + 1.0
     }
 }

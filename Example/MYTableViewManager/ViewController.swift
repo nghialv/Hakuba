@@ -10,18 +10,18 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private var tableViewManager: MYTableViewManager!
+    private var tvm: MYTableViewManager!
     
     override func viewWillAppear(animated: Bool) {
-        tableViewManager?.deselectAllCells()
+        tvm?.deselectAllCells()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableViewManager = MYTableViewManager(tableView: tableView)
-        tableViewManager.delegate = self
+        tvm = MYTableViewManager(tableView: tableView)
+        tvm.delegate = self
         
-        tableViewManager.registerCellNib(CustomCell)
+        tvm.registerCellNib(CustomCell)
         
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
         let longTitle2 = "Support dynamic cell height from ios7"
@@ -36,13 +36,19 @@ class ViewController: UIViewController {
             data.dynamicHeightEnabled = true
             return data
         }
-        tableViewManager[0].reset(cellData)
-      
+        
+        delay(2) {
+            self.tvm[10]
+                .reset(cellData)
+                .fire()
+            return
+        }
+        
         /*
-        tableViewManager.loadmoreHandler = { [weak self] in
+        tvm.loadmoreHandler = { [weak self] in
             println("Loadmore")
             self?.delay(1) {
-                self?.tableViewManager.loadmoreEnabled = true
+                self?.tvm.loadmoreEnabled = true
                 return
             }
         }
@@ -55,16 +61,16 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.resetWithData(newCellData, inSection: 5)
-            //self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
+            self.tvm.resetWithData(newCellData, inSection: 5)
+            //self.tvm.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
         }
         
         delay(2.0) {
-            self.tableViewManager.removeDataInSection(0, atRow: 2)
+            self.tvm.removeDataInSection(0, atRow: 2)
         }
         
         delay(3.0) {
-            self.tableViewManager.updateUserData("Last cell", inSection: 5, atRow: 1)
+            self.tvm.updateUserData("Last cell", inSection: 5, atRow: 1)
         }
         
         delay(5.0) {
@@ -75,15 +81,15 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
+            self.tvm.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
         }
         
         delay(6.0) {
-            self.tableViewManager.removeLastDataInSection(0)
-            //self.tableViewManager.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
+            self.tvm.removeLastDataInSection(0)
+            //self.tvm.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
         }
         
-        tableViewManager.loadmoreEnabled = true
+        tvm.loadmoreEnabled = true
         */
     }
     
@@ -105,7 +111,6 @@ class ViewController: UIViewController {
 
 extension ViewController : MYTableViewManagerDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        println("OK")
     }
 }
 

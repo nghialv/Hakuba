@@ -57,6 +57,9 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     public func didChangeFloatingState(isFloating: Bool) {
         
     }
+    
+    public func fire() {
+    }
 }
 
 // MARK - Hightlight
