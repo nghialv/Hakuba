@@ -16,6 +16,12 @@ I want to manage tableview without the code of `UITableViewDelegate` and `UITabl
 
 That is why I created `MYTableViewManager`.
 
+What's next?
+-----
+
+- [ ] method chaining
+- [ ] subscript
+
 Feature
 -----
 * Don't have to write the code for `UITableViewDelegate` and `UITableViewDataSource` protocols
