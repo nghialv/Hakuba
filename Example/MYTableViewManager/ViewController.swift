@@ -23,7 +23,6 @@ class ViewController: UIViewController {
         
         tableViewManager.registerCellNib(CustomCell)
         
-        /*
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
         let longTitle2 = "Support dynamic cell height from ios7"
         
@@ -37,8 +36,9 @@ class ViewController: UIViewController {
             data.dynamicHeightEnabled = true
             return data
         }
-        tableViewManager.resetWithData(cellData, inSection: 0)
-       
+        tableViewManager[0].reset(cellData)
+      
+        /*
         tableViewManager.loadmoreHandler = { [weak self] in
             println("Loadmore")
             self?.delay(1) {

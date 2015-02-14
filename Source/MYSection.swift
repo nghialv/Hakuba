@@ -8,16 +8,24 @@
 
 import Foundation
 
+protocol MYSectionDelegate : class {
+    
+}
+
 public class MYSection {
     var header: MYHeaderFooterViewModel?
     var footer: MYHeaderFooterViewModel?
+    var delegate: MYSectionDelegate?
     
     private var items: [MYCellViewModel] = []
     
-    public subscript(index: Int) -> MYCellViewModel {
+    public subscript(index: Int) -> MYCellViewModel? {
         get {
-            return items[index]
+            return items.hasIndex(index) ? items[index] : nil
         }
+    }
+    
+    init() {
     }
 }
 
