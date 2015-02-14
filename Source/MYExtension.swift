@@ -29,6 +29,13 @@ extension Array {
     func getSafeIndex(index: Int) -> Int {
         return min(count, max(0, index))
     }
+   
+    func indexOf<T: Equatable>(item: T) -> Int? {
+        if item is Element {
+            return find(unsafeBitCast(self, [T].self), item)
+        }
+        return nil
+    }
     
     func getSafeRange(range: Range<Int>) -> Range<Int>? {
         let start = max(0, range.startIndex)
@@ -38,6 +45,12 @@ extension Array {
     
     func get(index: Int) -> T? {
         return hasIndex(index) ? self[index] : nil
+    }
+   
+    mutating func append(newArray: Array) -> Range<Int> {
+        let range = Range<Int>(start: count, end: count + newArray.count)
+        self += newArray
+        return range
     }
     
     mutating func insert(newArray: Array, atIndex index: Int) -> Range<Int> {
@@ -50,12 +63,12 @@ extension Array {
         return Range<Int>(start: start, end: end)
     }
     
-    mutating func remove(index: Int) -> Int? {
+    mutating func remove(index: Int) -> Range<Int>? {
         if !hasIndex(index) {
             return nil
         }
         self.removeAtIndex(index)
-        return index
+        return Range<Int>(start: index, end: index + 1)
     }
     
     mutating func remove(range: Range<Int>) -> Range<Int>? {
@@ -66,7 +79,7 @@ extension Array {
         return nil
     }
     
-    mutating func removeLast() -> Int? {
+    mutating func removeLast() -> Range<Int>? {
         return self.remove(count - 1)
     }
 }

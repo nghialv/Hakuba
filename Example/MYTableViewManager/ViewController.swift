@@ -37,10 +37,27 @@ class ViewController: UIViewController {
             return data
         }
         
-        delay(2) {
-            self.tvm[10]
-                .reset(cellData)
+        delay(1) {
+            self.tvm[0].reset(cellData)
                 .fire()
+            return
+        }
+        
+        delay(2) {
+            let titles = ["new cell 1", "new cell 2"]
+            let newCellData = titles.map { [weak self] title -> MYCellViewModel in
+                return MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
+                    println("Did select new cell : \(title)")
+                    self?.pushChildViewController()
+                }
+            }
+            self.tvm[0].insert(newCellData, atIndex: 2)
+                .fire(.Middle)
+        }
+       
+        delay(5) {
+            self.tvm[0].remove(1)
+                .fire(.Left)
             return
         }
         
@@ -52,22 +69,8 @@ class ViewController: UIViewController {
                 return
             }
         }
+    
         
-        delay(1.0) {
-            let titles = ["new cell 1", "new cell 2"]
-            let newCellData = titles.map { [weak self] title -> MYCellViewModel in
-                return MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
-                    println("Did select new cell : \(title)")
-                    self?.pushChildViewController()
-                }
-            }
-            self.tvm.resetWithData(newCellData, inSection: 5)
-            //self.tvm.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
-        }
-        
-        delay(2.0) {
-            self.tvm.removeDataInSection(0, atRow: 2)
-        }
         
         delay(3.0) {
             self.tvm.updateUserData("Last cell", inSection: 5, atRow: 1)

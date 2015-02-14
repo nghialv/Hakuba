@@ -100,13 +100,16 @@ extension MYTableViewManager : MYSectionDelegate {
         tableView?.reloadData()
     }
 
-    func reloadSections(range: Range<Int>, animation: MYAnimation) {
-        let indexSet = NSIndexSet(indexesInRange: NSRange(range))
+    func reloadSections(indexSet: NSIndexSet, animation: MYAnimation) {
         tableView?.reloadSections(indexSet, withRowAnimation: animation)
     }
     
-    func reloadRows(section: Int, range: Range<Int>, animation: MYAnimation) {
-        
+    func insertRows(indexPaths: [NSIndexPath], animation: MYAnimation) {
+        tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+    }
+    
+    func deleteRows(indexPaths: [NSIndexPath], animation: MYAnimation) {
+        tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
     }
     
     func willAddCellViewModels(viewmodels: [MYCellViewModel]) {
