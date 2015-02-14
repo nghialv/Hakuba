@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MYHeaderFooterViewData : MYBaseViewData {
+public class MYHeaderFooterViewModel : MYViewModel {
     let identifier: String
     var viewHeight: CGFloat = 44
     var isEnabled = true
@@ -46,7 +46,7 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     public func setup() {
     }
     
-    public func configureView(data: MYHeaderFooterViewData) {
+    public func configureView(data: MYHeaderFooterViewModel) {
         self.delegate = data
     }
     

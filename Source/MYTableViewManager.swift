@@ -9,18 +9,6 @@
 
 import UIKit
 
-private extension Array {
-    mutating func insert(newArray: Array, atIndex index: Int) {
-        let left = self[0..<max(0, index)]
-        let right = index > count ? [] : self[index..<count]
-        self = left + newArray + right
-    }
-    
-    func get(index: Int) -> T? {
-        return 0 <= index && index < count ? self[index] : nil
-    }
-}
-
 public enum MYReloadType {
     case InsertRows(UITableViewRowAnimation)
     case DeleteRows(UITableViewRowAnimation)
@@ -37,13 +25,13 @@ public enum MYReloadType {
 }
 
 public class MYTableViewManager : NSObject {
-    typealias MYTableViewCellDataList = [MYTableViewCellData]
+    typealias MYCellViewModelList = [MYCellViewModel]
     public weak var delegate: MYTableViewManagerDelegate?
     
     private weak var tableView: UITableView?
-    private var dataSource: [Int: MYTableViewCellDataList] = [:]
-    private var headerViewData: [Int: MYHeaderFooterViewData] = [:]
-    private var footerViewData: [Int: MYHeaderFooterViewData] = [:]
+    private var dataSource: [Int: MYCellViewModelList] = [:]
+    private var headerViewData: [Int: MYHeaderFooterViewModel] = [:]
+    private var footerViewData: [Int: MYHeaderFooterViewModel] = [:]
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
@@ -106,12 +94,12 @@ public extension MYTableViewManager {
 
 // MARK - Append
 public extension MYTableViewManager {
-    func appendData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+    func appendData(data: MYCellViewModel, inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         let cellData = [data]
         self.appendData(cellData, inSection: section, reloadType: reloadType)
     }
     
-    func appendData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+    func appendData(data: [MYCellViewModel], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         if self.dataSource.indexForKey(section) != nil {
             self.setBaseViewDataDelegate(data)
             self.dataSource[section]! += data
@@ -143,11 +131,11 @@ public extension MYTableViewManager {
 
 // MARK - Reset
 public extension MYTableViewManager {
-    func resetWithData(data: MYTableViewCellData, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+    func resetWithData(data: MYCellViewModel, inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
         resetWithData([data], inSection: section, reloadType: reloadType)
     }
     
-    func resetWithData(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
+    func resetWithData(data: [MYCellViewModel], inSection section: Int, reloadType: MYReloadType = .ReloadSection(.None)) {
         self.setBaseViewDataDelegate(data)
     
         let length = section + 1 - self.numberOfSections
@@ -175,11 +163,11 @@ public extension MYTableViewManager {
 
 // MARK - Insert
 public extension MYTableViewManager {
-    func insertData(data: MYTableViewCellData, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+    func insertData(data: MYCellViewModel, inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         self.insertData([data], inSection: section, atRow: row)
     }
     
-    func insertData(data: [MYTableViewCellData], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+    func insertData(data: [MYCellViewModel], inSection section: Int, atRow row: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         self.setBaseViewDataDelegate(data)
         
         if self.dataSource[section] == nil {
@@ -218,7 +206,7 @@ public extension MYTableViewManager {
         }
     }
     
-    func insertDataBeforeLastRow(data: [MYTableViewCellData], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
+    func insertDataBeforeLastRow(data: [MYCellViewModel], inSection section: Int, reloadType: MYReloadType = .InsertRows(.None)) {
         let lastRow = max((self.dataSource[section]?.count ?? 0) - 1, 0)
         self.insertData(data, inSection: section, atRow: lastRow, reloadType: reloadType)
     }
@@ -311,11 +299,11 @@ public extension MYTableViewManager {
 
 // MARK - header/footer 
 public extension MYTableViewManager {
-    func setHeaderData(data: MYHeaderFooterViewData, inSection section: Int) {
+    func setHeaderData(data: MYHeaderFooterViewModel, inSection section: Int) {
         headerViewData[section] = data
     }
     
-    func setFooterData(data: MYHeaderFooterViewData, inSection section: Int) {
+    func setFooterData(data: MYHeaderFooterViewModel, inSection section: Int) {
         footerViewData[section] = data
     }
     
@@ -339,7 +327,7 @@ private extension MYTableViewManager {
         selectedCells = [view]
     }
     
-    func setBaseViewDataDelegate(dataList: [MYBaseViewData]) {
+    func setBaseViewDataDelegate(dataList: [MYViewModel]) {
         for data in dataList {
             data.delegate = self
         }

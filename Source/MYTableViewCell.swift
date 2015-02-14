@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MYTableViewCellData : MYBaseViewData {
+public class MYCellViewModel : MYViewModel {
     let identifier: String
     var cellHeight: CGFloat = 44
     var cellSelectionEnabled = true
@@ -30,7 +30,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     class var identifier: String { return String.className(self) }
     var cellSelectionEnabled = true
     private weak var delegate: MYBaseViewDelegate?
-    weak var cellData: MYTableViewCellData?
+    weak var cellData: MYCellViewModel?
     
     public override init() {
         super.init()
@@ -55,7 +55,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func setup() {
     }
     
-    public func configureCell(data: MYTableViewCellData) {
+    public func configureCell(data: MYCellViewModel) {
         cellData = data
         delegate = data
         cellSelectionEnabled = data.cellSelectionEnabled
@@ -66,11 +66,11 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
         delegate?.didSelect(view)
     }
     
-    public func willAppear(data: MYTableViewCellData) {
+    public func willAppear(data: MYCellViewModel) {
         
     }
     
-    public func didDisappear(data: MYTableViewCellData) {
+    public func didDisappear(data: MYCellViewModel) {
         
     }
 }

@@ -24,7 +24,7 @@ public protocol MYBaseViewDelegate : class {
     func didSelect(view: MYBaseViewProtocol)
 }
 
-public class MYBaseViewData : NSObject, MYBaseViewDelegate {
+public class MYViewModel : NSObject, MYBaseViewDelegate {
     var action: MYSelectionHandler?
     weak var delegate: MYBaseViewDataDelegate?
     var userData: AnyObject?

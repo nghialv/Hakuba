@@ -22,14 +22,15 @@ class ViewController: UIViewController {
         tableViewManager.delegate = self
         
         tableViewManager.registerCellNib(CustomCell)
-       
+        
+        /*
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
         let longTitle2 = "Support dynamic cell height from ios7"
         
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
-        let cellData = titles.map { [weak self] title -> MYTableViewCellData in
-            let data = MYTableViewCellData(cellClass: CustomCell.self, userData: title) { _ in
+        let cellData = titles.map { [weak self] title -> MYCellViewModel in
+            let data = MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
                 println("Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
@@ -48,8 +49,8 @@ class ViewController: UIViewController {
         
         delay(1.0) {
             let titles = ["new cell 1", "new cell 2"]
-            let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
-                return MYTableViewCellData(cellClass: CustomCell.self, userData: title) { _ in
+            let newCellData = titles.map { [weak self] title -> MYCellViewModel in
+                return MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
                     println("Did select new cell : \(title)")
                     self?.pushChildViewController()
                 }
@@ -68,8 +69,8 @@ class ViewController: UIViewController {
         
         delay(5.0) {
             let titles = ["inserted cell 1", "inserted cell 2", "inserted cell 3"]
-            let newCellData = titles.map { [weak self] title -> MYTableViewCellData in
-                return MYTableViewCellData(cellClass: CustomCell.self, height: 100, userData: title) { _ in
+            let newCellData = titles.map { [weak self] title -> MYCellViewModel in
+                return MYCellViewModel(cellClass: CustomCell.self, height: 100, userData: title) { _ in
                     println("Did select new cell : \(title)")
                     self?.pushChildViewController()
                 }
@@ -83,6 +84,7 @@ class ViewController: UIViewController {
         }
         
         tableViewManager.loadmoreEnabled = true
+        */
     }
     
     func pushChildViewController() {
