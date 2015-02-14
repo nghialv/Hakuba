@@ -19,8 +19,92 @@ That is why I created `MYTableViewManager`.
 What's next?
 -----
 
+**I'm reimplementing MYTableViewManager with the following interface:**
+
 - [ ] method chaining
 - [ ] subscript
+
+
+- initilization
+
+``` swift
+	tvm = MYTableViewManager(tableView: tableView)
+```
+
+- register cell, header
+
+``` swift
+	tvm.registerCellNib(CellClassName)
+	tvm.registerCellClass(CellClassName)
+	tvm.registerHeaderFooterNib(HeaderOrFooterClassName)
+	tvm.registerHeaderFooterClass(HeaderOrFooterClassName)
+```
+
+- section handling
+
+``` swift
+	tvm.insertSection(section, atIndex: 1).fire()
+	tvm.removeSectionAtIndex(secionIndex).fire()
+	tvm.removeAllSection().fire()
+	// get section at index
+	let section = tvm[1]
+```
+
+- view model handling
+
+``` swift
+	let cellViewModel = MYCellViewModel(CellClassName.self, data: yourData) { cell, viewmodel in
+		println("selected")
+	}
+	
+	tvm[sectionIndex].append(viewmodel)
+	tvm[sectionIndex].append(viewmodels)
+	tvm[sectionIndex].append(viewmodel).fire()
+	tvm[sectionIndex].append(viewmodel).fire(.Fade)
+	
+	// or using section
+	let section = tvm[sectionIndex]
+	
+	section.reset().fire()
+	section.reset(viewmodel).fire()
+	section.reset(viewmodels).fire(.Middle)
+	
+	section.insert(viewmodel, atIndex: 1).fire()
+	section.insert(viewmodels, atIndex: 2).fire(.Left)
+	
+	section.remove(1).fire()
+	section.remove(viewmodel).fire()
+	section.remove((2...5))
+	section.removeLast().fire()
+	
+	section.sort().fire()
+	section.shuffle().fire()
+	section.map
+	section.filter
+	section.reduce
+	section.mapFilter
+	section.each
+	
+	section.first
+	section.last
+	section[1]
+	section.count
+```
+
+- header/footer handling
+
+``` swift
+	let headerViewModel = MYHeaderFooterViewModel(HeaderClassName.self, data: yourData) { view, viewmodel in
+		println("selected")
+	}
+	
+	tvm[section].header = headerViewModel
+	tvm[section].header?.hidden = true
+	
+	// change view model data
+	(tvm[section].header as? HeaderClassName).yourProperty = newData
+	tvm[section].header?.fire()
+```
 
 Feature
 -----
