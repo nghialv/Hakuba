@@ -9,15 +9,6 @@
 
 import UIKit
 
-public enum MYReloadType {
-    case InsertRows(UITableViewRowAnimation)
-    case DeleteRows(UITableViewRowAnimation)
-    case ReloadRows(UITableViewRowAnimation)
-    case ReloadSection(UITableViewRowAnimation)
-    case ReloadTableView
-    case None
-}
-
 @objc public protocol MYTableViewManagerDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
     optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
@@ -29,9 +20,8 @@ public class MYTableViewManager : NSObject {
     public weak var delegate: MYTableViewManagerDelegate?
     
     private weak var tableView: UITableView?
+    private var sections: [Int: MYSection] = [:]
     private var dataSource: [Int: MYCellViewModelList] = [:]
-    private var headerViewData: [Int: MYHeaderFooterViewModel] = [:]
-    private var footerViewData: [Int: MYHeaderFooterViewModel] = [:]
     private var numberOfSections: Int = 0
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
@@ -56,9 +46,8 @@ public class MYTableViewManager : NSObject {
     }
     
     public func resetAllData() {
+        sections = [:]
         dataSource = [:]
-        headerViewData = [:]
-        footerViewData = [:]
         numberOfSections = 0
         selectedCells = []
         heightCalculationCells = [:]
@@ -300,13 +289,14 @@ public extension MYTableViewManager {
 // MARK - header/footer 
 public extension MYTableViewManager {
     func setHeaderData(data: MYHeaderFooterViewModel, inSection section: Int) {
-        headerViewData[section] = data
+        self.sections[section]?.header = data
     }
     
     func setFooterData(data: MYHeaderFooterViewModel, inSection section: Int) {
-        footerViewData[section] = data
+        self.sections[section]?.footer = data
     }
-    
+   
+    /*
     func setHeaderViewInSection(section: Int, hidden: Bool) {
         if let data = headerViewData[section] {
             data.isEnabled = !hidden
@@ -318,6 +308,7 @@ public extension MYTableViewManager {
             data.isEnabled = !hidden
         }
     }
+    */
 }
 
 // MARK - private methods
@@ -380,38 +371,38 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let data = headerViewData[section] {
-            return data.isEnabled ? data.viewHeight : 0
+        if let header = self.sections[section]?.header {
+            return header.isEnabled ? header.viewHeight : 0
         }
         return 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let data = headerViewData[section] {
-            if !data.isEnabled {
+        if let header = self.sections[section]?.header {
+            if !header.isEnabled {
                 return nil
             }
-            let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(data.identifier) as MYHeaderFooterView
-            headerView.configureView(data)
+            let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(header.identifier) as MYHeaderFooterView
+            headerView.configureView(header)
             return headerView
         }
         return nil
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let data = footerViewData[section] {
-            return data.isEnabled ? data.viewHeight : 0
+        if let footer = self.sections[section]?.footer {
+            return footer.isEnabled ? footer.viewHeight : 0
         }
         return 0
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let data = footerViewData[section] {
-            if !data.isEnabled {
+        if let footer = self.sections[section]?.footer {
+            if !footer.isEnabled {
                 return nil
             }
-            let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(data.identifier) as MYHeaderFooterView
-            footerView.configureView(data)
+            let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(footer.identifier) as MYHeaderFooterView
+            footerView.configureView(footer)
             return footerView
         }
         return nil

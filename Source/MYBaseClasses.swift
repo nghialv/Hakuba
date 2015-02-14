@@ -9,6 +9,7 @@
 import UIKit
 
 public typealias MYSelectionHandler = (MYBaseViewProtocol) -> ()
+public typealias MYAnimation = UITableViewRowAnimation
 
 public protocol MYBaseViewProtocol {
     func highlight(Bool)
@@ -24,18 +25,11 @@ public protocol MYBaseViewDelegate : class {
     func didSelect(view: MYBaseViewProtocol)
 }
 
-public class MYViewModel : NSObject, MYBaseViewDelegate {
-    var action: MYSelectionHandler?
-    weak var delegate: MYBaseViewDataDelegate?
-    var userData: AnyObject?
-    
-    public init(userData: AnyObject? = nil, selectionHandler: MYSelectionHandler?) {
-        self.userData = userData
-        self.action = selectionHandler
-    }
-    
-    public func didSelect(view: MYBaseViewProtocol) {
-        action?(view)
-        delegate?.didSelectView(view)
-    }
+public enum MYReloadType {
+    case InsertRows(UITableViewRowAnimation)
+    case DeleteRows(UITableViewRowAnimation)
+    case ReloadRows(UITableViewRowAnimation)
+    case ReloadSection(UITableViewRowAnimation)
+    case ReloadTableView
+    case None
 }
