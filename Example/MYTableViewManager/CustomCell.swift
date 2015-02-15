@@ -14,7 +14,7 @@ class CustomCell : MYTableViewCell {
     override func configureCell(data: MYCellViewModel) {
         super.configureCell(data)
         if let title = data.userData as? String {
-            titleLabel.text = title
+            titleLabel.text = title + "(\(data.section),\(data.row))"
         }
     }
 }

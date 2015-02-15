@@ -1,27 +1,18 @@
 //
-//  BaseClasses.swift
+//  MYViewModel.swift
 //  MYTableViewManager
 //
-//  Created by Le Van Nghia on 1/13/15.
+//  Created by Le VanNghia on 2/14/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
 //
 
-import UIKit
-
-public typealias MYSelectionHandler = (MYBaseViewProtocol) -> ()
-
-public protocol MYBaseViewProtocol {
-    func highlight(Bool)
-    func unhighlight(Bool)
-    func emitSelectedEvent(MYBaseViewProtocol)
-}
+import Foundation
 
 public protocol MYBaseViewDataDelegate : class {
-    func didSelectView(view: MYBaseViewProtocol)
-}
-
-public protocol MYBaseViewDelegate : class {
-    func didSelect(view: MYBaseViewProtocol)
+    func didCallSelectionHandler(view: MYBaseViewProtocol)
+    func reloadView(index: Int, section: Int, animation: MYAnimation)
+    func reloadHeader(section: Int)
+    func reloadFooter(section: Int)
 }
 
 public class MYViewModel : NSObject, MYBaseViewDelegate {
@@ -36,6 +27,6 @@ public class MYViewModel : NSObject, MYBaseViewDelegate {
     
     public func didSelect(view: MYBaseViewProtocol) {
         action?(view)
-        delegate?.didSelectView(view)
+        delegate?.didCallSelectionHandler(view)
     }
 }

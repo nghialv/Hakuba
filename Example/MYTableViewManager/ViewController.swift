@@ -10,19 +10,60 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private var tableViewManager: MYTableViewManager!
+    private var tvm: MYTableViewManager!
     
     override func viewWillAppear(animated: Bool) {
-        tableViewManager?.deselectAllCells()
+        tvm?.deselectAllCells()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableViewManager = MYTableViewManager(tableView: tableView)
-        tableViewManager.delegate = self
+        tvm = MYTableViewManager(tableView: tableView)
+        tvm.delegate = self
         
-        tableViewManager.registerCellNib(CustomCell)
+        tvm.registerCellNib(CustomCell)
+        delay(1) {
+            _ = self.start()
+        }
+    }
+   
+    func start() {
         
+        for index in 0...4 {
+            let cvm = (0..<2).map { [weak self] i -> MYCellViewModel in
+                return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index*2 + i)") { _ in
+                    println("Did select new cell : \(index + i)")
+                    self?.pushChildViewController()
+                }
+            }
+            tvm[0].insert(cvm[0], atIndex: 0)
+                  //.fire(.Left)
+            tvm[0].append(cvm[1])
+            
+            //tvm[0][index*2]?.userData = "new title: \(index)"
+            //tvm[0][index + 1]?.fire()
+        }
+        //tvm[0].remove(0)
+        
+        /*
+        delay(2) {
+            for index in 0...4 {
+                self.tvm[0].remove(index+1)
+                    //.fire(.Right)
+            }
+        }
+        */
+        
+        println("finish setting")
+        delay(2) {
+            self.tvm[0].fire()
+            return
+        }
+        
+        delay(7) {
+            //self.tvm[0].fire()
+            return
+        }
         /*
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
         let longTitle2 = "Support dynamic cell height from ios7"
@@ -37,17 +78,11 @@ class ViewController: UIViewController {
             data.dynamicHeightEnabled = true
             return data
         }
-        tableViewManager.resetWithData(cellData, inSection: 0)
-       
-        tableViewManager.loadmoreHandler = { [weak self] in
-            println("Loadmore")
-            self?.delay(1) {
-                self?.tableViewManager.loadmoreEnabled = true
-                return
-            }
-        }
         
-        delay(1.0) {
+        self.tvm[0].reset(cellData)
+            .fire()
+        
+        delay(2) {
             let titles = ["new cell 1", "new cell 2"]
             let newCellData = titles.map { [weak self] title -> MYCellViewModel in
                 return MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
@@ -55,16 +90,29 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.resetWithData(newCellData, inSection: 5)
-            //self.tableViewManager.insertData(newCellData, inSection: 0, atRow: 1, reloadType: .InsertRows(.Middle))
+            self.tvm[0].insert(newCellData, atIndex: 2)
+                .fire(.Middle)
         }
+       
+        delay(5) {
+            self.tvm[0].remove(1)
+                .fire(.Left)
+            return
+        }
+        */
+        /*
+        tvm.loadmoreHandler = { [weak self] in
+            println("Loadmore")
+            self?.delay(1) {
+                self?.tvm.loadmoreEnabled = true
+                return
+            }
+        }
+    
         
-        delay(2.0) {
-            self.tableViewManager.removeDataInSection(0, atRow: 2)
-        }
         
         delay(3.0) {
-            self.tableViewManager.updateUserData("Last cell", inSection: 5, atRow: 1)
+            self.tvm.updateUserData("Last cell", inSection: 5, atRow: 1)
         }
         
         delay(5.0) {
@@ -75,16 +123,27 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            self.tableViewManager.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
+            self.tvm.insertDataBeforeLastRow(newCellData, inSection: 0, reloadType: .InsertRows(.Middle))
         }
         
         delay(6.0) {
-            self.tableViewManager.removeLastDataInSection(0)
-            //self.tableViewManager.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
+            self.tvm.removeLastDataInSection(0)
+            //self.tvm.removeDataInSection(0, inRange: (7..<9), reloadType: .DeleteRows(.Middle))
         }
         
-        tableViewManager.loadmoreEnabled = true
+        tvm.loadmoreEnabled = true
         */
+    }
+    
+    func appendItems(index: Int, num: Int) {
+        let cvm = (0..<num).map { [weak self] i -> MYCellViewModel in
+            return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index + i)") { _ in
+                println("Did select new cell : \(index + i)")
+                self?.pushChildViewController()
+            }
+        }
+        self.tvm[0].append(cvm)
+            .fire(.Left)
     }
     
     func pushChildViewController() {
@@ -105,7 +164,6 @@ class ViewController: UIViewController {
 
 extension ViewController : MYTableViewManagerDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        println("OK")
     }
 }
 

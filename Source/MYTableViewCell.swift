@@ -10,10 +10,12 @@ import UIKit
 
 public class MYCellViewModel : MYViewModel {
     let identifier: String
-    var cellHeight: CGFloat = 44
-    var cellSelectionEnabled = true
-    var calculatedHeight: CGFloat?
-    var dynamicHeightEnabled: Bool = false {
+    internal(set) var row: Int = 0
+    internal(set) var section: Int = 0
+    public var cellHeight: CGFloat = 44
+    public var cellSelectionEnabled = true
+    public var calculatedHeight: CGFloat?
+    public var dynamicHeightEnabled: Bool = false {
         didSet {
             calculatedHeight = nil
         }
@@ -23,6 +25,11 @@ public class MYCellViewModel : MYViewModel {
         self.identifier = String.className(cellClass)
         self.cellHeight = height
         super.init(userData: userData, selectionHandler: selectionHandler)
+    }
+    
+    public func fire(_ animation: MYAnimation = .None) -> Self {
+        delegate?.reloadView(row, section: section, animation: animation)
+        return self
     }
 }
 

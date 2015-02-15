@@ -10,12 +10,23 @@ import UIKit
 
 public class MYHeaderFooterViewModel : MYViewModel {
     let identifier: String
-    var viewHeight: CGFloat = 44
-    var isEnabled = true
+    internal(set) var section: Int = 0
+    internal(set) var isHeader = true
+    public var viewHeight: CGFloat = 44
+    public var isEnabled = true
     
     public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.className(viewClass)
         super.init(userData: userData, selectionHandler: selectionHandler)
+    }
+    
+    func fire() -> Self {
+        if isHeader {
+            delegate?.reloadHeader(section)
+        } else {
+            delegate?.reloadFooter(section)
+        }
+        return self
     }
 }
 
