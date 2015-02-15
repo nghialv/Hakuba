@@ -11,6 +11,8 @@ import Foundation
 public protocol MYBaseViewDataDelegate : class {
     func didCallSelectionHandler(view: MYBaseViewProtocol)
     func reloadView(index: Int, section: Int, animation: MYAnimation)
+    func reloadHeader(section: Int)
+    func reloadFooter(section: Int)
 }
 
 public class MYViewModel : NSObject, MYBaseViewDelegate {

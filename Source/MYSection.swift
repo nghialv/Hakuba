@@ -84,13 +84,28 @@ private class MYSectionReloadTracker {
 }
 
 public class MYSection {
-    internal(set) var index: Int = 0
+    internal(set) var index: Int = 0 {
+        didSet {
+            header?.section = index
+            footer?.section = index
+        }
+    }
     weak var delegate: MYSectionDelegate?
     private var items: [MYCellViewModel] = []
     private let reloadTracker = MYSectionReloadTracker()
     
-    public var header: MYHeaderFooterViewModel?
-    public var footer: MYHeaderFooterViewModel?
+    public var header: MYHeaderFooterViewModel? {
+        didSet {
+            header?.section = index
+            header?.isHeader = true
+        }
+    }
+    public var footer: MYHeaderFooterViewModel? {
+        didSet {
+            footer?.section = index
+            footer?.isHeader = false
+        }
+    }
 
     public subscript(index: Int) -> MYCellViewModel? {
         get {

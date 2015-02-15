@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     }
    
     func start() {
+        
         for index in 0...4 {
             let cvm = (0..<2).map { [weak self] i -> MYCellViewModel in
                 return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index*2 + i)") { _ in

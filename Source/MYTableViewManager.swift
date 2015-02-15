@@ -46,13 +46,13 @@ public class MYTableViewManager : NSObject {
         selectedCells.removeAll(keepCapacity: false)
     }
     
-    public func resetAllData() {
+    public func resetAllData() -> Self {
         sections = []
         selectedCells = []
         heightCalculationCells = [:]
         currentTopSection = 0
         willFloatingSection = -1
-        // TODO : need to reload table view
+        return self
     }
     
     public subscript(index: Int) -> MYSection {
@@ -126,6 +126,22 @@ extension MYTableViewManager : MYBaseViewDataDelegate {
     public func reloadView(index: Int, section: Int, animation: MYAnimation) {
         let indexPath = NSIndexPath(forRow: index, inSection: section)
         tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+    }
+    
+    public func reloadHeader(section: Int) {
+        if let headerView = tableView?.headerViewForSection(section) as? MYHeaderFooterView {
+            if let viewmodel = sections[section].header {
+                headerView.configureView(viewmodel)
+            }
+        }
+    }
+    
+    public func reloadFooter(section: Int) {
+        if let footerView = tableView?.footerViewForSection(section) as? MYHeaderFooterView {
+            if let viewmodel = sections[section].footer {
+                footerView.configureView(viewmodel)
+            }
+        }
     }
 }
 
