@@ -89,19 +89,8 @@ public extension MYTableViewManager {
     }
     
     func fire(_ animation: MYAnimation = .None) -> Self {
-        switch reloadTracker.state {
-        case .Add:
-            println("ADD section")
-            tableView?.insertSections(reloadTracker.getSectionIndexSet(), withRowAnimation: animation)
-        case .Remove:
-            println("REMOVE section")
-            tableView?.deleteSections(reloadTracker.getSectionIndexSet(), withRowAnimation: animation)
-        default:
-            println("RESET all sections (reload table view data)")
-            tableView?.reloadData()
-            break
-        }
-        reloadTracker.didFire()
+        // TODO : implementation
+        tableView?.reloadData()
         return self
     }
 }

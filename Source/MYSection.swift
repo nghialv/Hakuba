@@ -136,7 +136,7 @@ public extension MYSection {
             delegate?.reloadSections(NSIndexSet(index: index), animation: animation)
             break
         }
-        reloadTracker.didFire()
+        reloadTracker.didFire(self.count)
         return self
     }
     

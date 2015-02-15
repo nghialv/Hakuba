@@ -14,11 +14,11 @@ enum ReloadState {
 
 class MYReloadTracker {
     var state: ReloadState = .Begin
-    private var addedIndexes: [Int] = []
+    private var originalIndexes: [Int] = []
     private var removedIndexes: [Int] = []
     
     init() {
-        didFire()
+        didFire(0)
     }
     
     func didReset() {
@@ -30,13 +30,8 @@ class MYReloadTracker {
             state = .Reset
             return
         }
-        for i in range {
-            var newIndexes: [Int] = []
-            if addedIndexes.indexOf(i) == nil {
-                newIndexes.append(i)
-            }
-            addedIndexes += newIndexes
-        }
+        let ind = range.map { _ -> Int in -1 }
+        originalIndexes.insert(ind, atIndex: range.startIndex)
         state = .Add
     }
     
@@ -45,7 +40,9 @@ class MYReloadTracker {
             state = .Reset
             return
         }
-        for i in range {
+        let ri = originalIndexes[range]
+        originalIndexes.remove(range)
+        for i in ri {
             var newIndexes: [Int] = []
             if removedIndexes.indexOf(i) == nil {
                 newIndexes.append(i)
@@ -55,15 +52,21 @@ class MYReloadTracker {
         state = .Remove
     }
     
-    func didFire() {
+    func didFire(count: Int) {
         state = .Begin
-        addedIndexes = []
+        originalIndexes = (0..<count).map { $0 }
         removedIndexes = []
     }
     
     func getIndexPaths(section: Int) -> [NSIndexPath] {
         switch state {
         case .Add:
+            var addedIndexes: [Int] = []
+            originalIndexes.each { i, value in
+                if value == -1 {
+                    addedIndexes.append(i)
+                }
+            }
             return addedIndexes.map { NSIndexPath(forRow: $0, inSection: section) }
         case .Remove:
             return removedIndexes.map { NSIndexPath(forRow: $0, inSection: section) }
@@ -71,26 +74,5 @@ class MYReloadTracker {
             break
         }
         return []
-    }
-    
-    func getSectionIndexSet() -> NSIndexSet {
-        switch state {
-        case .Add:
-            if addedIndexes.count == 0 {
-                return NSIndexSet()
-            }
-            let min = minElement(addedIndexes)
-            let max = maxElement(addedIndexes)
-            return NSIndexSet(indexesInRange: NSRange(min...max))
-        case .Remove:
-            if removedIndexes.count == 0 {
-                return NSIndexSet()
-            }
-            let min = minElement(removedIndexes)
-            let max = maxElement(removedIndexes)
-            return NSIndexSet(indexesInRange: NSRange(min...max))
-        default:
-            return NSIndexSet()
-        }
     }
 }

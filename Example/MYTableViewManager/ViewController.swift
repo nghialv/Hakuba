@@ -36,21 +36,32 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            tvm[0].append(cvm)
-                  .fire(.Left)
-
-            tvm[0][index*2]?.userData = "new title: \(index)"
+            tvm[0].insert(cvm[0], atIndex: 0)
+                  //.fire(.Left)
+            tvm[0].append(cvm[1])
+            
+            //tvm[0][index*2]?.userData = "new title: \(index)"
             //tvm[0][index + 1]?.fire()
         }
+        //tvm[0].remove(0)
         
-        for index in 0...4 {
-            tvm[0].remove(index+1)
-                  .fire(.Right)
+        /*
+        delay(2) {
+            for index in 0...4 {
+                self.tvm[0].remove(index+1)
+                    //.fire(.Right)
+            }
         }
+        */
         
         println("finish setting")
         delay(2) {
             self.tvm[0].fire()
+            return
+        }
+        
+        delay(7) {
+            //self.tvm[0].fire()
             return
         }
         /*
