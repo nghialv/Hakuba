@@ -16,96 +16,6 @@ I want to manage tableview without the code of `UITableViewDelegate` and `UITabl
 
 That is why I created `MYTableViewManager`.
 
-What's next?
------
-
-**I'm reimplementing MYTableViewManager with the following interface:**
-
-- [ ] method chaining
-- [ ] subscript
-
-
-- initilization
-
-``` swift
-	tvm = MYTableViewManager(tableView: tableView)
-```
-
-- register cell, header
-
-``` swift
-	tvm.registerCellNib(CellClassName)
-	tvm.registerCellClass(CellClassName)
-	tvm.registerHeaderFooterNib(HeaderOrFooterClassName)
-	tvm.registerHeaderFooterClass(HeaderOrFooterClassName)
-```
-
-- section handling
-
-``` swift
-	tvm.insertSection(section, atIndex: 1).fire()
-	tvm.removeSectionAtIndex(secionIndex).fire()
-	tvm.removeAllSection().fire()
-	// get section at index
-	let section = tvm[1]
-```
-
-- view model handling
-
-``` swift
-	let cellViewModel = MYCellViewModel(CellClassName.self, data: yourData) { cell, viewmodel in
-		println("selected")
-	}
-	
-	tvm[sectionIndex].append(viewmodel)
-	tvm[sectionIndex].append(viewmodels)
-	tvm[sectionIndex].append(viewmodel).fire()
-	tvm[sectionIndex].append(viewmodel).fire(.Fade)
-	
-	// or using section
-	let section = tvm[sectionIndex]
-	
-	section.reset().fire()
-	section.reset(viewmodel).fire()
-	section.reset(viewmodels).fire(.Middle)
-	
-	section.insert(viewmodel, atIndex: 1).fire()
-	section.insert(viewmodels, atIndex: 2).fire(.Left)
-	
-	section.remove(1).fire()
-	section.remove(viewmodel).fire()
-	section.remove((2...5))
-	section.removeLast().fire()
-	
-	section.sort().fire()
-	section.shuffle().fire()
-	section.map
-	section.filter
-	section.reduce
-	section.mapFilter
-	section.each
-	
-	section.first
-	section.last
-	section[1]
-	section.count
-```
-
-- header/footer handling
-
-``` swift
-	let headerViewModel = MYHeaderFooterViewModel(HeaderClassName.self, data: yourData) { view, viewmodel in
-		println("selected")
-	}
-	
-	tvm[section].header = headerViewModel
-	tvm[section].header?.hidden = true
-	
-	// change view model data
-	(tvm[section].header as? HeaderClassName).yourProperty = newData
-	tvm[section].header?.fire()
-```
-
 Feature
 -----
 * Don't have to write the code for `UITableViewDelegate` and `UITableViewDataSource` protocols
@@ -115,6 +25,8 @@ Feature
 * Easy to implement header/footer view
 * Support dynamic cell height from **ios7**
 * Support for creating cells from Nibs or Storyboards
+* Method chaining
+* Subscript
 * Easy to implement loadmore
 * Complete example
 
@@ -123,18 +35,21 @@ Feature
 ``` swift
 	// viewController class
 	@IBOutlet weak var tableView: UITableView!
-	private var tvManager: MYTableViewManager!
+	private var tvm: MYTableViewManager!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		tnManager = MYTableViewManager(tableView: tableView)
+		tvm = MYTableViewManager(tableView: tableView)
 		
 		let title = "Cell Title"
-		let cellData = MYTableViewCellData(cellClass: CustomCell.self, userData: title) {
+		let cellviewmodel = MYCellViewModel(cellClass: CustomCell.self, userData: title) {
 			println("Did select cell with title = \(title)")
 		}
-		tvManager.appendData(cellData, inSection: 0, reloadType: .InsertRows(.Fade))
-		//a cell of TextCell will be appended to tableView with Fade animation
+		
+		// append a new cell in section `0` with `Fade` animation
+		
+		tvm[0].append(cellviewmodel)
+			  .fire(.Fade)
 	}       
 ```
 ``` swift
@@ -142,7 +57,7 @@ Feature
 	class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
-    override func configureCell(data: MYTableViewCellData) {
+    override func configureCell(data: MYCellViewModel) {
         super.configureCell(data)
         if let title = data.userData as? String {
             titleLabel.text = title
@@ -157,143 +72,161 @@ Usage
  * Initilization
 
 ``` swift
-	private var tvManager = MYTableViewManager(tableView: tableView)   
+	private var tvm = MYTableViewManager(tableView: tableView)   
 ```
 
-* Append a new cell with `Fade` animation
+* Create cell view-model
 
 ``` swift
-	let cellData = MYTableViewCellData(cellClass: CustomClass.self, userData: yourCellData) {
-		println("Did select cell")
+	// create a cell view-model
+	let cellviewmodel = MYCellViewModel(cellClass: CustomCell.self, userData: celldata) {
+		println("Did select")
 	}
-	tvManager.appendData(cellData, inSection: 0, reloadType: .InsertRows(.Fade))
-```
-
-* Append a list of cells
-
-``` swift
+	
+	// create a list of view-model from api results
 	let items = [...] // or your data from API
 
-	let cellData = items.map { item -> MYTableViewCellData in
-		return MYTableViewCellData(cellClass: CustomCell.self, userData: item) {
-			println("Did select cell")
-		}
-	}
-	tvManager.appendData(cellData, inSection: 1, reloadType: .InsertRows(.None))
+    let cellviewmodels = items.map { item -> MYCellViewModel in
+        return MYCellViewModel(cellClass: CustomCell.self, userData: item) {
+            println("Did select cell")
+        }
+    }
 ```
 
-* Reset section data
+* Register cell, header, footer
 
 ``` swift
-	// replace current data in section by new data
-	tvManager.resetWithData([yourData], inSection: 0, reloadType: .ReloadSection(.Middle))
-
-	// or reload all tableview
-	tvManager.resetWithData(yourData, inSection: 0, reloadType: .ReloadTableView)
-
-	// or without reload
-	tvManager.resetWithData([yourData], inSection: 0, reloadType: nil)
+	tvm.registerCellNib(CellClassName)
+	tvm.registerCellClass(CellClassName)
+	tvm.registerHeaderFooterNib(HeaderOrFooterClassName)
+	tvm.registerHeaderFooterClass(HeaderOrFooterClassName)
 ```
 
-* Insert data
+* Section handling
 
 ``` swift
-	tvManager.insertData(cellData, inSection: 0, atRow: 1)
-	// insert a list of cellData
-	tvManager.insertData([cellData1, cellData2], inSection: 0, atRow: 2)
-	// setting insert animation
-	tvManager.insertData([cellData1, cellData2], inSection: 0, atRow: 2, reloadType: .InsertRows(.Middle))
-
-	tvManager.insertDataBeforeLastRow(cellData, inSection: 0, reloadType: .InsertRows(.Middle))
+	let section = MYSection()
+	tvm.insertSection(section, atIndex: 1)
+	   .fire()
+	
+	tvm.removeSectionAtIndex(index)
+	   .fire(.Left)
+	   
+	tvm.removeAllSection()
+	   .fire()
+	
+	// get or create section by the following simple syntax
+	let section = tvm[index]
 ```
 
-* Remove data 
+* View-Model handling
 
 ``` swift
-	tvManager.removeDataInSection(0, row: 1)
-	tvManager.removeLastDataInSection(0, reloadType: .DeleteRows(.Middle))
-	tvManager.removeDataInsection(0, inRange: (2..<5), reloadType: .DeleteRows(.Middle))
-	tvManager.removeData(cellData)
+	// appending
+	
+	tvm[0].append(cellviewmodel)
+		  .fire(.Fade)
+		  
+	// create section 1 and append a list of cells
+	tvm[1].append(cellviewmodels)
+		  .fire(.Left)					// fire with `Left` animation
+		  
+	// or using section
+	section.append(cellviewmodel)
+		    .fire()
 ```
 
-* Update userData
-
 ``` swift
-	let newdata = tmp
-	tvManager.updateUserData(newData, inSection: 0, atRow: 1, reloadCell: true)
+	// you can insert a view-model or an array of view-model
+	
+	tvm[1].insert(cellviewmodels, atIndex: 1)
+		  .fire(.Middle)
 ```
 
-* set header/footer view
+``` swift
+	// replace current data in section by the new data
+	tvm[1].reset(cellviewmodels)
+		  .fire()
+```
 
 ``` swift
-	let headerData = MYHeaderFooterViewData(viewClass: CustomHeaderView.self, userData: nil) {
+	// inserting
+	section.insert(viewmodel, atIndex: 1).fire()
+	section.insert(viewmodels, atIndex: 2).fire(.Left)
+```
+
+
+``` swift
+	// removing
+	section.remove(1).fire()
+	section.remove((2...5))
+	section.removeLast().fire()
+```
+
+``` swift
+	section.sort().fire()
+	section.shuffle().fire()
+	section.map
+	section.filter
+	section.reduce
+	section.mapFilter
+	section.each
+
+	section.first
+	section.last
+	section[1]
+	section.count
+```
+
+* Update view-model
+
+``` swift
+	tvm[0][1].property = newData
+	tvm[0][1].fire()		
+```
+
+* Set header/footer view
+
+``` swift
+	let viewmodel = MYHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: nil) {
 		println("Did select header view")
 	}
-	tvManager.setHeaderData(headerData, inSection: 0)
-
-	// you can enable/disable header in section
-	tvManager.enableHeaderInSection(0)
-	tvManager.disableFooterInSection(1)
+	tvm[0].header = viewmodel
+	
+	// hide header in section 1
+	tvm[1].header?.hidden = true
 ```
 
 * loadmore
 
 ``` swift
-	tvManager.loadmoreEnabled = true
-	tvManager.loadmoreHandler = {
+	tvm.loadmoreEnabled = true
+	tvm.loadmoreHandler = {
 		
 	}
 ```
 
-* Reload type: MYTableViewManager supports some reload types as follows:
-	- `InsertRows(UITableViewRowAnimation)`
-	- `DeleteRows(UITableViewRowAnimation)`
-	- `ReloadRows(UITableViewRowAnimation)`
-	- `ReloadSection(UITableViewRowAnimation)`
-	- `ReleadTableView`
-	- `None`
-
-* Handling cell
+* deselect all cells
 
 ``` swift
-	// deselect the selected cell
-	tvManager.deselectAllCells(animated: true)
+	tvm.deselectAllCells(animated: true)
 ```
- 
+
 * Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the `height` parameter and set `dynamicHeightEnabled = true`
 
 ``` swift
-let cellData = MYTableViewCellData(cellClass: CustomClass.self, height: 50, userData: yourCellData) {
+	let cellviewmodel = MYCellViewModel(cellClass: CustomClass.self, height: 50, userData: yourCellData) {
 		println("Did select cell")
 	}
-	cellData.dynamicHeightEnabled = true
+	cellviewmodel.dynamicHeightEnabled = true
 	
 ```
 
 * Callback methods in the cell class
 
 ``` swift
-	func willAppear(data: MYTableViewCellData)
-	func didDisappear(data: MYTableViewCellData)
-```
-
-* Register cell with simple syntax
-
-	- `func registerCellClass(cellClass)`
-	- `func registerCellNib(cellClass)`
-	- `func registerHeaderFooterViewClass(viewClass)`
-	- `func registerHeaderFooterViewNib(viewClass)`
-
-``` swift
-	// example
-	tvManager.registerCellClass(YourCellClassName)
-	tvManager.regsiterCellNib(YourCellClassName)
-
-	//of cource you don't need to register cell if your cell is included in the tableview storyboard
-
-	// register header/footer view
-	tvManager.registerHeaderFooterClass(MyHeaderClass)
-	tvManager.registerHeaderFooterNib(MyHeaderClass)
+	func willAppear(data: MYCellViewModel)
+	func didDisappear(data: MYCellViewModel)
 ```
 
 TODO
@@ -310,6 +243,7 @@ TODO
 - [x] update data on the main thread
 - [x] loadmore
 - [x] create podfile
+- [ ] section handling
 
 Installation
 -----
