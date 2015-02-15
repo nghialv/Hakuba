@@ -10,8 +10,8 @@ import UIKit
 
 public class MYHeaderFooterViewModel : MYViewModel {
     let identifier: String
-    var viewHeight: CGFloat = 44
-    var isEnabled = true
+    public var viewHeight: CGFloat = 44
+    public var isEnabled = true
     
     public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.className(viewClass)

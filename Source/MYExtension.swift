@@ -82,4 +82,10 @@ extension Array {
     mutating func removeLast() -> Range<Int>? {
         return self.remove(count - 1)
     }
+    
+    func each(exe: (Int, Element) -> ()) {
+        for (index, item) in enumerate(self) {
+            exe(index, item)
+        }
+    }
 }

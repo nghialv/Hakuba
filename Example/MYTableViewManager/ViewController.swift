@@ -22,7 +22,37 @@ class ViewController: UIViewController {
         tvm.delegate = self
         
         tvm.registerCellNib(CustomCell)
+        delay(1) {
+            _ = self.start()
+        }
+    }
+   
+    func start() {
+        for index in 0...4 {
+            let cvm = (0..<2).map { [weak self] i -> MYCellViewModel in
+                return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index*2 + i)") { _ in
+                    println("Did select new cell : \(index + i)")
+                    self?.pushChildViewController()
+                }
+            }
+            tvm[0].append(cvm)
+                  .fire(.Left)
+
+            tvm[0][index*2]?.userData = "new title: \(index)"
+            //tvm[0][index + 1]?.fire()
+        }
         
+        for index in 0...4 {
+            tvm[0].remove(index+1)
+                  .fire(.Right)
+        }
+        
+        println("finish setting")
+        delay(2) {
+            self.tvm[0].fire()
+            return
+        }
+        /*
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
         let longTitle2 = "Support dynamic cell height from ios7"
         
@@ -37,11 +67,8 @@ class ViewController: UIViewController {
             return data
         }
         
-        delay(1) {
-            self.tvm[0].reset(cellData)
-                .fire()
-            return
-        }
+        self.tvm[0].reset(cellData)
+            .fire()
         
         delay(2) {
             let titles = ["new cell 1", "new cell 2"]
@@ -60,7 +87,7 @@ class ViewController: UIViewController {
                 .fire(.Left)
             return
         }
-        
+        */
         /*
         tvm.loadmoreHandler = { [weak self] in
             println("Loadmore")
@@ -94,6 +121,17 @@ class ViewController: UIViewController {
         
         tvm.loadmoreEnabled = true
         */
+    }
+    
+    func appendItems(index: Int, num: Int) {
+        let cvm = (0..<num).map { [weak self] i -> MYCellViewModel in
+            return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index + i)") { _ in
+                println("Did select new cell : \(index + i)")
+                self?.pushChildViewController()
+            }
+        }
+        self.tvm[0].append(cvm)
+            .fire(.Left)
     }
     
     func pushChildViewController() {

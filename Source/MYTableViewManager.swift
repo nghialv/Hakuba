@@ -122,6 +122,11 @@ extension MYTableViewManager : MYBaseViewDataDelegate {
     public func didCallSelectionHandler(view: MYBaseViewProtocol) {
         addSelectedView(view)
     }
+   
+    public func reloadView(index: Int, section: Int, animation: MYAnimation) {
+        let indexPath = NSIndexPath(forRow: index, inSection: section)
+        tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+    }
 }
 
 // MARK - UITableViewDelegate

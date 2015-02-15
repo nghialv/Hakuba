@@ -84,7 +84,7 @@ private class MYSectionReloadTracker {
 }
 
 public class MYSection {
-    var index: Int = 0
+    internal(set) var index: Int = 0
     weak var delegate: MYSectionDelegate?
     private var items: [MYCellViewModel] = []
     private let reloadTracker = MYSectionReloadTracker()
@@ -117,6 +117,7 @@ public extension MYSection {
     func reset(viewmodels: [MYCellViewModel]) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
         items = viewmodels
+        resetIndex(0, end: self.count-1)
         reloadTracker.didReset()
         return self
     }
@@ -129,6 +130,7 @@ public extension MYSection {
     func append(viewmodels: [MYCellViewModel]) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
         let r = items.append(viewmodels)
+        resetIndex(r.startIndex, end: self.count-1)
         reloadTracker.didAdd(r)
         return self
     }
@@ -141,6 +143,7 @@ public extension MYSection {
     func insert(viewmodels: [MYCellViewModel], atIndex index: Int) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
         let r = items.insert(viewmodels, atIndex: index)
+        resetIndex(r.startIndex, end: self.count-1)
         reloadTracker.didAdd(r)
         return self
     }
@@ -148,6 +151,7 @@ public extension MYSection {
     // MARK - remove
     func remove(index: Int) -> Self {
         if let r = items.remove(index) {
+            resetIndex(r.startIndex, end: self.count-1)
             reloadTracker.didRemove(r)
         }
         return self
@@ -160,6 +164,7 @@ public extension MYSection {
     
     func remove(range: Range<Int>) -> Self {
         if let r = items.remove(range) {
+            resetIndex(r.startIndex, end: self.count-1)
             reloadTracker.didRemove(r)
         }
         return self
@@ -168,9 +173,6 @@ public extension MYSection {
     // MARK - fire
     func fire(_ animation: MYAnimation = .None) -> Self {
         switch reloadTracker.state {
-        case .Reset:
-            println("RESET")
-            delegate?.reloadSections(NSIndexSet(index: index), animation: animation)
         case .Add:
             println("ADD")
             delegate?.insertRows(reloadTracker.getIndexPaths(index), animation: animation)
@@ -178,10 +180,22 @@ public extension MYSection {
             println("REMOVE")
             delegate?.deleteRows(reloadTracker.getIndexPaths(index), animation: animation)
         default:
+            println("RESET")
+            delegate?.reloadSections(NSIndexSet(index: index), animation: animation)
             break
         }
         reloadTracker.didFire()
         return self
+    }
+    
+    private func resetIndex(begin: Int, end: Int) {
+        if begin > end {
+            return
+        }
+        for i in (begin...end) {
+            items[i].row = i
+            items[i].section = index
+        }
     }
 }
 
