@@ -17,82 +17,19 @@ protocol MYSectionDelegate : class {
     func willAddCellViewModels(viewmodels: [MYCellViewModel])
 }
 
-private enum ReloadState {
-    case Reset, Add, Remove, Begin
-}
-
-private class MYSectionReloadTracker {
-    private var state: ReloadState = .Begin
-    private var addedIndexes: [Int] = []
-    private var removedIndexes: [Int] = []
-    
-    init() {
-        didFire()
-    }
-    
-    func didReset() {
-        state = .Reset
-    }
-    
-    func didAdd(range: Range<Int>) {
-        if state == .Reset || state == .Remove {
-            state = .Reset
-            return
-        }
-        for i in range {
-            var newIndexes: [Int] = []
-            if addedIndexes.indexOf(i) == nil {
-                newIndexes.append(i)
-            }
-            addedIndexes += newIndexes
-        }
-        state = .Add
-    }
-    
-    func didRemove(range: Range<Int>) {
-        if state == .Reset || state == .Add {
-            state = .Reset
-            return
-        }
-        for i in range {
-            var newIndexes: [Int] = []
-            if removedIndexes.indexOf(i) == nil {
-                newIndexes.append(i)
-            }
-            removedIndexes += newIndexes
-        }
-        state = .Remove
-    }
-    
-    func didFire() {
-        state = .Begin
-        addedIndexes = []
-        removedIndexes = []
-    }
-    
-    func getIndexPaths(section: Int) -> [NSIndexPath] {
-        switch state {
-        case .Add:
-            return addedIndexes.map { NSIndexPath(forRow: $0, inSection: section) }
-        case .Remove:
-            return removedIndexes.map { NSIndexPath(forRow: $0, inSection: section) }
-        default:
-            break
-        }
-        return []
-    }
-}
-
 public class MYSection {
     internal(set) var index: Int = 0 {
         didSet {
             header?.section = index
             footer?.section = index
+            for item in items {
+                item.section = index
+            }
         }
     }
     weak var delegate: MYSectionDelegate?
     private var items: [MYCellViewModel] = []
-    private let reloadTracker = MYSectionReloadTracker()
+    private let reloadTracker = MYReloadTracker()
     
     public var header: MYHeaderFooterViewModel? {
         didSet {

@@ -27,8 +27,9 @@ public class MYCellViewModel : MYViewModel {
         super.init(userData: userData, selectionHandler: selectionHandler)
     }
     
-    public func fire(animation: MYAnimation = .None) {
+    public func fire(_ animation: MYAnimation = .None) -> Self {
         delegate?.reloadView(row, section: section, animation: animation)
+        return self
     }
 }
 

@@ -20,12 +20,13 @@ public class MYHeaderFooterViewModel : MYViewModel {
         super.init(userData: userData, selectionHandler: selectionHandler)
     }
     
-    func fire() {
+    func fire() -> Self {
         if isHeader {
             delegate?.reloadHeader(section)
         } else {
             delegate?.reloadFooter(section)
         }
+        return self
     }
 }
 
@@ -66,9 +67,6 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     
     public func didChangeFloatingState(isFloating: Bool) {
         
-    }
-    
-    public func fire() {
     }
 }
 

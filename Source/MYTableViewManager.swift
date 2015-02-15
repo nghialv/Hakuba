@@ -26,7 +26,8 @@ public class MYTableViewManager : NSObject {
     
     private weak var tableView: UITableView?
     private var sections: [MYSection] = []
-    
+   
+    private let reloadTracker = MYReloadTracker()
     private var selectedCells = [MYBaseViewProtocol]()
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
     private var currentTopSection = 0
@@ -46,7 +47,7 @@ public class MYTableViewManager : NSObject {
         selectedCells.removeAll(keepCapacity: false)
     }
     
-    public func resetAllData() -> Self {
+    public func resetAll() -> Self {
         sections = []
         selectedCells = []
         heightCalculationCells = [:]
@@ -77,20 +78,31 @@ public class MYTableViewManager : NSObject {
 }
 
 public extension MYTableViewManager {
-    func insertSection(section: MYSection, atIndex index: Int) {
-        
+    func insertSection(section: MYSection, atIndex index: Int) -> Self {
+        // TODO : implementation
+        return self
     }
     
-    func removeSectionAtIndex(index: Int) {
-        
+    func removeSectionAtIndex(index: Int) -> Self {
+        // TODO : implementation
+        return self
     }
     
-    func removeAllSections() {
-        
-    }
-    
-    func fire(animation: MYAnimation = .None) {
-        
+    func fire(_ animation: MYAnimation = .None) -> Self {
+        switch reloadTracker.state {
+        case .Add:
+            println("ADD section")
+            tableView?.insertSections(reloadTracker.getSectionIndexSet(), withRowAnimation: animation)
+        case .Remove:
+            println("REMOVE section")
+            tableView?.deleteSections(reloadTracker.getSectionIndexSet(), withRowAnimation: animation)
+        default:
+            println("RESET all sections (reload table view data)")
+            tableView?.reloadData()
+            break
+        }
+        reloadTracker.didFire()
+        return self
     }
 }
 
