@@ -22,38 +22,38 @@ extension NSRange {
 }
 
 extension Array {
-    func hasIndex(index: Int) -> Bool {
+    func my_hasIndex(index: Int) -> Bool {
         return index >= 0 && index < count
     }
     
-    func getSafeIndex(index: Int) -> Int {
+    func my_getSafeIndex(index: Int) -> Int {
         return min(count, max(0, index))
     }
    
-    func indexOf<T: Equatable>(item: T) -> Int? {
+    func my_indexOf<T: Equatable>(item: T) -> Int? {
         if item is Element {
             return find(unsafeBitCast(self, [T].self), item)
         }
         return nil
     }
     
-    func getSafeRange(range: Range<Int>) -> Range<Int>? {
+    func my_getSafeRange(range: Range<Int>) -> Range<Int>? {
         let start = max(0, range.startIndex)
         let end = min(count, range.endIndex)
         return start <= end ? Range<Int>(start: start, end: end) : nil
     }
     
-    func get(index: Int) -> T? {
-        return hasIndex(index) ? self[index] : nil
+    func my_get(index: Int) -> T? {
+        return my_hasIndex(index) ? self[index] : nil
     }
    
-    mutating func append(newArray: Array) -> Range<Int> {
+    mutating func my_append(newArray: Array) -> Range<Int> {
         let range = Range<Int>(start: count, end: count + newArray.count)
         self += newArray
         return range
     }
     
-    mutating func insert(newArray: Array, atIndex index: Int) -> Range<Int> {
+    mutating func my_insert(newArray: Array, atIndex index: Int) -> Range<Int> {
         let start = min(count, max(0, index))
         let end = start + newArray.count
         
@@ -63,27 +63,27 @@ extension Array {
         return Range<Int>(start: start, end: end)
     }
     
-    mutating func remove(index: Int) -> Range<Int>? {
-        if !hasIndex(index) {
+    mutating func my_remove(index: Int) -> Range<Int>? {
+        if !my_hasIndex(index) {
             return nil
         }
         self.removeAtIndex(index)
         return Range<Int>(start: index, end: index + 1)
     }
     
-    mutating func remove(range: Range<Int>) -> Range<Int>? {
-        if let sr = getSafeRange(range) {
+    mutating func my_remove(range: Range<Int>) -> Range<Int>? {
+        if let sr = my_getSafeRange(range) {
             self.removeRange(sr)
             return sr
         }
         return nil
     }
     
-    mutating func removeLast() -> Range<Int>? {
-        return self.remove(count - 1)
+    mutating func my_removeLast() -> Range<Int>? {
+        return self.my_remove(count - 1)
     }
     
-    func each(exe: (Int, Element) -> ()) {
+    func my_each(exe: (Int, Element) -> ()) {
         for (index, item) in enumerate(self) {
             exe(index, item)
         }

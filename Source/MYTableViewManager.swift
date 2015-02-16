@@ -58,7 +58,7 @@ public class MYTableViewManager : NSObject {
     
     public subscript(index: Int) -> MYSection {
         get {
-            if let s = sections.get(index) {
+            if let s = sections.my_get(index) {
                 return s
             }
             let length = index + 1 - sectionCount
@@ -176,14 +176,14 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let header = self.sections.get(section)?.header {
+        if let header = self.sections.my_get(section)?.header {
             return header.isEnabled ? header.viewHeight : 0
         }
         return 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let header = self.sections.get(section)?.header {
+        if let header = self.sections.my_get(section)?.header {
             if !header.isEnabled {
                 return nil
             }
@@ -195,14 +195,14 @@ extension MYTableViewManager : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let footer = self.sections.get(section)?.footer {
+        if let footer = self.sections.my_get(section)?.footer {
             return footer.isEnabled ? footer.viewHeight : 0
         }
         return 0
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let footer = self.sections.get(section)?.footer {
+        if let footer = self.sections.my_get(section)?.footer {
             if !footer.isEnabled {
                 return nil
             }
@@ -237,7 +237,7 @@ extension MYTableViewManager : UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sections.get(section)?.count ?? 0
+        return self.sections.my_get(section)?.count ?? 0
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -329,7 +329,7 @@ extension MYTableViewManager {
 // MARK - private methods
 private extension MYTableViewManager {
     func cellViewModelAtIndexPath(indexPath: NSIndexPath) -> MYCellViewModel? {
-        return self.sections.get(indexPath.section)?[indexPath.row]
+        return self.sections.my_get(indexPath.section)?[indexPath.row]
     }
     
     func addSelectedView(view: MYBaseViewProtocol) {

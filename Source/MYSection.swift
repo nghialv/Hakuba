@@ -46,7 +46,7 @@ public class MYSection {
 
     public subscript(index: Int) -> MYCellViewModel? {
         get {
-            return items.hasIndex(index) ? items[index] : nil
+            return items.my_hasIndex(index) ? items[index] : nil
         }
     }
     
@@ -81,7 +81,7 @@ public extension MYSection {
     
     func append(viewmodels: [MYCellViewModel]) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
-        let r = items.append(viewmodels)
+        let r = items.my_append(viewmodels)
         resetIndex(r.startIndex, end: self.count-1)
         reloadTracker.didAdd(r)
         return self
@@ -94,7 +94,7 @@ public extension MYSection {
     
     func insert(viewmodels: [MYCellViewModel], atIndex index: Int) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
-        let r = items.insert(viewmodels, atIndex: index)
+        let r = items.my_insert(viewmodels, atIndex: index)
         resetIndex(r.startIndex, end: self.count-1)
         reloadTracker.didAdd(r)
         return self
@@ -102,7 +102,7 @@ public extension MYSection {
     
     // MARK - remove
     func remove(index: Int) -> Self {
-        if let r = items.remove(index) {
+        if let r = items.my_remove(index) {
             resetIndex(r.startIndex, end: self.count-1)
             reloadTracker.didRemove(r)
         }
@@ -115,7 +115,7 @@ public extension MYSection {
     }
     
     func remove(range: Range<Int>) -> Self {
-        if let r = items.remove(range) {
+        if let r = items.my_remove(range) {
             resetIndex(r.startIndex, end: self.count-1)
             reloadTracker.didRemove(r)
         }

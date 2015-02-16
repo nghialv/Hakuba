@@ -31,7 +31,7 @@ class MYReloadTracker {
             return
         }
         let ind = range.map { _ -> Int in -1 }
-        originalIndexes.insert(ind, atIndex: range.startIndex)
+        originalIndexes.my_insert(ind, atIndex: range.startIndex)
         state = .Add
     }
     
@@ -41,10 +41,10 @@ class MYReloadTracker {
             return
         }
         let ri = originalIndexes[range]
-        originalIndexes.remove(range)
+        originalIndexes.my_remove(range)
         for i in ri {
             var newIndexes: [Int] = []
-            if removedIndexes.indexOf(i) == nil {
+            if removedIndexes.my_indexOf(i) == nil {
                 newIndexes.append(i)
             }
             removedIndexes += newIndexes
@@ -62,7 +62,7 @@ class MYReloadTracker {
         switch state {
         case .Add:
             var addedIndexes: [Int] = []
-            originalIndexes.each { i, value in
+            originalIndexes.my_each { i, value in
                 if value == -1 {
                     addedIndexes.append(i)
                 }
