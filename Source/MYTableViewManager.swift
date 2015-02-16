@@ -32,6 +32,7 @@ public class MYTableViewManager : NSObject {
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
     private var currentTopSection = 0
     private var willFloatingSection = -1
+    private var insertedSectionsRange: (Int, Int) = (100, -1)
     
     public init(tableView: UITableView) {
         super.init()
@@ -62,7 +63,6 @@ public class MYTableViewManager : NSObject {
                 return s
             }
             let length = index + 1 - sectionCount
-            let insertSet: NSIndexSet = NSIndexSet(indexesInRange: NSMakeRange(sectionCount, length))
             
             let newSections = (sectionCount...index).map { i -> MYSection in
                 let ns = MYSection()
@@ -70,10 +70,27 @@ public class MYTableViewManager : NSObject {
                 ns.index = i
                 return ns
             }
+           
+            //let insertSet: NSIndexSet = NSIndexSet(indexesInRange: NSMakeRange(sectionCount, length))
+            //tableView?.insertSections(insertSet, withRowAnimation: .None)
+            let begin = min(insertedSectionsRange.0, sectionCount)
+            let end = max(insertedSectionsRange.1, index + 1)
+            insertedSectionsRange = (begin, end)
+
             sections += newSections
-            tableView?.insertSections(insertSet, withRowAnimation: .None)
             return sections[index]
         }
+    }
+    
+    private func syncSections() -> Bool {
+        let length = insertedSectionsRange.1 - insertedSectionsRange.0
+        if length > 0 {
+            let insertSet: NSIndexSet =  NSIndexSet(indexesInRange: NSMakeRange(insertedSectionsRange.0, length))
+            insertedSectionsRange = (100, -1)
+            tableView?.insertSections(insertSet, withRowAnimation: .None)
+            return true
+        }
+        return false
     }
 }
 
@@ -102,15 +119,21 @@ extension MYTableViewManager : MYSectionDelegate {
     }
 
     func reloadSections(indexSet: NSIndexSet, animation: MYAnimation) {
-        tableView?.reloadSections(indexSet, withRowAnimation: animation)
+        if !syncSections() {
+            tableView?.reloadSections(indexSet, withRowAnimation: animation)
+        }
     }
     
     func insertRows(indexPaths: [NSIndexPath], animation: MYAnimation) {
-        tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        if !syncSections() {
+            tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        }
     }
     
     func deleteRows(indexPaths: [NSIndexPath], animation: MYAnimation) {
-        tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        if !syncSections() {
+            tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        }
     }
     
     func willAddCellViewModels(viewmodels: [MYCellViewModel]) {

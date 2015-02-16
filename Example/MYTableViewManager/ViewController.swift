@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         }
         //tvm[0].remove(0)
         self.tvm[0].fire()
-        
+       
         delay(2) {
             for index in 0...4 {
                 self.tvm[0].remove(index+1)
