@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol MYBaseViewDataDelegate : class {
+public protocol MYViewModelDelegate : class {
     func didCallSelectionHandler(view: MYBaseViewProtocol)
     func reloadView(index: Int, section: Int, animation: MYAnimation)
     func reloadHeader(section: Int)
@@ -17,7 +17,7 @@ public protocol MYBaseViewDataDelegate : class {
 
 public class MYViewModel : NSObject, MYBaseViewDelegate {
     var action: MYSelectionHandler?
-    weak var delegate: MYBaseViewDataDelegate?
+    weak var delegate: MYViewModelDelegate?
     var userData: AnyObject?
     
     public init(userData: AnyObject? = nil, selectionHandler: MYSelectionHandler?) {

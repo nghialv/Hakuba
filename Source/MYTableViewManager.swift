@@ -118,8 +118,8 @@ extension MYTableViewManager : MYSectionDelegate {
     }
 }
 
-// MARK - MYBaseViewDataDelegate
-extension MYTableViewManager : MYBaseViewDataDelegate {
+// MARK - MYViewModelDelegate
+extension MYTableViewManager : MYViewModelDelegate {
     public func didCallSelectionHandler(view: MYBaseViewProtocol) {
         addSelectedView(view)
     }
