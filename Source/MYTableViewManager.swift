@@ -82,12 +82,12 @@ public class MYTableViewManager : NSObject {
         }
     }
     
-    private func syncSections() -> Bool {
+    private func syncSections(animation: MYAnimation) -> Bool {
         let length = insertedSectionsRange.1 - insertedSectionsRange.0
         if length > 0 {
             let insertSet: NSIndexSet =  NSIndexSet(indexesInRange: NSMakeRange(insertedSectionsRange.0, length))
             insertedSectionsRange = (100, -1)
-            tableView?.insertSections(insertSet, withRowAnimation: .None)
+            tableView?.insertSections(insertSet, withRowAnimation: animation)
             return true
         }
         return false
@@ -108,6 +108,7 @@ public extension MYTableViewManager {
     func fire(_ animation: MYAnimation = .None) -> Self {
         // TODO : implementation
         tableView?.reloadData()
+        insertedSectionsRange = (100, -1)
         return self
     }
 }
@@ -115,23 +116,23 @@ public extension MYTableViewManager {
 // MARK - MYSectionDelegate
 extension MYTableViewManager : MYSectionDelegate {
     func reloadTableView() {
-        tableView?.reloadData()
+        fire(.None)
     }
 
     func reloadSections(indexSet: NSIndexSet, animation: MYAnimation) {
-        if !syncSections() {
+        if !syncSections(animation) {
             tableView?.reloadSections(indexSet, withRowAnimation: animation)
         }
     }
     
     func insertRows(indexPaths: [NSIndexPath], animation: MYAnimation) {
-        if !syncSections() {
+        if !syncSections(animation) {
             tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
         }
     }
     
     func deleteRows(indexPaths: [NSIndexPath], animation: MYAnimation) {
-        if !syncSections() {
+        if !syncSections(animation) {
             tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
         }
     }

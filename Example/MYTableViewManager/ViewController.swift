@@ -61,6 +61,12 @@ class ViewController: UIViewController {
         
         delay(7) {
             //self.tvm[0].fire()
+            
+            for i in 0...200 {
+                let secIndex = Int(arc4random() % 200)
+                let section = self.tvm[secIndex]
+                NSLog("\(section.count)")
+            }
             return
         }
         /*
