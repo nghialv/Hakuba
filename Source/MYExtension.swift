@@ -27,7 +27,8 @@ extension Array {
     }
     
     func my_getSafeIndex(index: Int) -> Int {
-        return min(count, max(0, index))
+        let mIndex = max(0, index)
+        return min(count, mIndex)
     }
    
     func my_indexOf<T: Equatable>(item: T) -> Int? {
@@ -54,7 +55,8 @@ extension Array {
     }
     
     mutating func my_insert(newArray: Array, atIndex index: Int) -> Range<Int> {
-        let start = min(count, max(0, index))
+        let mIndex = max(0, index)
+        let start = min(count, mIndex)
         let end = start + newArray.count
         
         let left = self[0..<start]
