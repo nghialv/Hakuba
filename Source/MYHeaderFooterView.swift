@@ -14,6 +14,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
     internal(set) var isHeader = true
     public var viewHeight: CGFloat = 44
     public var isEnabled = true
+    public var selectionEnabled = true
     
     public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.className(viewClass)
@@ -33,6 +34,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
 public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtocol {
     class var identifier: String { return String.className(self) }
     private weak var delegate: MYBaseViewDelegate?
+    public var selectionEnabled = true
     
     public override init() {
         super.init()
@@ -59,6 +61,7 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     
     public func configureView(data: MYHeaderFooterViewModel) {
         self.delegate = data
+        selectionEnabled = data.selectionEnabled
     }
     
     public func emitSelectedEvent(view: MYBaseViewProtocol) {
@@ -83,16 +86,22 @@ public extension MYHeaderFooterView {
 public extension MYHeaderFooterView {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
-        highlight(false)
+        if selectionEnabled {
+            highlight(false)
+        }
     }
     
     override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
         super.touchesCancelled(touches, withEvent: event)
-        unhighlight(false)
+        if selectionEnabled {
+            unhighlight(false)
+        }
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
-        emitSelectedEvent(self)
+        if selectionEnabled {
+            emitSelectedEvent(self)
+        }
     }
 }
