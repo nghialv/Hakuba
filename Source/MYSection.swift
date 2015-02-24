@@ -126,13 +126,10 @@ public extension MYSection {
     func fire(_ animation: MYAnimation = .None) -> Self {
         switch reloadTracker.state {
         case .Add:
-            println("ADD")
             delegate?.insertRows(reloadTracker.getIndexPaths(index), animation: animation)
         case .Remove:
-            println("REMOVE")
             delegate?.deleteRows(reloadTracker.getIndexPaths(index), animation: animation)
         default:
-            println("RESET")
             delegate?.reloadSections(NSIndexSet(index: index), animation: animation)
             break
         }
