@@ -99,6 +99,15 @@ public extension MYSection {
         reloadTracker.didAdd(r)
         return self
     }
+   
+    func insertBeforeLast(viewmodel: MYCellViewModel) -> Self {
+        return insertBeforeLast([viewmodel])
+    }
+    
+    func insertBeforeLast(viewmodels: [MYCellViewModel]) -> Self {
+        let index = max(items.count - 1, 0)
+        return insert(viewmodels, atIndex: index)
+    }
     
     // MARK - remove
     func remove(index: Int) -> Self {
