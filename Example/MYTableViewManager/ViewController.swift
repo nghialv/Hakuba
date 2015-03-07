@@ -30,8 +30,8 @@ class ViewController: UIViewController {
     func start() {
         
         for index in 0...4 {
-            let cvm = (0..<2).map { [weak self] i -> MYCellViewModel in
-                return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index*2 + i)") { _ in
+            let cvm = (0..<2).map { [weak self] i -> MYCellModel in
+                return MYCellModel(cellClass: CustomCell.self, userData: "index \(index*2 + i)") { _ in
                     println("Did select new cell : \(index + i)")
                     self?.pushChildViewController()
                 }
@@ -75,8 +75,8 @@ class ViewController: UIViewController {
         
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
-        let cellData = titles.map { [weak self] title -> MYCellViewModel in
-            let data = MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
+        let cellData = titles.map { [weak self] title -> MYCellModel in
+            let data = MYCellModel(cellClass: CustomCell.self, userData: title) { _ in
                 println("Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
@@ -89,8 +89,8 @@ class ViewController: UIViewController {
         
         delay(2) {
             let titles = ["new cell 1", "new cell 2"]
-            let newCellData = titles.map { [weak self] title -> MYCellViewModel in
-                return MYCellViewModel(cellClass: CustomCell.self, userData: title) { _ in
+            let newCellData = titles.map { [weak self] title -> MYCellModel in
+                return MYCellModel(cellClass: CustomCell.self, userData: title) { _ in
                     println("Did select new cell : \(title)")
                     self?.pushChildViewController()
                 }
@@ -122,8 +122,8 @@ class ViewController: UIViewController {
         
         delay(5.0) {
             let titles = ["inserted cell 1", "inserted cell 2", "inserted cell 3"]
-            let newCellData = titles.map { [weak self] title -> MYCellViewModel in
-                return MYCellViewModel(cellClass: CustomCell.self, height: 100, userData: title) { _ in
+            let newCellData = titles.map { [weak self] title -> MYCellModel in
+                return MYCellModel(cellClass: CustomCell.self, height: 100, userData: title) { _ in
                     println("Did select new cell : \(title)")
                     self?.pushChildViewController()
                 }
@@ -141,8 +141,8 @@ class ViewController: UIViewController {
     }
     
     func appendItems(index: Int, num: Int) {
-        let cvm = (0..<num).map { [weak self] i -> MYCellViewModel in
-            return MYCellViewModel(cellClass: CustomCell.self, userData: "index \(index + i)") { _ in
+        let cvm = (0..<num).map { [weak self] i -> MYCellModel in
+            return MYCellModel(cellClass: CustomCell.self, userData: "index \(index + i)") { _ in
                 println("Did select new cell : \(index + i)")
                 self?.pushChildViewController()
             }

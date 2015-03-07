@@ -137,7 +137,7 @@ extension MYTableViewManager : MYSectionDelegate {
         }
     }
     
-    func willAddCellViewModels(viewmodels: [MYCellViewModel]) {
+    func willAddCellViewModels(viewmodels: [MYCellModel]) {
         setBaseViewDataDelegate(viewmodels)
     }
 }
@@ -356,7 +356,7 @@ extension MYTableViewManager {
 
 // MARK - private methods
 private extension MYTableViewManager {
-    func cellViewModelAtIndexPath(indexPath: NSIndexPath) -> MYCellViewModel? {
+    func cellViewModelAtIndexPath(indexPath: NSIndexPath) -> MYCellModel? {
         return self.sections.my_get(indexPath.section)?[indexPath.row]
     }
     

@@ -14,7 +14,7 @@ protocol MYSectionDelegate : class {
     func insertRows(indexPaths: [NSIndexPath], animation: MYAnimation)
     func deleteRows(indexPaths: [NSIndexPath], animation: MYAnimation)
     
-    func willAddCellViewModels(viewmodels: [MYCellViewModel])
+    func willAddCellViewModels(viewmodels: [MYCellModel])
 }
 
 public class MYSection {
@@ -28,7 +28,7 @@ public class MYSection {
         }
     }
     weak var delegate: MYSectionDelegate?
-    private var items: [MYCellViewModel] = []
+    private var items: [MYCellModel] = []
     private let reloadTracker = MYReloadTracker()
     
     public var header: MYHeaderFooterViewModel? {
@@ -44,7 +44,7 @@ public class MYSection {
         }
     }
 
-    public subscript(index: Int) -> MYCellViewModel? {
+    public subscript(index: Int) -> MYCellModel? {
         get {
             return items.my_hasIndex(index) ? items[index] : nil
         }
@@ -62,11 +62,11 @@ public extension MYSection {
         return self
     }
     
-    func reset(viewmodel: MYCellViewModel) -> Self {
+    func reset(viewmodel: MYCellModel) -> Self {
         return reset([viewmodel])
     }
     
-    func reset(viewmodels: [MYCellViewModel]) -> Self {
+    func reset(viewmodels: [MYCellModel]) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
         items = viewmodels
         resetIndex(0, end: self.count-1)
@@ -75,11 +75,11 @@ public extension MYSection {
     }
     
     // MARK - apppend
-    func append(viewmodel: MYCellViewModel) -> Self {
+    func append(viewmodel: MYCellModel) -> Self {
         return append([viewmodel])
     }
     
-    func append(viewmodels: [MYCellViewModel]) -> Self {
+    func append(viewmodels: [MYCellModel]) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
         let r = items.my_append(viewmodels)
         resetIndex(r.startIndex, end: self.count-1)
@@ -88,11 +88,11 @@ public extension MYSection {
     }
     
     // MARK - insert
-    func insert(viewmodel: MYCellViewModel, atIndex index: Int) -> Self {
+    func insert(viewmodel: MYCellModel, atIndex index: Int) -> Self {
         return insert([viewmodel], atIndex: index)
     }
     
-    func insert(viewmodels: [MYCellViewModel], atIndex index: Int) -> Self {
+    func insert(viewmodels: [MYCellModel], atIndex index: Int) -> Self {
         delegate?.willAddCellViewModels(viewmodels)
         let r = items.my_insert(viewmodels, atIndex: index)
         resetIndex(r.startIndex, end: self.count-1)
@@ -100,11 +100,11 @@ public extension MYSection {
         return self
     }
    
-    func insertBeforeLast(viewmodel: MYCellViewModel) -> Self {
+    func insertBeforeLast(viewmodel: MYCellModel) -> Self {
         return insertBeforeLast([viewmodel])
     }
     
-    func insertBeforeLast(viewmodels: [MYCellViewModel]) -> Self {
+    func insertBeforeLast(viewmodels: [MYCellModel]) -> Self {
         let index = max(items.count - 1, 0)
         return insert(viewmodels, atIndex: index)
     }
@@ -166,11 +166,11 @@ public extension MYSection {
         return items.count == 0
     }
 
-    var first: MYCellViewModel? {
+    var first: MYCellModel? {
         return items.first
     }
     
-    var last: MYCellViewModel? {
+    var last: MYCellModel? {
         return items.last
     }
 }

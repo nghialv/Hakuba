@@ -11,7 +11,7 @@ import UIKit
 class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: MYLabel!
     
-    override func configureCell(data: MYCellViewModel) {
+    override func configureCell(data: MYCellModel) {
         super.configureCell(data)
         if let title = data.userData as? String {
             titleLabel.text = title + "(\(data.section),\(data.row))"
