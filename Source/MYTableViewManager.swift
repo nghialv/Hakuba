@@ -276,26 +276,30 @@ extension MYTableViewManager : UITableViewDataSource {
 
 // MARK - register cell and header/footer view
 public extension MYTableViewManager {
-    func registerCellClass(cellClass: AnyClass) {
+    func registerCellClass(cellClass: AnyClass) -> Self {
         let identifier = String.className(cellClass)
         tableView?.registerClass(cellClass, forCellReuseIdentifier: identifier)
+        return self
     }
     
-    func registerCellNib(cellClass: AnyClass) {
+    func registerCellNib(cellClass: AnyClass) -> Self {
         let identifier = String.className(cellClass)
         let nib = UINib(nibName: identifier, bundle: nil)
         tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
+        return self
     }
     
-    func registerHeaderFooterViewClass(viewClass: AnyClass) {
+    func registerHeaderFooterViewClass(viewClass: AnyClass) -> Self {
         let identifier = String.className(viewClass)
         tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
+        return self
     }
     
-    func registerHeaderFooterViewNib(viewClass: AnyClass) {
+    func registerHeaderFooterViewNib(viewClass: AnyClass) -> Self {
         let identifier = String.className(viewClass)
         let nib = UINib(nibName: identifier, bundle: nil)
         tableView?.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+        return self
     }
 }
 
