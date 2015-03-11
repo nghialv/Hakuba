@@ -29,6 +29,9 @@ public class MYSection {
     weak var delegate: MYSectionDelegate?
     private var items: [MYCellModel] = []
     private let reloadTracker = MYReloadTracker()
+    var isChanged: Bool {
+        return reloadTracker.isChanged
+    }
     
     public var header: MYHeaderFooterViewModel? {
         didSet {

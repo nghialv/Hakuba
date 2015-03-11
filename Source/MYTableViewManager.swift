@@ -83,6 +83,14 @@ public class MYTableViewManager : NSObject {
     }
     
     private func syncSections(animation: MYAnimation) -> Bool {
+        let modifiedSections = sections.filter { $0.isChanged }
+        // reload all tableview when the number of modified sections is greater than 1
+        if modifiedSections.count > 1 {
+            println("reload tableview")
+            self.fire(animation)
+            return true
+        }
+        
         let length = insertedSectionsRange.1 - insertedSectionsRange.0
         if length > 0 {
             let insertSet: NSIndexSet =  NSIndexSet(indexesInRange: NSMakeRange(insertedSectionsRange.0, length))

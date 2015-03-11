@@ -16,6 +16,9 @@ class MYReloadTracker {
     var state: ReloadState = .Begin
     private var originalIndexes: [Int] = []
     private var removedIndexes: [Int] = []
+    var isChanged: Bool {
+        return state != .Begin
+    }
     
     init() {
         didFire(0)
