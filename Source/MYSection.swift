@@ -54,6 +54,10 @@ public class MYSection {
     
     public init() {
     }
+    
+    func didReloadTableView() {
+        reloadTracker.didFire(self.count)
+    }
 }
 
 public extension MYSection {

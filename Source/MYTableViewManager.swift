@@ -86,7 +86,6 @@ public class MYTableViewManager : NSObject {
         let modifiedSections = sections.filter { $0.isChanged }
         // reload all tableview when the number of modified sections is greater than 1
         if modifiedSections.count > 1 {
-            println("reload tableview")
             self.fire(animation)
             return true
         }
@@ -117,6 +116,10 @@ public extension MYTableViewManager {
         // TODO : implementation
         tableView?.reloadData()
         insertedSectionsRange = (100, -1)
+        // reset all section reload tracker
+        for sec in sections {
+            sec.didReloadTableView()
+        }
         return self
     }
 }
