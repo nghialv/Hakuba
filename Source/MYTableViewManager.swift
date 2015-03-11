@@ -192,12 +192,14 @@ extension MYTableViewManager : UITableViewDelegate {
         return 0
     }
    
+    /*
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellData = self.cellViewModelAtIndexPath(indexPath) {
             return cellData.cellHeight
         }
         return 0
     }
+    */
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let header = self.sections.my_get(section)?.header {
