@@ -115,12 +115,9 @@ public extension MYTableViewManager {
 
 // MARK - MYSectionDelegate
 extension MYTableViewManager : MYSectionDelegate {
-    func reloadTableView() {
-        fire(.None)
-    }
-
-    func reloadSections(indexSet: NSIndexSet, animation: MYAnimation) {
+    func reloadSections(index: Int, animation: MYAnimation) {
         if !syncSections(animation) {
+            let indexSet = NSIndexSet(index: index)
             tableView?.reloadSections(indexSet, withRowAnimation: animation)
         }
     }

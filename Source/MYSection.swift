@@ -9,8 +9,7 @@
 import Foundation
 
 protocol MYSectionDelegate : class {
-    func reloadTableView()
-    func reloadSections(indexSet: NSIndexSet, animation: MYAnimation)
+    func reloadSections(index: Int, animation: MYAnimation)
     func insertRows(indexPaths: [NSIndexPath], animation: MYAnimation)
     func deleteRows(indexPaths: [NSIndexPath], animation: MYAnimation)
     
@@ -139,7 +138,7 @@ public extension MYSection {
         case .Remove:
             delegate?.deleteRows(reloadTracker.getIndexPaths(index), animation: animation)
         default:
-            delegate?.reloadSections(NSIndexSet(index: index), animation: animation)
+            delegate?.reloadSections(index, animation: animation)
             break
         }
         reloadTracker.didFire(self.count)
