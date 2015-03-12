@@ -42,13 +42,13 @@ Feature
 		tvm = MYTableViewManager(tableView: tableView)
 		
 		let title = "Cell Title"
-		let cellviewmodel = MYCellViewModel(cellClass: CustomCell.self, userData: title) {
+		let cellmodel = MYCellModel(cellClass: CustomCell.self, userData: title) {
 			println("Did select cell with title = \(title)")
 		}
 		
 		// append a new cell in section `0` with `Fade` animation
 		
-		tvm[0].append(cellviewmodel)
+		tvm[0].append(cellmodel)
 			  .fire(.Fade)
 	}       
 ```
@@ -57,7 +57,7 @@ Feature
 	class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
-    override func configureCell(data: MYCellViewModel) {
+    override func configureCell(data: MYCellModel) {
         super.configureCell(data)
         if let title = data.userData as? String {
             titleLabel.text = title
@@ -78,16 +78,16 @@ Usage
 * Create cell view-model
 
 ``` swift
-	// create a cell view-model
-	let cellviewmodel = MYCellViewModel(cellClass: CustomCell.self, userData: celldata) {
+	// create a cell-model
+	let cellmodel = MYCellModel(cellClass: CustomCell.self, userData: celldata) {
 		println("Did select")
 	}
 	
 	// create a list of view-model from api results
 	let items = [...] // or your data from API
 
-    let cellviewmodels = items.map { item -> MYCellViewModel in
-        return MYCellViewModel(cellClass: CustomCell.self, userData: item) {
+    let cellmodels = items.map { item -> MYCellModel in
+        return MYCellModel(cellClass: CustomCell.self, userData: item) {
             println("Did select cell")
         }
     }
@@ -124,35 +124,35 @@ Usage
 ``` swift
 	// appending
 	
-	tvm[0].append(cellviewmodel)
+	tvm[0].append(cellmodel)
 		  .fire(.Fade)
 		  
 	// create section 1 and append a list of cells
-	tvm[1].append(cellviewmodels)
+	tvm[1].append(cellmodels)
 		  .fire(.Left)					// fire with `Left` animation
 		  
 	// or using section
-	section.append(cellviewmodel)
+	section.append(cellmodel)
 		    .fire()
 ```
 
 ``` swift
-	// you can insert a view-model or an array of view-model
+	// you can insert a cell-model or an array of cell-models
 	
-	tvm[1].insert(cellviewmodels, atIndex: 1)
+	tvm[1].insert(cellmodels, atIndex: 1)
 		  .fire(.Middle)
 ```
 
 ``` swift
 	// replace current data in section by the new data
-	tvm[1].reset(cellviewmodels)
+	tvm[1].reset(cellmodels)
 		  .fire()
 ```
 
 ``` swift
 	// inserting
-	section.insert(viewmodel, atIndex: 1).fire()
-	section.insert(viewmodels, atIndex: 2).fire(.Left)
+	section.insert(cellmodel, atIndex: 1).fire()
+	section.insert(cellmodels, atIndex: 2).fire(.Left)
 ```
 
 
@@ -215,18 +215,18 @@ Usage
 * Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the `height` parameter and set `dynamicHeightEnabled = true`
 
 ``` swift
-	let cellviewmodel = MYCellViewModel(cellClass: CustomClass.self, height: 50, userData: yourCellData) {
+	let cellmodel = MYCellModel(cellClass: CustomClass.self, height: 50, userData: yourCellData) {
 		println("Did select cell")
 	}
-	cellviewmodel.dynamicHeightEnabled = true
+	cellmodel.dynamicHeightEnabled = true
 	
 ```
 
 * Callback methods in the cell class
 
 ``` swift
-	func willAppear(data: MYCellViewModel)
-	func didDisappear(data: MYCellViewModel)
+	func willAppear(data: MYCellModel)
+	func didDisappear(data: MYCellModel)
 ```
 
 TODO
