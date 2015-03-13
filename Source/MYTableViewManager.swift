@@ -9,6 +9,10 @@
 
 import UIKit
 
+public protocol SectionIndex {
+    var intValue: Int { get }
+}
+
 @objc public protocol MYTableViewManagerDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
     optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
@@ -55,6 +59,10 @@ public class MYTableViewManager : NSObject {
         currentTopSection = 0
         willFloatingSection = -1
         return self
+    }
+    
+    public subscript(section: SectionIndex) -> MYSection {
+        return self[section.intValue]
     }
     
     public subscript(index: Int) -> MYSection {

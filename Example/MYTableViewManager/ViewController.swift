@@ -8,6 +8,15 @@
 
 import UIKit
 
+enum Section : Int, SectionIndex {
+    case Top = 0
+    case Center
+    
+    var intValue: Int {
+        return self.rawValue
+    }
+}
+
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var tvm: MYTableViewManager!
@@ -36,26 +45,26 @@ class ViewController: UIViewController {
                     self?.pushChildViewController()
                 }
             }
-            tvm[0].insert(cvm[0], atIndex: 0)
+            tvm[Section.Top].insert(cvm[0], atIndex: 0)
                   //.fire(.Left)
-            tvm[0].append(cvm[1])
+            tvm[Section.Top].append(cvm[1])
             
             //tvm[0][index*2]?.userData = "new title: \(index)"
             //tvm[0][index + 1]?.fire()
         }
         //tvm[0].remove(0)
-        self.tvm[0].fire()
+        self.tvm[Section.Top].fire()
        
         delay(2) {
             for index in 0...4 {
-                self.tvm[0].remove(index+1)
+                self.tvm[Section.Top].remove(index+1)
                     //.fire(.Right)
             }
         }
         
         println("finish setting")
         delay(4) {
-            self.tvm[0].fire()
+            self.tvm[Section.Top].fire()
             return
         }
         
