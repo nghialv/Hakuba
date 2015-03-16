@@ -38,6 +38,9 @@ public class MYTableViewManager : NSObject {
     private var willFloatingSection = -1
     private var insertedSectionsRange: (Int, Int) = (100, -1)
     
+    // inserting or deleting rows
+    public var commitEditingHandler: ((UITableViewCellEditingStyle, NSIndexPath) -> ())?
+    
     public init(tableView: UITableView) {
         super.init()
         self.tableView = tableView
@@ -108,6 +111,15 @@ public class MYTableViewManager : NSObject {
         return false
     }
 }
+
+
+// MARK - UITableView methods
+public extension MYTableViewManager {
+    func setEditing(editing: Bool, animated: Bool) {
+        tableView?.setEditing(editing, animated: animated)
+    }
+}
+
 
 public extension MYTableViewManager {
     func insertSection(section: MYSection, atIndex index: Int) -> Self {
@@ -289,6 +301,11 @@ extension MYTableViewManager : UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
+    }
+    
+    // inserting or deleting delegate
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        commitEditingHandler?(editingStyle, indexPath)
     }
 }
 
