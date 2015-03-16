@@ -1,4 +1,4 @@
-MYTableViewManager
+Hakuba
 ===========
 
 [![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
@@ -14,55 +14,67 @@ I want to slim down my view controllers.
 
 I want to manage tableview without the code of `UITableViewDelegate` and `UITableViewDataSource`.
 
-That is why I created `MYTableViewManager`.
+That is why I created `Hakuba`.
+
+**update:**
+	The project name has been changed from `MYTableViewManager` to `Hakuba`.
+	(Hakuba is one of the most famous ski resorts in Japan.)
 
 Feature
 -----
 * Don't have to write the code for `UITableViewDelegate` and `UITableViewDataSource` protocols
-* Don't have to set cell identifier
-* Handling cell selection by trailing closure
-* Easy to manage your cells (append/reset/insert/remove/update)
-* Easy to implement header/footer view
+* Easy to manage your sections and cells (append/reset/insert/remove/update)
 * Support dynamic cell height from **ios7**
+* Don't have to worry about cell identifier
+* Handling cell selection by trailing closure
+* Easy to implement header/footer view (floating callback)
 * Support for creating cells from Nibs or Storyboards
 * Method chaining
 * Subscript
-* Easy to implement loadmore
+* Support loadmore closure
 * Complete example
 
 ##### Quick example
 
 ``` swift
-	// viewController class
-	@IBOutlet weak var tableView: UITableView!
-	private var tvm: MYTableViewManager!
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		tvm = MYTableViewManager(tableView: tableView)
-		
-		let title = "Cell Title"
-		let cellmodel = MYCellModel(cellClass: CustomCell.self, userData: title) {
-			println("Did select cell with title = \(title)")
-		}
-		
-		// append a new cell in section `0` with `Fade` animation
-		
-		tvm[0].append(cellmodel)
-			  .fire(.Fade)
-	}       
+	// viewController swift file
+	
+	hakuba = Hakuba(tableView: tableView)
+	
+	let cellmodel = YourCellModel(title: "Title", des: "description") {
+		println("Did select cell with title = \(title)")
+	}
+	
+	hakuba[2].append(cellmodel)
+			 .slide(.Fade)
+	
+	hakuba[1].remove(1...3)
+			 .slide(.Right)
 ```
 ``` swift
-	// your custom cell class
-	class CustomCell : MYTableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
+	// your cell swift file
+	
+	class YourCellModel : MYCellModel {
+		let title: String
+		let des: String
+		
+		init(title: String, des: String, selectionHandler: MYSelectionHandler) {
+			self.title = title
+			self.des = des
+			super.init(YourCell.self, selectionHandler: selectionHandler)
+		}
+	}
+	
+
+	class YourCell : MYTableViewCell {
+		@IBOutlet weak var titleLabel: UILabel!
     
-    override func configureCell(data: MYCellModel) {
-        super.configureCell(data)
-        if let title = data.userData as? String {
-            titleLabel.text = title
-        }
-      }
+		override func configureCell(data: MYCellModel) {
+			super.configureCell(data)
+			if let cellmodel = data as? YourCellModel {
+				titleLabel.text = cellmodel.title
+        	}
+      	}
 	}
 ```
 
@@ -72,100 +84,87 @@ Usage
  * Initilization
 
 ``` swift
-	private var tvm = MYTableViewManager(tableView: tableView)   
-```
-
-* Create cell view-model
-
-``` swift
-	// create a cell-model
-	let cellmodel = MYCellModel(cellClass: CustomCell.self, userData: celldata) {
-		println("Did select")
-	}
-	
-	// create a list of view-model from api results
-	let items = [...] // or your data from API
-
-    let cellmodels = items.map { item -> MYCellModel in
-        return MYCellModel(cellClass: CustomCell.self, userData: item) {
-            println("Did select cell")
-        }
-    }
-```
-
-* Register cell, header, footer
-
-``` swift
-	tvm.registerCellNib(CellClassName)
-	tvm.registerCellClass(CellClassName)
-	tvm.registerHeaderFooterNib(HeaderOrFooterClassName)
-	tvm.registerHeaderFooterClass(HeaderOrFooterClassName)
+	private var hakuba = Hakuba(tableView: tableView)   
 ```
 
 * Section handling
 
 ``` swift
-	let section = MYSection()
-	tvm.insertSection(section, atIndex: 1)
-	   .fire()
-	
-	tvm.removeSectionAtIndex(index)
-	   .fire(.Left)
-	   
-	tvm.removeAllSection()
-	   .fire()
-	
-	// get or create section by the following simple syntax
-	let section = tvm[index]
-```
+	let section = hakuba[secIndex]	// retrieve a section or create a new section if it doesn't already exist
 
-* View-Model handling
-
-``` swift
-	// appending
-	
-	tvm[0].append(cellmodel)
-		  .fire(.Fade)
-		  
-	// create section 1 and append a list of cells
-	tvm[1].append(cellmodels)
-		  .fire(.Left)					// fire with `Left` animation
-		  
-	// or using section
-	section.append(cellmodel)
-		    .fire()
-```
-
-``` swift
-	// you can insert a cell-model or an array of cell-models
-	
-	tvm[1].insert(cellmodels, atIndex: 1)
-		  .fire(.Middle)
-```
-
-``` swift
-	// replace current data in section by the new data
-	tvm[1].reset(cellmodels)
-		  .fire()
-```
-
-``` swift
 	// inserting
-	section.insert(cellmodel, atIndex: 1).fire()
-	section.insert(cellmodels, atIndex: 2).fire(.Left)
-```
-
-
-``` swift
+	hakuba.insert(section, atIndex: 1)
+		  .slide()
+	
 	// removing
-	section.remove(1).fire()
-	section.remove((2...5))
-	section.removeLast().fire()
+	hakuba.remove(index)
+	   	  .slide(.Left)
+	
+	hakuba.removeAll()
+	   	  .slide()
+	   	  
+	// handing section index with enum
+	enum Section : Int, MYSectionIndex {
+		case Top = 0
+		case Center
+		case Bottom
+		
+		var intValue: Int {
+			return self.rawValue
+    	}
+	}
+	let topSection = hakuba[Section.Top]
 ```
 
+* Cell handling
+
 ``` swift
-	section.sort().fire()
-	section.shuffle().fire()
+	// 1. appending
+	hakuba[0].append(cellmodel)				// append a cellmodel
+		     .slide(.Fade)					// and slide with `Fade` animation
+
+	hakuba[1].append(cellmodels)			// append a list of cellmodes
+		  	.slide(.Left)					
+	
+	// by using section
+	let section = hakuba[Section.Top]
+	section.append(cellmodel)
+		   .slide()
+
+
+	// 2. inserting
+	section.insert(cellmodels, atIndex: 1)
+		   .slide(.Middle)
+	
+	
+	// 3. reseting
+	section.reset(cellmodels)				// replace current data in section by the new data
+		   .slide()
+	section.reset()							// or remove all data in section
+		   .slide()
+		   
+
+	// 4. removing
+	section.remove(1)
+		   .slide(.Right)
+	section.remove(2...5)
+		   .slide()
+	section.removeLast()
+	       .slide()
+```
+
+
+``` swift
+	// updating cell data
+	let section = hakuba[Section.Top]
+	section[1].property = newData
+	section[1].slide()		
+```
+
+
+``` swift
+	section.sort().slide()
+	section.shuffle().slide()
 	section.map
 	section.filter
 	section.reduce
@@ -178,44 +177,77 @@ Usage
 	section.count
 ```
 
-* Update view-model
+
+* Creating cell model
 
 ``` swift
-	tvm[0][1].property = newData
-	tvm[0][1].fire()		
+	// create a cell model
+	let cellmodel = MYCellModel(cellClass: YourCell.self, userData: celldata) {
+		println("Did select")
+	}
+	
+	// create a list of cell models from api results
+	let items = [...] // or your data from API
+
+    let cellmodels = items.map { item -> MYCellModel in
+        return MYCellModel(cellClass: YourCell.self, userData: item) {
+            println("Did select cell")
+        }
+    }
 ```
 
-* Set header/footer view
+* Register cell, header, footer
 
 ``` swift
-	let viewmodel = MYHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: nil) {
+	hakuba.registerCellNib(CellClassName)
+	hakuba.registerCellClass(CellClassName)
+	hakuba.registerHeaderFooterNib(HeaderOrFooterClassName)
+	hakuba.registerHeaderFooterClass(HeaderOrFooterClassName)
+	
+	// register a list of cells by using variadic parameters
+	hakuba.registerCellNib(CellClass1.self, CellClass2.self, ..., CellClassN.self)
+```
+
+* Section header/footer
+
+``` swift
+	let header = MYHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
 		println("Did select header view")
 	}
-	tvm[0].header = viewmodel
+	hakuba[Section.Top].header = header
 	
 	// hide header in section 1
-	tvm[1].header?.hidden = true
+	hakuba[Section.Center].header?.enabled = false
 ```
 
-* loadmore
+* Loadmore
 
 ``` swift
-	tvm.loadmoreEnabled = true
-	tvm.loadmoreHandler = {
-		
+	hakuba.loadmoreEnabled = true
+	hakuba.loadmoreHandler = {
+		// request api
+		// append new data
 	}
 ```
 
-* deselect all cells
+* Commit editing 
 
 ``` swift
-	tvm.deselectAllCells(animated: true)
+	hakuba.commitEditingHandler = { [weak self] style, indexPath in
+		self?.hakuba[indexPath.section].remove(indexPath.row)
+	}
+```
+
+* Deselect all cells
+
+``` swift
+	hakuba.deselectAllCells(animated: true)
 ```
 
 * Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the `height` parameter and set `dynamicHeightEnabled = true`
 
 ``` swift
-	let cellmodel = MYCellModel(cellClass: CustomClass.self, height: 50, userData: yourCellData) {
+	let cellmodel = MYCellModel(cellClass: YourCell.self, height: 50, userData: yourCellData) {
 		println("Did select cell")
 	}
 	cellmodel.dynamicHeightEnabled = true
@@ -229,28 +261,13 @@ Usage
 	func didDisappear(data: MYCellModel)
 ```
 
-TODO
------
-
-- [x] prototyping
-- [x] append/reset
-- [x] insert
-- [x] remove
-- [x] update
-- [x] header/footer
-- [x] dynamic height for cells
-- [x] dynamic height example
-- [x] update data on the main thread
-- [x] loadmore
-- [x] create podfile
-- [ ] section handling
 
 Installation
 -----
 * Installation with CocoaPods
 
 ```
-	pod 'MYTableViewManager'
+	pod 'Hakuba'
 ```
 
 * Copying all the files into your project
@@ -264,4 +281,4 @@ Requirements
 License
 -----
 
-MYTableViewManager is released under the MIT license. See LICENSE for details.
+Hakuba is released under the MIT license. See LICENSE for details.
