@@ -1,6 +1,6 @@
 //
-//  MYTableViewManagerTests.swift
-//  MYTableViewManagerTests
+//  HakubaTests.swift
+//  HakubaTests
 //
 //  Created by Le Van Nghia on 1/13/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class MYTableViewManagerTests: XCTestCase {
+class HakubaTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

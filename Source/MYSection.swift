@@ -1,6 +1,6 @@
 //
 //  MYSection.swift
-//  MYTableViewManager
+//  Hakuba
 //
 //  Created by Le VanNghia on 2/14/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
@@ -137,8 +137,8 @@ public extension MYSection {
         return self
     }
     
-    // MARK - fire
-    func fire(_ animation: MYAnimation = .None) -> Self {
+    // MARK - slide
+    func slide(_ animation: MYAnimation = .None) -> Self {
         switch reloadTracker.state {
         case .Add:
             delegate?.insertRows(reloadTracker.getIndexPaths(index), animation: animation)

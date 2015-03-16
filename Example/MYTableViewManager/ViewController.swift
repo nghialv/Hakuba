@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  MYTableViewManager
+//  Hakuba
 //
 //  Created by Le Van Nghia on 1/13/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
@@ -19,7 +19,7 @@ enum Section : Int, SectionIndex {
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private var tvm: MYTableViewManager!
+    private var tvm: Hakuba!
     
     override func viewWillAppear(animated: Bool) {
         tvm?.deselectAllCells()
@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tvm = MYTableViewManager(tableView: tableView)
+        tvm = Hakuba(tableView: tableView)
         tvm.delegate = self
         
         tvm.registerCellNib(CustomCell)
@@ -46,30 +46,30 @@ class ViewController: UIViewController {
                 }
             }
             tvm[Section.Top].insert(cvm[0], atIndex: 0)
-                  //.fire(.Left)
+                  //.slide(.Left)
             tvm[Section.Top].append(cvm[1])
             
             //tvm[0][index*2]?.userData = "new title: \(index)"
-            //tvm[0][index + 1]?.fire()
+            //tvm[0][index + 1]?.slide()
         }
         //tvm[0].remove(0)
-        self.tvm[Section.Top].fire()
+        self.tvm[Section.Top].slide()
        
         delay(2) {
             for index in 0...4 {
                 self.tvm[Section.Top].remove(index+1)
-                    //.fire(.Right)
+                    //.slide(.Right)
             }
         }
         
         println("finish setting")
         delay(4) {
-            self.tvm[Section.Top].fire()
+            self.tvm[Section.Top].slide()
             return
         }
         
         delay(7) {
-            //self.tvm[0].fire()
+            //self.tvm[0].slide()
             
             for i in 0...200 {
                 let secIndex = Int(arc4random() % 200)
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
         }
         
         self.tvm[0].reset(cellData)
-            .fire()
+            .slide()
         
         delay(2) {
             let titles = ["new cell 1", "new cell 2"]
@@ -105,12 +105,12 @@ class ViewController: UIViewController {
                 }
             }
             self.tvm[0].insert(newCellData, atIndex: 2)
-                .fire(.Middle)
+                .slide(.Middle)
         }
        
         delay(5) {
             self.tvm[0].remove(1)
-                .fire(.Left)
+                .slide(.Left)
             return
         }
         */
@@ -157,7 +157,7 @@ class ViewController: UIViewController {
             }
         }
         self.tvm[0].append(cvm)
-            .fire(.Left)
+            .slide(.Left)
     }
     
     func pushChildViewController() {
@@ -176,7 +176,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController : MYTableViewManagerDelegate {
+extension ViewController : HakubaDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
     }
 }

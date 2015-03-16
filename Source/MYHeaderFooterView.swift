@@ -1,6 +1,6 @@
 //
 //  MYHeaderFooterView.swift
-//  MYTableViewManager
+//  Hakuba
 //
 //  Created by Le Van Nghia on 1/13/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
@@ -21,7 +21,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
         super.init(userData: userData, selectionHandler: selectionHandler)
     }
     
-    func fire() -> Self {
+    func slide() -> Self {
         if isHeader {
             delegate?.reloadHeader(section)
         } else {

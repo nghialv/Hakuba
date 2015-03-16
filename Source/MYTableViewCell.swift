@@ -1,6 +1,6 @@
 //
 //  MYTableViewCell.swift
-//  MYTableViewManager
+//  Hakuba
 //
 //  Created by Le Van Nghia on 1/13/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
@@ -27,7 +27,7 @@ public class MYCellModel : MYViewModel {
         super.init(userData: userData, selectionHandler: selectionHandler)
     }
     
-    public func fire(_ animation: MYAnimation = .None) -> Self {
+    public func slide(_ animation: MYAnimation = .None) -> Self {
         delegate?.reloadView(row, section: section, animation: animation)
         return self
     }

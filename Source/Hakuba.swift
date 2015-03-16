@@ -1,6 +1,6 @@
 //
-//  MYTableViewManager.swift
-//  MYTableViewManager
+//  Hakuba.swift
+//  Hakuba
 //
 //  Created by Le Van Nghia on 1/13/15.
 //  Copyright (c) 2015 Le Van Nghia. All rights reserved.
@@ -13,14 +13,14 @@ public protocol SectionIndex {
     var intValue: Int { get }
 }
 
-@objc public protocol MYTableViewManagerDelegate : class {
+@objc public protocol HakubaDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
     optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
     optional func scrollViewWillBeginDragging(scrollView: UIScrollView)
 }
 
-public class MYTableViewManager : NSObject {
-    public weak var delegate: MYTableViewManagerDelegate?
+public class Hakuba : NSObject {
+    public weak var delegate: HakubaDelegate?
     public var loadmoreHandler: (() -> ())?
     public var loadmoreEnabled = false
     public var loadmoreThreshold: CGFloat = 25
@@ -97,7 +97,7 @@ public class MYTableViewManager : NSObject {
         let modifiedSections = sections.filter { $0.isChanged }
         // reload all tableview when the number of modified sections is greater than 1
         if modifiedSections.count > 1 {
-            self.fire(animation)
+            self.slide(animation)
             return true
         }
         
@@ -114,14 +114,14 @@ public class MYTableViewManager : NSObject {
 
 
 // MARK - UITableView methods
-public extension MYTableViewManager {
+public extension Hakuba {
     func setEditing(editing: Bool, animated: Bool) {
         tableView?.setEditing(editing, animated: animated)
     }
 }
 
 
-public extension MYTableViewManager {
+public extension Hakuba {
     func insertSection(section: MYSection, atIndex index: Int) -> Self {
         // TODO : implementation
         return self
@@ -132,7 +132,7 @@ public extension MYTableViewManager {
         return self
     }
     
-    func fire(_ animation: MYAnimation = .None) -> Self {
+    func slide(_ animation: MYAnimation = .None) -> Self {
         // TODO : implementation
         tableView?.reloadData()
         insertedSectionsRange = (100, -1)
@@ -145,7 +145,7 @@ public extension MYTableViewManager {
 }
 
 // MARK - MYSectionDelegate
-extension MYTableViewManager : MYSectionDelegate {
+extension Hakuba : MYSectionDelegate {
     func reloadSections(index: Int, animation: MYAnimation) {
         if !syncSections(animation) {
             let indexSet = NSIndexSet(index: index)
@@ -171,7 +171,7 @@ extension MYTableViewManager : MYSectionDelegate {
 }
 
 // MARK - MYViewModelDelegate
-extension MYTableViewManager : MYViewModelDelegate {
+extension Hakuba : MYViewModelDelegate {
     public func didCallSelectionHandler(view: MYBaseViewProtocol) {
         addSelectedView(view)
     }
@@ -199,7 +199,7 @@ extension MYTableViewManager : MYViewModelDelegate {
 }
 
 // MARK - UITableViewDelegate
-extension MYTableViewManager : UITableViewDelegate {
+extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellData = self.cellViewModelAtIndexPath(indexPath) {
             if !cellData.dynamicHeightEnabled {
@@ -285,7 +285,7 @@ extension MYTableViewManager : UITableViewDelegate {
 }
 
 // MARK - UITableViewDataSource
-extension MYTableViewManager : UITableViewDataSource {
+extension Hakuba : UITableViewDataSource {
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return sectionCount
     }
@@ -310,7 +310,7 @@ extension MYTableViewManager : UITableViewDataSource {
 }
 
 // MARK - register cell and header/footer view
-public extension MYTableViewManager {
+public extension Hakuba {
     func registerCellClass(cellClass: AnyClass) -> Self {
         return registerCellClasses(cellClass)
     }
@@ -363,7 +363,7 @@ public extension MYTableViewManager {
 }
 
 // MARK - UIScrollViewDelegate
-extension MYTableViewManager {
+extension Hakuba {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
         
@@ -414,7 +414,7 @@ extension MYTableViewManager {
 }
 
 // MARK - private methods
-private extension MYTableViewManager {
+private extension Hakuba {
     func cellViewModelAtIndexPath(indexPath: NSIndexPath) -> MYCellModel? {
         return self.sections.my_get(indexPath.section)?[indexPath.row]
     }
