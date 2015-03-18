@@ -103,7 +103,7 @@ Usage
 	hakuba.removeAll()
 	   	  .slide()
 	   	  
-	// handing section index with enum
+	// handing section index by enum
 	enum Section : Int, MYSectionIndex {
 		case Top = 0
 		case Center
