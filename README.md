@@ -43,8 +43,8 @@ Feature
 		println("Did select cell with title = \(title)")
 	}
 	
-	hakuba[2].append(cellmodel)
-			 .slide(.Fade)
+	hakuba[2].append(cellmodel)		// append a new cell model in datasource
+			 .slide(.Fade)			// show the cell of your cell model in the table view
 	
 	hakuba[1].remove(1...3)
 			 .slide(.Right)
