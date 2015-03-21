@@ -16,7 +16,7 @@ I want to manage tableview without the code of `UITableViewDelegate` and `UITabl
 
 That is why I created `Hakuba`.
 
-**Hakuba** is one of the most famous ski resorts in Japan.
+( **Hakuba** is one of the most famous ski resorts in Japan. )
 
 Feature
 -----
