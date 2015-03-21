@@ -8,12 +8,21 @@
 
 import UIKit
 
+class CustomCellModel : MYCellModel {
+    let title: String
+    
+    init(title: String, selectionHandler: MYSelectionHandler) {
+        self.title = title
+        super.init(cellClass: CustomCell.self, height: 40, userData: nil, selectionHandler: selectionHandler)
+    }
+}
+
 class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: MYLabel!
     
     override func configureCell(data: MYCellModel) {
         super.configureCell(data)
-        if let title = data.userData as? String {
+        if let title = (data as? CustomCellModel)?.title {
             titleLabel.text = title + "(\(data.section),\(data.row))"
         }
     }

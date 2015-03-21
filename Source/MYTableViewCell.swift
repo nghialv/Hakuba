@@ -14,6 +14,7 @@ public class MYCellModel : MYViewModel {
     internal(set) var section: Int = 0
     public var cellHeight: CGFloat = 44
     public var cellSelectionEnabled = true
+    public var editable = false
     public var calculatedHeight: CGFloat?
     public var dynamicHeightEnabled: Bool = false {
         didSet {

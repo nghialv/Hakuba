@@ -39,6 +39,7 @@ public class Hakuba : NSObject {
     private var insertedSectionsRange: (Int, Int) = (100, -1)
     
     // inserting or deleting rows
+    public var cellEditable = false
     public var commitEditingHandler: ((UITableViewCellEditingStyle, NSIndexPath) -> ())?
     
     public init(tableView: UITableView) {
@@ -306,6 +307,13 @@ extension Hakuba : UITableViewDataSource {
     // inserting or deleting delegate
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         commitEditingHandler?(editingStyle, indexPath)
+    }
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if let cellmodel = self.cellViewModelAtIndexPath(indexPath) {
+            return cellmodel.editable || cellEditable
+        }
+        return false
     }
 }
 
