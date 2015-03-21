@@ -7,8 +7,8 @@ Hakuba
 )](https://developer.apple.com/swift)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
-[![Issues](https://img.shields.io/github/issues/nghialv/MYTableViewManager.svg?style=flat
-)](https://github.com/nghialv/MYTableViewManager/issues?state=open)
+[![Issues](https://img.shields.io/github/issues/nghialv/Hakuba.svg?style=flat
+)](https://github.com/nghialv/Hakuba/issues?state=open)
 
 I want to slim down my view controllers.
 
@@ -16,9 +16,7 @@ I want to manage tableview without the code of `UITableViewDelegate` and `UITabl
 
 That is why I created `Hakuba`.
 
-**update:**
-	The project name has been changed from `MYTableViewManager` to `Hakuba`.
-	(Hakuba is one of the most famous ski resorts in Japan.)
+**Hakuba** is one of the most famous ski resorts in Japan.
 
 Feature
 -----
