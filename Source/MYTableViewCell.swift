@@ -38,7 +38,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     class var identifier: String { return String.className(self) }
     var cellSelectionEnabled = true
     private weak var delegate: MYBaseViewDelegate?
-    weak var cellData: MYCellModel?
+    weak var cellModel: MYCellModel?
     
     public override init() {
         super.init()
@@ -64,7 +64,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     }
     
     public func configureCell(data: MYCellModel) {
-        cellData = data
+        cellModel = data
         delegate = data
         cellSelectionEnabled = data.cellSelectionEnabled
         unhighlight(false)

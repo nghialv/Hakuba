@@ -202,20 +202,20 @@ extension Hakuba : MYViewModelDelegate {
 // MARK - UITableViewDelegate
 extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let cellData = self.cellViewModelAtIndexPath(indexPath) {
-            if !cellData.dynamicHeightEnabled {
-                return cellData.cellHeight
+        if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
+            if !cellModel.dynamicHeightEnabled {
+                return cellModel.cellHeight
             }
-            if let h = cellData.calculatedHeight {
+            if let h = cellModel.calculatedHeight {
                 return h
             }
-            if heightCalculationCells[cellData.identifier] == nil {
-                heightCalculationCells[cellData.identifier] = tableView.dequeueReusableCellWithIdentifier(cellData.identifier) as? MYTableViewCell
+            if heightCalculationCells[cellModel.identifier] == nil {
+                heightCalculationCells[cellModel.identifier] = tableView.dequeueReusableCellWithIdentifier(cellModel.identifier) as? MYTableViewCell
             }
-            if let cell = heightCalculationCells[cellData.identifier] {
-                cell.configureCell(cellData)
-                cellData.calculatedHeight = calculateHeightForConfiguredSizingCell(cell)
-                return cellData.calculatedHeight!
+            if let cell = heightCalculationCells[cellModel.identifier] {
+                cell.configureCell(cellModel)
+                cellModel.calculatedHeight = calculateHeightForConfiguredSizingCell(cell)
+                return cellModel.calculatedHeight!
             }
         }
         return 0
@@ -223,8 +223,8 @@ extension Hakuba : UITableViewDelegate {
    
     /*
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let cellData = self.cellViewModelAtIndexPath(indexPath) {
-            return cellData.cellHeight
+        if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
+            return cellModel.cellHeight
         }
         return 0
     }
@@ -269,17 +269,17 @@ extension Hakuba : UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cellData = self.cellViewModelAtIndexPath(indexPath) {
+        if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if let myCell = cell as? MYTableViewCell {
-                myCell.willAppear(cellData)
+                myCell.willAppear(cellModel)
             }
         }
     }
     
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cellData = self.cellViewModelAtIndexPath(indexPath) {
+        if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if let myCell = cell as? MYTableViewCell {
-                myCell.didDisappear(cellData)
+                myCell.didDisappear(cellModel)
             }
         }
     }
@@ -296,9 +296,9 @@ extension Hakuba : UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cellData = self.cellViewModelAtIndexPath(indexPath) {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellData.identifier, forIndexPath: indexPath) as MYTableViewCell
-            cell.configureCell(cellData)
+        if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellModel.identifier, forIndexPath: indexPath) as MYTableViewCell
+            cell.configureCell(cellModel)
             return cell
         }
         return UITableViewCell()
