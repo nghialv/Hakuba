@@ -325,7 +325,7 @@ public extension Hakuba {
     
     func registerCellClasses(cellClasses: AnyClass...) -> Self {
         for cellClass in cellClasses {
-            let identifier = String.className(cellClass)
+            let identifier = String.my_className(cellClass)
             tableView?.registerClass(cellClass, forCellReuseIdentifier: identifier)
         }
         return self
@@ -337,7 +337,7 @@ public extension Hakuba {
     
     func registerCellNibs(cellClasses: AnyClass...) -> Self {
         for cellClass in cellClasses {
-            let identifier = String.className(cellClass)
+            let identifier = String.my_className(cellClass)
             let nib = UINib(nibName: identifier, bundle: nil)
             tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
         }
@@ -350,7 +350,7 @@ public extension Hakuba {
     
     func registerHeaderFooterViewClasses(viewClasses: AnyClass...) -> Self {
         for viewClass in viewClasses {
-            let identifier = String.className(viewClass)
+            let identifier = String.my_className(viewClass)
             tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
         }
         return self
@@ -362,7 +362,7 @@ public extension Hakuba {
     
     func registerHeaderFooterViewNibs(viewClasses: AnyClass...) -> Self {
         for viewClass in viewClasses {
-            let identifier = String.className(viewClass)
+            let identifier = String.my_className(viewClass)
             let nib = UINib(nibName: identifier, bundle: nil)
             tableView?.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
         }
