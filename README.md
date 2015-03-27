@@ -18,7 +18,7 @@ That is why I created `Hakuba`.
 
 ( **Hakuba** is one of the most famous ski resorts in Japan. )
 
-Feature
+Features
 -----
 * Don't have to write the code for `UITableViewDelegate` and `UITableViewDataSource` protocols
 * Easy to manage your sections and cells (append/reset/insert/remove/update)
