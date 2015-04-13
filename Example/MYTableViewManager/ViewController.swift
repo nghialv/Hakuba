@@ -70,7 +70,7 @@ class ViewController: UIViewController {
     
     func pushChildViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ChildViewController") as ChildViewController
+        let vc = storyboard.instantiateViewControllerWithIdentifier("ChildViewController") as! ChildViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

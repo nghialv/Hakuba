@@ -40,18 +40,8 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     private weak var delegate: MYBaseViewDelegate?
     weak var cellModel: MYCellModel?
     
-    public override init() {
-        super.init()
-        setup()
-    }
-    
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
-    }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
         setup()
     }
     
@@ -103,21 +93,21 @@ public extension MYTableViewCell {
 
 // MARK - Touch events
 public extension MYTableViewCell {
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        super.touchesBegan(touches, withEvent: event)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+       super.touchesBegan(touches, withEvent: event)
         if cellSelectionEnabled {
             highlight(false)
         }
     }
     
-    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
         super.touchesCancelled(touches, withEvent: event)
         if cellSelectionEnabled {
             unhighlight(false)
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
         if cellSelectionEnabled {
             emitSelectedEvent(self)
