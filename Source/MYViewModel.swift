@@ -26,7 +26,7 @@ public class MYViewModel : NSObject, MYBaseViewDelegate {
     }
     
     public func didSelect(view: MYBaseViewProtocol) {
-        action?(view)
         delegate?.didCallSelectionHandler(view)
+        action?(view)
     }
 }
