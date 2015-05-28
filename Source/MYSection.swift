@@ -172,6 +172,10 @@ public extension MYSection {
         return items.count == 0
     }
 
+    var isNotEmpty: Bool {
+        return !isEmpty
+    }
+    
     var first: MYCellModel? {
         return items.first
     }
