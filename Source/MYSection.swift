@@ -136,6 +136,13 @@ public extension MYSection {
         }
         return self
     }
+   
+    func remove(cellmodel: MYCellModel) -> Self {
+        if let index = find(items, cellmodel) {
+            return remove(index)
+        }
+        return self
+    }
     
     // MARK - slide
     func slide(_ animation: MYAnimation = .None) -> Self {
