@@ -283,7 +283,7 @@ extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if let myCell = cell as? MYTableViewCell {
-                myCell.willAppear(cellModel)
+                myCell.willAppear(cellModel, tableView: tableView)
             }
         }
     }
@@ -291,7 +291,7 @@ extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if let myCell = cell as? MYTableViewCell {
-                myCell.didDisappear(cellModel)
+                myCell.didDisappear(cellModel, tableView: tableView)
             }
         }
     }

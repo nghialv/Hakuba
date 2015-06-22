@@ -31,7 +31,6 @@ public class MYHeaderFooterViewModel : MYViewModel {
 }
 
 public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtocol {
-    class var identifier: String { return classNameOf(self) }
     private weak var delegate: MYBaseViewDelegate?
     public var selectable = true
     

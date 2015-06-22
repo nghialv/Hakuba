@@ -64,9 +64,9 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
         delegate?.didSelect(view)
     }
     
-    public func willAppear(data: MYCellModel) {
+    public func willAppear(data: MYCellModel, tableView: UITableView) {
     }
     
-    public func didDisappear(data: MYCellModel) {
+    public func didDisappear(data: MYCellModel, tableView: UITableView) {
     }
 }
