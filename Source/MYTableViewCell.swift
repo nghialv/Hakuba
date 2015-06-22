@@ -23,7 +23,7 @@ public class MYCellModel : MYViewModel {
     }
     
     public init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
-        self.identifier = String.my_className(cellClass)
+        self.identifier = classNameOf(cellClass)
         self.height = height
         super.init(selectionHandler: selectionHandler)
     }
@@ -35,7 +35,7 @@ public class MYCellModel : MYViewModel {
 }
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
-    class var identifier: String { return String.my_className(self) }
+    class var identifier: String { return classNameOf(self) }
     var selectable = true
     private weak var delegate: MYBaseViewDelegate?
     weak var cellModel: MYCellModel?

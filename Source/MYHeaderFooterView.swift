@@ -17,7 +17,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
     public var selectionEnabled = true
     
     public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
-        self.identifier = String.my_className(viewClass)
+        self.identifier = classNameOf(viewClass)
         super.init(selectionHandler: selectionHandler)
     }
     
@@ -32,7 +32,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
 }
 
 public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtocol {
-    class var identifier: String { return String.my_className(self) }
+    class var identifier: String { return classNameOf(self) }
     private weak var delegate: MYBaseViewDelegate?
     public var selectionEnabled = true
     
