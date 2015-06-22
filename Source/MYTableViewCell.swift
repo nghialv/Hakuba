@@ -35,7 +35,6 @@ public class MYCellModel : MYViewModel {
 }
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
-    class var identifier: String { return classNameOf(self) }
     var selectable = true
     private weak var delegate: MYBaseViewDelegate?
     weak var cellModel: MYCellModel?
