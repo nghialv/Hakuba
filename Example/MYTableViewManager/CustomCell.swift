@@ -13,7 +13,7 @@ class CustomCellModel : MYCellModel {
     
     init(title: String, selectionHandler: MYSelectionHandler) {
         self.title = title
-        super.init(cellClass: CustomCell.self, height: 40, selectionHandler: selectionHandler)
+        super.init(cell: CustomCell.self, height: 40, selectionHandler: selectionHandler)
     }
 }
 

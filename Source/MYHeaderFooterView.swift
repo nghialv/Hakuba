@@ -15,8 +15,8 @@ public class MYHeaderFooterViewModel : MYViewModel {
     
     public var isEnabled = true
     
-    public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
-        self.identifier = classNameOf(viewClass)
+    public init<T: MYHeaderFooterView>(view: T.Type, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
+        self.identifier = view.reuseIdentifier
         super.init(selectionHandler: selectionHandler)
     }
     

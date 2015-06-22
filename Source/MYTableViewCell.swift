@@ -24,8 +24,8 @@ public class MYCellModel : MYViewModel {
         }
     }
     
-    public init(cellClass: AnyClass, height: CGFloat = 44, selectionHandler: MYSelectionHandler? = nil) {
-        self.identifier = classNameOf(cellClass)
+    public init<T: MYTableViewCell>(cell: T.Type, height: CGFloat = 44, selectionHandler: MYSelectionHandler? = nil) {
+        self.identifier = cell.reuseIdentifier
         
         super.init(selectionHandler: selectionHandler)
         self.height = height
