@@ -12,8 +12,8 @@ public class MYCellModel : MYViewModel {
     let identifier: String
     internal(set) var row: Int = 0
     internal(set) var section: Int = 0
-    public var cellHeight: CGFloat = 44
-    public var cellSelectionEnabled = true
+    public var height: CGFloat = 44
+    public var selectable = true
     public var editable = false
     public var calculatedHeight: CGFloat?
     public var dynamicHeightEnabled: Bool = false {
@@ -24,8 +24,8 @@ public class MYCellModel : MYViewModel {
     
     public init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.my_className(cellClass)
-        self.cellHeight = height
-        super.init(userData: userData, selectionHandler: selectionHandler)
+        self.height = height
+        super.init(selectionHandler: selectionHandler)
     }
     
     public func slide(_ animation: MYAnimation = .None) -> Self {
@@ -36,7 +36,7 @@ public class MYCellModel : MYViewModel {
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     class var identifier: String { return String.my_className(self) }
-    var cellSelectionEnabled = true
+    var selectable = true
     private weak var delegate: MYBaseViewDelegate?
     weak var cellModel: MYCellModel?
     
@@ -56,7 +56,7 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func configureCell(data: MYCellModel) {
         cellModel = data
         delegate = data
-        cellSelectionEnabled = data.cellSelectionEnabled
+        selectable = data.selectable
         unhighlight(false)
     }
    
@@ -95,21 +95,21 @@ public extension MYTableViewCell {
 public extension MYTableViewCell {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
        super.touchesBegan(touches, withEvent: event)
-        if cellSelectionEnabled {
+        if selectable {
             highlight(false)
         }
     }
     
     override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
         super.touchesCancelled(touches, withEvent: event)
-        if cellSelectionEnabled {
+        if selectable {
             unhighlight(false)
         }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
-        if cellSelectionEnabled {
+        if selectable {
             emitSelectedEvent(self)
         }
     }

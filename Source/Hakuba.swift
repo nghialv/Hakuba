@@ -204,7 +204,7 @@ extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if !cellModel.dynamicHeightEnabled {
-                return cellModel.cellHeight
+                return cellModel.height
             }
             if let h = cellModel.calculatedHeight {
                 return h

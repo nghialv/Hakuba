@@ -18,7 +18,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
     
     public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
         self.identifier = String.my_className(viewClass)
-        super.init(userData: userData, selectionHandler: selectionHandler)
+        super.init(selectionHandler: selectionHandler)
     }
     
     func slide() -> Self {
