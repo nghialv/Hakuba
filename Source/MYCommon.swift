@@ -12,8 +12,6 @@ public typealias MYSelectionHandler = (MYBaseViewProtocol) -> ()
 public typealias MYAnimation = UITableViewRowAnimation
 
 public protocol MYBaseViewProtocol {
-    func highlight(Bool)
-    func unhighlight(Bool)
     func emitSelectedEvent(MYBaseViewProtocol)
 }
 

@@ -50,8 +50,10 @@ public class Hakuba : NSObject {
     }
     
     public func deselectAllCells() {
-        for view in selectedCells {
-            view.unhighlight(true)
+        for cell in selectedCells {
+            if let cellmodel = (cell as? MYTableViewCell)?.cellModel {
+                tableView?.deselectRowAtIndexPath(cellmodel.indexPath, animated: true)
+            }
         }
         selectedCells.removeAll(keepCapacity: false)
     }
@@ -220,7 +222,7 @@ extension Hakuba : UITableViewDelegate {
         }
         return 0
     }
-   
+
     /*
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
@@ -230,9 +232,17 @@ extension Hakuba : UITableViewDelegate {
     }
     */
     
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let cellmodel = self.cellViewModelAtIndexPath(indexPath) {
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? MYTableViewCell {
+                cellmodel.didSelect(cell)
+            }
+        }
+    }
+    
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let header = self.sections.my_get(section)?.header {
-            return header.isEnabled ? header.viewHeight : 0
+            return header.isEnabled ? header.height : 0
         }
         return 0
     }
@@ -252,7 +262,7 @@ extension Hakuba : UITableViewDelegate {
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if let footer = self.sections.my_get(section)?.footer {
-            return footer.isEnabled ? footer.viewHeight : 0
+            return footer.isEnabled ? footer.height : 0
         }
         return 0
     }

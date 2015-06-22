@@ -12,7 +12,7 @@ public class MYHeaderFooterViewModel : MYViewModel {
     let identifier: String
     internal(set) var section: Int = 0
     internal(set) var isHeader = true
-    public var viewHeight: CGFloat = 44
+    
     public var isEnabled = true
     public var selectionEnabled = true
     
