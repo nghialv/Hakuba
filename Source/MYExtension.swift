@@ -25,16 +25,37 @@ extension UITableViewCell {
     }
 }
 
+// MARK - UITableViewHeaderFooterView
+
+extension UITableViewHeaderFooterView {
+    static var nibName: String {
+        return classNameOf(self)
+    }
+    
+    static var reuseIdentifier: String {
+        return classNameOf(self)
+    }
+}
+
 // MARK - UITableView
 
 extension UITableView {
-    func registerNibForClass<T: UITableViewCell>(t: T.Type) {
+    func registerNibForCellClass<T: UITableViewCell>(t: T.Type) {
         let nib = UINib(nibName: t.nibName, bundle: nil)
         registerNib(nib, forCellReuseIdentifier: t.reuseIdentifier)
     }
     
-    func registerClass<T: UITableViewCell>(t: T.Type) {
+    func registerCellClass<T: UITableViewCell>(t: T.Type) {
         registerClass(t, forCellReuseIdentifier: t.reuseIdentifier)
+    }
+   
+    func registerNibForHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) {
+        let nib = UINib(nibName: t.nibName, bundle: nil)
+        registerNib(nib, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
+    }
+    
+    func registerHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) {
+        registerClass(t, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
     }
     
     func dequeueCell<T: UITableViewCell>(t: T.Type, forIndexPath indexPath: NSIndexPath) -> T {

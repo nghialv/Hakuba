@@ -322,53 +322,23 @@ extension Hakuba : UITableViewDataSource {
 
 // MARK - register cell and header/footer view
 public extension Hakuba {
-    func registerCellClass(cellClass: AnyClass) -> Self {
-        return registerCellClasses(cellClass)
-    }
-    
-    func registerCellClasses(cellClasses: AnyClass...) -> Self {
-        for cellClass in cellClasses {
-            let identifier = classNameOf(cellClass)
-            tableView?.registerClass(cellClass, forCellReuseIdentifier: identifier)
-        }
+    func registerNibForCellClass<T: UITableViewCell>(t: T.Type) -> Self {
+        tableView?.registerNibForCellClass(t)
         return self
     }
     
-    func registerCellNib(cellClass: AnyClass) -> Self {
-        return registerCellNibs(cellClass)
-    }
-    
-    func registerCellNibs(cellClasses: AnyClass...) -> Self {
-        for cellClass in cellClasses {
-            let identifier = classNameOf(cellClass)
-            let nib = UINib(nibName: identifier, bundle: nil)
-            tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
-        }
+    func registerCellClass<T: UITableViewCell>(t: T.Type) -> Self {
+        tableView?.registerCellClass(t)
         return self
     }
     
-    func registerHeaderFooterViewClass(viewClass: AnyClass) -> Self {
-        return registerHeaderFooterViewClasses(viewClass)
-    }
-    
-    func registerHeaderFooterViewClasses(viewClasses: AnyClass...) -> Self {
-        for viewClass in viewClasses {
-            let identifier = classNameOf(viewClass)
-            tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
-        }
+    func registerNibForHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) -> Self {
+        tableView?.registerNibForHeaderFooterClass(t)
         return self
     }
     
-    func registerHeaderFooterViewNib(viewClass: AnyClass) -> Self {
-        return registerHeaderFooterViewNibs(viewClass)
-    }
-    
-    func registerHeaderFooterViewNibs(viewClasses: AnyClass...) -> Self {
-        for viewClass in viewClasses {
-            let identifier = classNameOf(viewClass)
-            let nib = UINib(nibName: identifier, bundle: nil)
-            tableView?.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
-        }
+    func registerHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) -> Self {
+        tableView?.registerHeaderFooterClass(t)
         return self
     }
 }
