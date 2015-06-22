@@ -54,9 +54,9 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func setup() {
     }
     
-    public func configureCell(data: MYCellModel) {
-        cellModel = data
-        delegate = data
+    public func configureCell(cellModel: MYCellModel) {
+        self.cellModel = cellModel
+        delegate = cellModel
         //unhighlight(false)
     }
    

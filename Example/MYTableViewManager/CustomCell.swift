@@ -20,10 +20,10 @@ class CustomCellModel : MYCellModel {
 class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: MYLabel!
     
-    override func configureCell(data: MYCellModel) {
-        super.configureCell(data)
-        if let title = (data as? CustomCellModel)?.title {
-            titleLabel.text = title + "(\(data.section),\(data.row))"
+    override func configureCell(cellModel: MYCellModel) {
+        super.configureCell(cellModel)
+        if let title = (cellModel as? CustomCellModel)?.title {
+            titleLabel.text = title + "(\(cellModel.section),\(cellModel.row))"
         }
     }
 }

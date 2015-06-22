@@ -19,8 +19,7 @@ public protocol MYViewModelDelegate : class {
 public class MYViewModel : NSObject, MYBaseViewDelegate {
     public var selectable = true
     public var height: CGFloat = 44
-    
-    var selectionHandler: MYSelectionHandler?
+    public var selectionHandler: MYSelectionHandler?
     weak var delegate: MYViewModelDelegate?
     
     public init(selectionHandler: MYSelectionHandler?) {
@@ -28,9 +27,9 @@ public class MYViewModel : NSObject, MYBaseViewDelegate {
     }
     
     public func didSelect(view: MYBaseViewProtocol) {
-        // TODO: check selectable
-        
-        delegate?.didCallSelectionHandler(view)
-        selectionHandler?(view)
+        if selectable {
+            delegate?.didCallSelectionHandler(view)
+            selectionHandler?(view)
+        }
     }
 }
