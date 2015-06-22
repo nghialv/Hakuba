@@ -13,17 +13,17 @@ class CustomCellModel : MYCellModel {
     
     init(title: String, selectionHandler: MYSelectionHandler) {
         self.title = title
-        super.init(cellClass: CustomCell.self, height: 40, userData: nil, selectionHandler: selectionHandler)
+        super.init(cell: CustomCell.self, height: 40, selectionHandler: selectionHandler)
     }
 }
 
 class CustomCell : MYTableViewCell {
     @IBOutlet weak var titleLabel: MYLabel!
     
-    override func configureCell(data: MYCellModel) {
-        super.configureCell(data)
-        if let title = (data as? CustomCellModel)?.title {
-            titleLabel.text = title + "(\(data.section),\(data.row))"
+    override func configureCell(cellModel: MYCellModel) {
+        super.configureCell(cellModel)
+        if let title = (cellModel as? CustomCellModel)?.title {
+            titleLabel.text = title + "(\(cellModel.section),\(cellModel.row))"
         }
     }
 }

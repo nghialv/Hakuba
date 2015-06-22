@@ -9,7 +9,10 @@
 import Foundation
 
 enum ReloadState {
-    case Reset, Add, Remove, Begin
+    case Reset
+    case Add
+    case Remove
+    case Begin
 }
 
 class MYReloadTracker {

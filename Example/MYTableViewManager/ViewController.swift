@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hakuba = Hakuba(tableView: tableView)
-        hakuba.registerCellNib(CustomCell)
+        hakuba.registerNibForCellClass(CustomCell)
       
         // top section
         let cellmodels0 = (0..<2).map { [weak self] i -> MYCellModel in

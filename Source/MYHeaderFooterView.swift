@@ -12,13 +12,12 @@ public class MYHeaderFooterViewModel : MYViewModel {
     let identifier: String
     internal(set) var section: Int = 0
     internal(set) var isHeader = true
-    public var viewHeight: CGFloat = 44
-    public var isEnabled = true
-    public var selectionEnabled = true
     
-    public init(viewClass: AnyClass, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
-        self.identifier = String.my_className(viewClass)
-        super.init(userData: userData, selectionHandler: selectionHandler)
+    public var isEnabled = true
+    
+    public init<T: MYHeaderFooterView>(view: T.Type, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
+        self.identifier = view.reuseIdentifier
+        super.init(selectionHandler: selectionHandler)
     }
     
     func slide() -> Self {
@@ -32,9 +31,8 @@ public class MYHeaderFooterViewModel : MYViewModel {
 }
 
 public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtocol {
-    class var identifier: String { return String.my_className(self) }
     private weak var delegate: MYBaseViewDelegate?
-    public var selectionEnabled = true
+    public var selectable = true
     
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -54,9 +52,9 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     public func setup() {
     }
     
-    public func configureView(data: MYHeaderFooterViewModel) {
-        self.delegate = data
-        selectionEnabled = data.selectionEnabled
+    public func configureView(viewModel: MYHeaderFooterViewModel) {
+        self.delegate = viewModel
+        selectable = viewModel.selectable
     }
     
     public func emitSelectedEvent(view: MYBaseViewProtocol) {
@@ -81,21 +79,21 @@ public extension MYHeaderFooterView {
 public extension MYHeaderFooterView {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
-        if selectionEnabled {
+        if selectable {
             highlight(false)
         }
     }
     
     override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
         super.touchesCancelled(touches, withEvent: event)
-        if selectionEnabled {
+        if selectable {
             unhighlight(false)
         }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesEnded(touches, withEvent: event)
-        if selectionEnabled {
+        if selectable {
             emitSelectedEvent(self)
         }
     }

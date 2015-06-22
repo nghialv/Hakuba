@@ -7,12 +7,63 @@
 //
 
 import Foundation
+import UIKit
 
-extension String {
-    static func my_className(aClass: AnyClass) -> String {
-        return NSStringFromClass(aClass).componentsSeparatedByString(".").last!
+func classNameOf(aClass: AnyClass) -> String {
+    return NSStringFromClass(aClass).componentsSeparatedByString(".").last!
+}
+
+// MARK - UITableViewCell
+
+extension UITableViewCell {
+    static var nibName: String {
+        return classNameOf(self)
+    }
+    
+    static var reuseIdentifier: String {
+        return classNameOf(self)
     }
 }
+
+// MARK - UITableViewHeaderFooterView
+
+extension UITableViewHeaderFooterView {
+    static var nibName: String {
+        return classNameOf(self)
+    }
+    
+    static var reuseIdentifier: String {
+        return classNameOf(self)
+    }
+}
+
+// MARK - UITableView
+
+extension UITableView {
+    func registerNibForCellClass<T: UITableViewCell>(t: T.Type) {
+        let nib = UINib(nibName: t.nibName, bundle: nil)
+        registerNib(nib, forCellReuseIdentifier: t.reuseIdentifier)
+    }
+    
+    func registerCellClass<T: UITableViewCell>(t: T.Type) {
+        registerClass(t, forCellReuseIdentifier: t.reuseIdentifier)
+    }
+   
+    func registerNibForHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) {
+        let nib = UINib(nibName: t.nibName, bundle: nil)
+        registerNib(nib, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
+    }
+    
+    func registerHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) {
+        registerClass(t, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
+    }
+    
+    func dequeueCell<T: UITableViewCell>(t: T.Type, forIndexPath indexPath: NSIndexPath) -> T {
+        return dequeueReusableCellWithIdentifier(t.reuseIdentifier, forIndexPath: indexPath) as! T
+    }
+}
+
+// MARK - NSRange
 
 extension NSRange {
     init(range: Range<Int>) {
@@ -20,6 +71,8 @@ extension NSRange {
         self.length = range.endIndex - range.startIndex
     }
 }
+
+// MARK - Array
 
 extension Array {
     func my_hasIndex(index: Int) -> Bool {

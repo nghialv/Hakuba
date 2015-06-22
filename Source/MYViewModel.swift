@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol MYViewModelDelegate : class {
     func didCallSelectionHandler(view: MYBaseViewProtocol)
@@ -16,17 +17,19 @@ public protocol MYViewModelDelegate : class {
 }
 
 public class MYViewModel : NSObject, MYBaseViewDelegate {
-    var action: MYSelectionHandler?
+    public var selectable = true
+    public var height: CGFloat = 44
+    public var selectionHandler: MYSelectionHandler?
     weak var delegate: MYViewModelDelegate?
-    var userData: AnyObject?
     
-    public init(userData: AnyObject? = nil, selectionHandler: MYSelectionHandler?) {
-        self.userData = userData
-        self.action = selectionHandler
+    public init(selectionHandler: MYSelectionHandler?) {
+        self.selectionHandler = selectionHandler
     }
     
     public func didSelect(view: MYBaseViewProtocol) {
-        delegate?.didCallSelectionHandler(view)
-        action?(view)
+        if selectable {
+            delegate?.didCallSelectionHandler(view)
+            selectionHandler?(view)
+        }
     }
 }

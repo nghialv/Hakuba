@@ -12,20 +12,23 @@ public class MYCellModel : MYViewModel {
     let identifier: String
     internal(set) var row: Int = 0
     internal(set) var section: Int = 0
-    public var cellHeight: CGFloat = 44
-    public var cellSelectionEnabled = true
+    var indexPath: NSIndexPath {
+        return NSIndexPath(forRow: row, inSection: section)
+    }
+    var calculatedHeight: CGFloat?
+    
     public var editable = false
-    public var calculatedHeight: CGFloat?
     public var dynamicHeightEnabled: Bool = false {
         didSet {
             calculatedHeight = nil
         }
     }
     
-    public init(cellClass: AnyClass, height: CGFloat = 44, userData: AnyObject?, selectionHandler: MYSelectionHandler? = nil) {
-        self.identifier = String.my_className(cellClass)
-        self.cellHeight = height
-        super.init(userData: userData, selectionHandler: selectionHandler)
+    public init<T: MYTableViewCell>(cell: T.Type, height: CGFloat = 44, selectionHandler: MYSelectionHandler? = nil) {
+        self.identifier = cell.reuseIdentifier
+        
+        super.init(selectionHandler: selectionHandler)
+        self.height = height
     }
     
     public func slide(_ animation: MYAnimation = .None) -> Self {
@@ -35,8 +38,6 @@ public class MYCellModel : MYViewModel {
 }
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
-    class var identifier: String { return String.my_className(self) }
-    var cellSelectionEnabled = true
     private weak var delegate: MYBaseViewDelegate?
     weak var cellModel: MYCellModel?
     
@@ -53,64 +54,19 @@ public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     public func setup() {
     }
     
-    public func configureCell(data: MYCellModel) {
-        cellModel = data
-        delegate = data
-        cellSelectionEnabled = data.cellSelectionEnabled
-        unhighlight(false)
+    public func configureCell(cellModel: MYCellModel) {
+        self.cellModel = cellModel
+        delegate = cellModel
+        //unhighlight(false)
     }
    
     public func emitSelectedEvent(view: MYBaseViewProtocol) {
         delegate?.didSelect(view)
     }
     
-    public func willAppear(data: MYCellModel) {
-        
+    public func willAppear(data: MYCellModel, tableView: UITableView) {
     }
     
-    public func didDisappear(data: MYCellModel) {
-        
-    }
-}
-
-// MARK - Hightlight
-public extension MYTableViewCell {
-    // ignore the default handling
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
-    }
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-    }
-    
-    public func highlight(animated: Bool) {
-        super.setHighlighted(true, animated: animated)
-    }
-    
-    public func unhighlight(animated: Bool) {
-        super.setHighlighted(false, animated: animated)
-    }
-}
-
-// MARK - Touch events
-public extension MYTableViewCell {
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-       super.touchesBegan(touches, withEvent: event)
-        if cellSelectionEnabled {
-            highlight(false)
-        }
-    }
-    
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
-        super.touchesCancelled(touches, withEvent: event)
-        if cellSelectionEnabled {
-            unhighlight(false)
-        }
-    }
-    
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        super.touchesEnded(touches, withEvent: event)
-        if cellSelectionEnabled {
-            emitSelectedEvent(self)
-        }
+    public func didDisappear(data: MYCellModel, tableView: UITableView) {
     }
 }

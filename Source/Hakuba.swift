@@ -50,8 +50,10 @@ public class Hakuba : NSObject {
     }
     
     public func deselectAllCells() {
-        for view in selectedCells {
-            view.unhighlight(true)
+        for cell in selectedCells {
+            if let cellmodel = (cell as? MYTableViewCell)?.cellModel {
+                tableView?.deselectRowAtIndexPath(cellmodel.indexPath, animated: true)
+            }
         }
         selectedCells.removeAll(keepCapacity: false)
     }
@@ -204,7 +206,7 @@ extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if !cellModel.dynamicHeightEnabled {
-                return cellModel.cellHeight
+                return cellModel.height
             }
             if let h = cellModel.calculatedHeight {
                 return h
@@ -220,7 +222,7 @@ extension Hakuba : UITableViewDelegate {
         }
         return 0
     }
-   
+
     /*
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
@@ -230,9 +232,17 @@ extension Hakuba : UITableViewDelegate {
     }
     */
     
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let cellmodel = self.cellViewModelAtIndexPath(indexPath) {
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? MYTableViewCell {
+                cellmodel.didSelect(cell)
+            }
+        }
+    }
+    
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let header = self.sections.my_get(section)?.header {
-            return header.isEnabled ? header.viewHeight : 0
+            return header.isEnabled ? header.height : 0
         }
         return 0
     }
@@ -252,7 +262,7 @@ extension Hakuba : UITableViewDelegate {
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if let footer = self.sections.my_get(section)?.footer {
-            return footer.isEnabled ? footer.viewHeight : 0
+            return footer.isEnabled ? footer.height : 0
         }
         return 0
     }
@@ -273,7 +283,7 @@ extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if let myCell = cell as? MYTableViewCell {
-                myCell.willAppear(cellModel)
+                myCell.willAppear(cellModel, tableView: tableView)
             }
         }
     }
@@ -281,7 +291,7 @@ extension Hakuba : UITableViewDelegate {
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if let myCell = cell as? MYTableViewCell {
-                myCell.didDisappear(cellModel)
+                myCell.didDisappear(cellModel, tableView: tableView)
             }
         }
     }
@@ -322,53 +332,23 @@ extension Hakuba : UITableViewDataSource {
 
 // MARK - register cell and header/footer view
 public extension Hakuba {
-    func registerCellClass(cellClass: AnyClass) -> Self {
-        return registerCellClasses(cellClass)
-    }
-    
-    func registerCellClasses(cellClasses: AnyClass...) -> Self {
-        for cellClass in cellClasses {
-            let identifier = String.my_className(cellClass)
-            tableView?.registerClass(cellClass, forCellReuseIdentifier: identifier)
-        }
+    func registerNibForCellClass<T: UITableViewCell>(t: T.Type) -> Self {
+        tableView?.registerNibForCellClass(t)
         return self
     }
     
-    func registerCellNib(cellClass: AnyClass) -> Self {
-        return registerCellNibs(cellClass)
-    }
-    
-    func registerCellNibs(cellClasses: AnyClass...) -> Self {
-        for cellClass in cellClasses {
-            let identifier = String.my_className(cellClass)
-            let nib = UINib(nibName: identifier, bundle: nil)
-            tableView?.registerNib(nib, forCellReuseIdentifier: identifier)
-        }
+    func registerCellClass<T: UITableViewCell>(t: T.Type) -> Self {
+        tableView?.registerCellClass(t)
         return self
     }
     
-    func registerHeaderFooterViewClass(viewClass: AnyClass) -> Self {
-        return registerHeaderFooterViewClasses(viewClass)
-    }
-    
-    func registerHeaderFooterViewClasses(viewClasses: AnyClass...) -> Self {
-        for viewClass in viewClasses {
-            let identifier = String.my_className(viewClass)
-            tableView?.registerClass(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
-        }
+    func registerNibForHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) -> Self {
+        tableView?.registerNibForHeaderFooterClass(t)
         return self
     }
     
-    func registerHeaderFooterViewNib(viewClass: AnyClass) -> Self {
-        return registerHeaderFooterViewNibs(viewClass)
-    }
-    
-    func registerHeaderFooterViewNibs(viewClasses: AnyClass...) -> Self {
-        for viewClass in viewClasses {
-            let identifier = String.my_className(viewClass)
-            let nib = UINib(nibName: identifier, bundle: nil)
-            tableView?.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
-        }
+    func registerHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) -> Self {
+        tableView?.registerHeaderFooterClass(t)
         return self
     }
 }
