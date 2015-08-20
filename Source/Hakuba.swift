@@ -16,7 +16,14 @@ public protocol SectionIndex {
 @objc public protocol HakubaDelegate : class {
     optional func scrollViewDidScroll(scrollView: UIScrollView)
     optional func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
+	optional func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+	
     optional func scrollViewWillBeginDragging(scrollView: UIScrollView)
+	optional func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
+	optional func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+	
+	optional func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView)
+	optional func scrollViewDidScrollToTop(scrollView: UIScrollView)
 }
 
 public class Hakuba : NSObject {
@@ -355,6 +362,15 @@ public extension Hakuba {
 
 // MARK - UIScrollViewDelegate
 extension Hakuba {
+	public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if section == willFloatingSection {
+			if let view = view as? MYHeaderFooterView {
+				view.didChangeFloatingState(true)
+				willFloatingSection = -1
+			}
+		}
+	}
+	
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
         
@@ -385,23 +401,34 @@ extension Hakuba {
             self.loadmoreHandler?()
         }
     }
-    
-    public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if section == willFloatingSection {
-            if let view = view as? MYHeaderFooterView {
-                view.didChangeFloatingState(true)
-                willFloatingSection = -1
-            }
-        }
-    }
-
+	
     public func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDecelerating?(scrollView)
     }
-    
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        delegate?.scrollViewWillBeginDragging?(scrollView)
-    }
+	
+	public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+		delegate?.scrollViewDidEndDecelerating?(scrollView)
+	}
+	
+	public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+		delegate?.scrollViewWillBeginDragging?(scrollView)
+	}
+	
+	public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		delegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+	}
+	
+	public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+	}
+	
+	public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+		delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
+	}
+	
+	public func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+		delegate?.scrollViewDidScrollToTop?(scrollView)
+	}
 }
 
 // MARK - private methods
