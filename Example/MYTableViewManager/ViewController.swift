@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         let cellmodels0 = (0..<2).map { [weak self] i -> MYCellModel in
             let title = "Section 0 : index \(i)"
             return CustomCellModel(title: title) { _ in
-                println("Did select new cell : \(i)")
+                print("Did select new cell : \(i)")
                 self?.pushChildViewController()
             }
         }
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         
         let cellmodels1 = titles.map { [weak self] title -> MYCellModel in
             let data = CustomCellModel(title: "Section 1: " + title) { _ in
-                println("Did select cell with title = \(title)")
+                print(")Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
             data.dynamicHeightEnabled = true

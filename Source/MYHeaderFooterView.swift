@@ -34,16 +34,11 @@ public class MYHeaderFooterView : UITableViewHeaderFooterView, MYBaseViewProtoco
     private weak var delegate: MYBaseViewDelegate?
     public var selectable = true
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
+	
     public override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setup()
@@ -77,21 +72,21 @@ public extension MYHeaderFooterView {
 
 // MARK - Touch events
 public extension MYHeaderFooterView {
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         if selectable {
             highlight(false)
         }
     }
-    
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
+	
+	override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
         if selectable {
             unhighlight(false)
         }
     }
-    
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+	
+	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)
         if selectable {
             emitSelectedEvent(self)

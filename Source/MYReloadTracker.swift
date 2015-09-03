@@ -50,7 +50,7 @@ class MYReloadTracker {
         originalIndexes.my_remove(range)
         for i in ri {
             var newIndexes: [Int] = []
-            if removedIndexes.my_indexOf(i) == nil {
+            if removedIndexes.indexOf(i) == nil {
                 newIndexes.append(i)
             }
             removedIndexes += newIndexes

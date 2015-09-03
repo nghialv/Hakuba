@@ -138,14 +138,14 @@ public extension MYSection {
     }
    
     func remove(cellmodel: MYCellModel) -> Self {
-        if let index = find(items, cellmodel) {
+        if let index = items.indexOf(cellmodel) {
             return remove(index)
         }
         return self
     }
     
     // MARK - slide
-    func slide(_ animation: MYAnimation = .None) -> Self {
+    func slide(animation: MYAnimation = .None) -> Self {
         switch reloadTracker.state {
         case .Add:
             delegate?.insertRows(reloadTracker.getIndexPaths(index), animation: animation)

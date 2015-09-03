@@ -83,21 +83,14 @@ extension Array {
         let mIndex = max(0, index)
         return min(count, mIndex)
     }
-   
-    func my_indexOf<T: Equatable>(item: T) -> Int? {
-        if item is Element {
-            return find(unsafeBitCast(self, [T].self), item)
-        }
-        return nil
-    }
-    
+	
     func my_getSafeRange(range: Range<Int>) -> Range<Int>? {
         let start = max(0, range.startIndex)
         let end = min(count, range.endIndex)
         return start <= end ? Range<Int>(start: start, end: end) : nil
     }
     
-    func my_get(index: Int) -> T? {
+    func my_get(index: Int) -> Element? {
         return my_hasIndex(index) ? self[index] : nil
     }
    
@@ -139,7 +132,7 @@ extension Array {
     }
     
     func my_each(exe: (Int, Element) -> ()) {
-        for (index, item) in enumerate(self) {
+        for (index, item) in enumerate() {
             exe(index, item)
         }
     }

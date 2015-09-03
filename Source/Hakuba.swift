@@ -83,7 +83,7 @@ public class Hakuba : NSObject {
             if let s = sections.my_get(index) {
                 return s
             }
-            let length = index + 1 - sectionCount
+            //let length = index + 1 - sectionCount
             
             let newSections = (sectionCount...index).map { i -> MYSection in
                 let ns = MYSection()
@@ -142,7 +142,7 @@ public extension Hakuba {
         return self
     }
     
-    func slide(_ animation: MYAnimation = .None) -> Self {
+    func slide(animation: MYAnimation = .None) -> Self {
         // TODO : implementation
         tableView?.reloadData()
         insertedSectionsRange = (100, -1)
@@ -373,8 +373,8 @@ extension Hakuba {
 	
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
-        
-        if let indexPath = tableView?.indexPathsForVisibleRows()?.first as? NSIndexPath {
+		
+		if let indexPath = tableView?.indexPathsForVisibleRows?.first {
             if currentTopSection != indexPath.section {
                 if let headerView = tableView?.headerViewForSection(currentTopSection) as? MYHeaderFooterView {
                     headerView.didChangeFloatingState(false)

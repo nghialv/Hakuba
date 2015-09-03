@@ -31,7 +31,7 @@ public class MYCellModel : MYViewModel {
         self.height = height
     }
     
-    public func slide(_ animation: MYAnimation = .None) -> Self {
+    public func slide(animation: MYAnimation = .None) -> Self {
         delegate?.reloadView(row, section: section, animation: animation)
         return self
     }
@@ -39,9 +39,9 @@ public class MYCellModel : MYViewModel {
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     private weak var delegate: MYBaseViewDelegate?
-    weak var cellModel: MYCellModel?
-    
-    public required init(coder aDecoder: NSCoder) {
+    public internal(set) weak var cellModel: MYCellModel?
+	
+	public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
