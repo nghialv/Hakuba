@@ -20,7 +20,7 @@ public class MYViewModel : NSObject, MYBaseViewDelegate {
     public var selectable = true
     public var height: CGFloat = 44
     public var selectionHandler: MYSelectionHandler?
-    weak var delegate: MYViewModelDelegate?
+    public weak var delegate: MYViewModelDelegate?
     
     public init(selectionHandler: MYSelectionHandler?) {
         self.selectionHandler = selectionHandler
