@@ -14,6 +14,7 @@ public protocol MYViewModelDelegate : class {
     func reloadView(index: Int, section: Int, animation: MYAnimation)
     func reloadHeader(section: Int)
     func reloadFooter(section: Int)
+	func deselectRow(indexPath: NSIndexPath, animated: Bool)
 }
 
 public class MYViewModel : NSObject, MYBaseViewDelegate {

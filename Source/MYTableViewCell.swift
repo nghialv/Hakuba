@@ -35,6 +35,10 @@ public class MYCellModel : MYViewModel {
         delegate?.reloadView(row, section: section, animation: animation)
         return self
     }
+	
+	public func deselect(animated: Bool) {
+		delegate?.deselectRow(indexPath, animated: animated)
+	}
 }
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {

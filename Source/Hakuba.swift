@@ -206,6 +206,10 @@ extension Hakuba : MYViewModelDelegate {
             }
         }
     }
+	
+	public func deselectRow(indexPath: NSIndexPath, animated: Bool) {
+		tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
+	}
 }
 
 // MARK - UITableViewDelegate
