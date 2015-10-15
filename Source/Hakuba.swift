@@ -454,6 +454,8 @@ private extension Hakuba {
         cell.layoutIfNeeded()
         
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-        return size.height + 1.0
+        let separatorHeight: CGFloat = tableView?.separatorStyle == .None ? 0.0 : 1.0
+        
+        return size.height + separatorHeight
     }
 }
