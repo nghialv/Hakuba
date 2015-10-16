@@ -54,6 +54,7 @@ public class Hakuba : NSObject {
         self.tableView = tableView
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     public func deselectAllCells() {
@@ -210,6 +211,7 @@ extension Hakuba : MYViewModelDelegate {
 
 // MARK - UITableViewDelegate
 extension Hakuba : UITableViewDelegate {
+    /*
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if !cellModel.dynamicHeightEnabled {
@@ -229,15 +231,14 @@ extension Hakuba : UITableViewDelegate {
         }
         return 0
     }
-
-    /*
+*/
+    
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
-            return cellModel.cellHeight
+            return cellModel.height
         }
         return 0
     }
-    */
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cellmodel = self.cellViewModelAtIndexPath(indexPath) {
