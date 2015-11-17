@@ -222,6 +222,7 @@ extension Hakuba : UITableViewDelegate {
                 heightCalculationCells[cellModel.identifier] = tableView.dequeueReusableCellWithIdentifier(cellModel.identifier) as? MYTableViewCell
             }
             if let cell = heightCalculationCells[cellModel.identifier] {
+                cell.bounds = CGRectMake(0, 0, tableView.bounds.width, cell.bounds.height)
                 cell.configureCell(cellModel)
                 cellModel.calculatedHeight = calculateHeightForConfiguredSizingCell(cell)
                 return cellModel.calculatedHeight!
