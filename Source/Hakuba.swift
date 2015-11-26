@@ -252,7 +252,7 @@ extension Hakuba : UITableViewDelegate {
         if let header = self.sections.my_get(section)?.header {
             return header.isEnabled ? header.height : 0
         }
-        return 0
+        return self.tableView?.style == UITableViewStyle.Grouped ? CGFloat(FLT_MIN) : 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
