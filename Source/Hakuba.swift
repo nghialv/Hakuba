@@ -71,6 +71,7 @@ public class Hakuba : NSObject {
         heightCalculationCells = [:]
         currentTopSection = 0
         willFloatingSection = -1
+        tableView?.reloadData()
         return self
     }
     
