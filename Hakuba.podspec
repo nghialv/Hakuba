@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "Hakuba"
-  s.version      = "1.3.1"
+  s.version      = "1.3.2"
   s.summary      = "A new way to manage UITableView"
   s.homepage     = "https://github.com/beng341/Hakuba"
   s.license      = { :type => "MIT", :file => "LICENSE" }
