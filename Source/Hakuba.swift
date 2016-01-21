@@ -43,7 +43,7 @@ public class Hakuba : NSObject {
     private var heightCalculationCells: [String: MYTableViewCell] = [:]
     private var currentTopSection = 0
     private var willFloatingSection = -1
-    private var insertedSectionsRange: (Int, Int) = (100, -1)
+    private var insertedSectionsRange: (Int, Int) = (1000, -1)
     
     // inserting or deleting rows
     public var cellEditable = false
@@ -115,7 +115,7 @@ public class Hakuba : NSObject {
         let length = insertedSectionsRange.1 - insertedSectionsRange.0
         if length > 0 {
             let insertSet: NSIndexSet =  NSIndexSet(indexesInRange: NSMakeRange(insertedSectionsRange.0, length))
-            insertedSectionsRange = (100, -1)
+            insertedSectionsRange = (1000, -1)
             tableView?.insertSections(insertSet, withRowAnimation: animation)
             return true
         }
@@ -146,7 +146,7 @@ public extension Hakuba {
     func slide(animation: MYAnimation = .None) -> Self {
         // TODO : implementation
         tableView?.reloadData()
-        insertedSectionsRange = (100, -1)
+        insertedSectionsRange = (1000, -1)
         // reset all section reload tracker
         for sec in sections {
             sec.didReloadTableView()
