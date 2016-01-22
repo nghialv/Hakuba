@@ -56,6 +56,11 @@ public class Hakuba : NSObject {
         tableView.dataSource = self
     }
     
+    deinit {
+        tableView?.delegate = nil
+        tableView?.dataSource = nil
+    }
+    
     public func deselectAllCells() {
         for cell in selectedCells {
             if let cellmodel = (cell as? MYTableViewCell)?.cellModel {
