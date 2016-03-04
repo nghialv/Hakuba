@@ -54,6 +54,7 @@ public class Hakuba : NSObject {
         self.tableView = tableView
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     deinit {
@@ -219,6 +220,7 @@ extension Hakuba : MYViewModelDelegate {
 
 // MARK - UITableViewDelegate
 extension Hakuba : UITableViewDelegate {
+    /*
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
             if !cellModel.dynamicHeightEnabled {
@@ -238,15 +240,14 @@ extension Hakuba : UITableViewDelegate {
         }
         return 0
     }
-
-    /*
+*/
+    
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
-            return cellModel.cellHeight
+            return cellModel.height
         }
         return 0
     }
-    */
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cellmodel = self.cellViewModelAtIndexPath(indexPath) {
@@ -260,7 +261,7 @@ extension Hakuba : UITableViewDelegate {
         if let header = self.sections.my_get(section)?.header {
             return header.isEnabled ? header.height : 0
         }
-        return 0
+        return self.tableView?.style == UITableViewStyle.Grouped ? CGFloat(FLT_MIN) : 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -463,6 +464,8 @@ private extension Hakuba {
         cell.layoutIfNeeded()
         
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-        return size.height + 1.0
+        let separatorHeight: CGFloat = tableView?.separatorStyle == .None ? 0.0 : 1.0
+        
+        return size.height + separatorHeight
     }
 }
