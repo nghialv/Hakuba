@@ -10,9 +10,9 @@ import UIKit
 
 public class MYCellModel : MYViewModel {
     let identifier: String
-    internal(set) var row: Int = 0
-    internal(set) var section: Int = 0
-    var indexPath: NSIndexPath {
+    public internal(set) var row: Int = 0
+    public internal(set) var section: Int = 0
+    public var indexPath: NSIndexPath {
         return NSIndexPath(forRow: row, inSection: section)
     }
     var calculatedHeight: CGFloat?
@@ -35,11 +35,15 @@ public class MYCellModel : MYViewModel {
         delegate?.reloadView(row, section: section, animation: animation)
         return self
     }
+	
+	public func deselect(animated: Bool) {
+		delegate?.deselectRow(indexPath, animated: animated)
+	}
 }
 
 public class MYTableViewCell : UITableViewCell, MYBaseViewProtocol {
     private weak var delegate: MYBaseViewDelegate?
-    public internal(set) weak var cellModel: MYCellModel?
+    public private(set) weak var cellModel: MYCellModel?
 	
 	public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
