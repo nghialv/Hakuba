@@ -238,6 +238,8 @@ extension Hakuba : UITableViewDelegate {
         }
         return 0
     }
+    
+    
 
     /*
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -331,6 +333,10 @@ extension Hakuba : UITableViewDataSource {
             }
         }
         return UITableViewCell()
+    }
+    
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.sections.my_get(section)?.title
     }
     
     // inserting or deleting delegate

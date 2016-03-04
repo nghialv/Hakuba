@@ -33,6 +33,8 @@ public class MYSection {
         return reloadTracker.isChanged
     }
     
+    public var title: String = ""
+    
     public var header: MYHeaderFooterViewModel? {
         didSet {
             header?.section = index

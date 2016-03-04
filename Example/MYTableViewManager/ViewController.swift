@@ -38,7 +38,9 @@ class ViewController: UIViewController {
                 self?.pushChildViewController()
             }
         }
+        
         hakuba[Section.Top].reset(cellmodels0)
+        
         
         // center section
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
@@ -54,6 +56,7 @@ class ViewController: UIViewController {
             return data
         }
         delay(1.5) {
+            self.hakuba[Section.Center].title = "Sample"
             self.hakuba[Section.Center].append(cellmodels1)
                                        .slide()
             
