@@ -157,6 +157,14 @@ public extension Hakuba {
         }
         return self
     }
+    
+    public func cellForIndexPath(indexPath: NSIndexPath) -> MYTableViewCell? {
+        return self.tableView?.cellForRowAtIndexPath(indexPath) as? MYTableViewCell
+    }
+    
+    public func cellForViewModel(model: MYCellModel) -> MYTableViewCell? {
+        return self.cellForIndexPath(model.indexPath)
+    }
 }
 
 // MARK - MYSectionDelegate
