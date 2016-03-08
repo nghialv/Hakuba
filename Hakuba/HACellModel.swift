@@ -20,18 +20,15 @@ public class HACellModel: NSObject {
     public let reuseIdentifier: String
     public internal(set) var indexPath = NSIndexPath(forRow: 0, inSection: 0)
     public var selectionHandler: HASelectionHandler?
-    public var deselectionHandler: HADeselectionHandler?
 
     public var selectable = true
     public var editable = false
-
+    public var editingStyle: UITableViewCellEditingStyle = .None
+    public var shouldHighlight = true
+    
     public var height: CGFloat {
         get {
-            if dynamicHeightEnabled {
-                return calculateHeight()
-            } else {
-                return estimatedHeight
-            }
+            return dynamicHeightEnabled ? calculateHeight() : estimatedHeight
         }
         set {
             estimatedHeight = newValue
@@ -73,7 +70,7 @@ extension HACellModel {
     }
     
     func didSelect(cell: HACell) {
-        
+        selectionHandler?(cell)
     }
 }
 
@@ -97,6 +94,6 @@ private extension HACellModel {
         cell.layoutIfNeeded()
         
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-        return size.height + 1.0
+        return size.height + 1
     }
 }

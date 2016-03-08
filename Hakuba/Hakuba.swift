@@ -13,14 +13,12 @@ final public class Hakuba: NSObject {
     public weak var delegate: HakubaDelegate?
     public private(set) var sections: [HASection] = []
     
-    private let bumpTracker = HABumpTracker()
-    
     public var loadmoreHandler: (() -> ())?
     public var loadmoreEnabled = false
     public var loadmoreThreshold: CGFloat = 25
     
+    private let bumpTracker = HABumpTracker()
     private var offscreenCells: [String: HACell] = [:]
-    private var insertedSectionsRange: (Int, Int) = (100, -1)
     
     var currentTopSection = 0
     var willFloatingSection = -1
@@ -29,7 +27,6 @@ final public class Hakuba: NSObject {
         return sections.count
     }
     
-    // inserting or deleting rows
     public var cellEditable = false
     public var commitEditingHandler: ((UITableViewCellEditingStyle, NSIndexPath) -> ())?
     
@@ -189,21 +186,19 @@ extension Hakuba: HASectionDelegate, HACellModelDelegate {
     }
 }
 
-// MARK - UITableViewDelegate
+// MARK - UITableViewDelegate cell
 
 extension Hakuba: UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return getCellmodel(indexPath)?.height ?? 0
     }
     
-    /*
-    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    if let cellModel = self.cellViewModelAtIndexPath(indexPath) {
-    return cellModel.cellHeight
+//    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//    }
+    
+    public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
     }
-    return 0
-    }
-    */
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard let cellmodel = getCellmodel(indexPath), cell = tableView.cellForRowAtIndexPath(indexPath) as? HACell else {
@@ -213,44 +208,11 @@ extension Hakuba: UITableViewDelegate {
         cellmodel.didSelect(cell)
     }
     
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        if let header = self.sections.get(section)?.header {
-//            return header.isEnabled ? header.height : 0
-//        }
-        return 0
-    }
-    
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        if let header = self.sections.get(section)?.header {
-//            if !header.isEnabled {
-//                return nil
-//            }
-//            if let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(header.identifier) as? HAHeaderFooterView {
-//                headerView.configureView(header)
-//                return headerView
-//            }
-//        }
+    public func tableView(tableView: UITableView, willDeselectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return nil
     }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        if let footer = self.sections.get(section)?.footer {
-//            return footer.isEnabled ? footer.height : 0
-//        }
-        return 0
-    }
-    
-    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        if let footer = self.sections.get(section)?.footer {
-//            if !footer.isEnabled {
-//                return nil
-//            }
-//            if let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(footer.identifier) as? HAHeaderFooterView {
-//                footerView.configureView(footer)
-//                return footerView
-//            }
-//        }
-        return nil
+    public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -269,6 +231,64 @@ extension Hakuba: UITableViewDelegate {
 //        }
     }
     
+    public func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .None
+    }
+    
+    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    public func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
+    }
+    
+    public func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
+    }
+}
+
+// MARK - UITableViewDelegate header-footer
+
+extension Hakuba {
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        //        if let header = self.sections.get(section)?.header {
+        //            return header.isEnabled ? header.height : 0
+        //        }
+        return 0
+    }
+    
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //        if let header = self.sections.get(section)?.header {
+        //            if !header.isEnabled {
+        //                return nil
+        //            }
+        //            if let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(header.identifier) as? HAHeaderFooterView {
+        //                headerView.configureView(header)
+        //                return headerView
+        //            }
+        //        }
+        return nil
+    }
+    
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        //        if let footer = self.sections.get(section)?.footer {
+        //            return footer.isEnabled ? footer.height : 0
+        //        }
+        return 0
+    }
+    
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        //        if let footer = self.sections.get(section)?.footer {
+        //            if !footer.isEnabled {
+        //                return nil
+        //            }
+        //            if let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(footer.identifier) as? HAHeaderFooterView {
+        //                footerView.configureView(footer)
+        //                return footerView
+        //            }
+        //        }
+        return nil
+    }
+    
     public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if section == willFloatingSection {
             if let view = view as? HAHeaderFooterView {
@@ -276,6 +296,18 @@ extension Hakuba: UITableViewDelegate {
                 willFloatingSection = -1
             }
         }
+    }
+    
+    public func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        
+    }
+
+    
+    public func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        
+    }
+    
+    public func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
     }
 }
 

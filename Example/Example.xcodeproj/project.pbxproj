@@ -117,19 +117,19 @@
 		8C30CA4A1C8E71880008B717 /* Hakuba */ = {
 			isa = PBXGroup;
 			children = (
-				8C30CA4B1C8E71880008B717 /* ArrayExt.swift */,
 				8C30CA4C1C8E71880008B717 /* Common.swift */,
 				8C30CA4D1C8E71880008B717 /* HABumpTracker.swift */,
 				8C30CA4E1C8E71880008B717 /* HACell.swift */,
 				8C30CA4F1C8E71880008B717 /* HACellModel.swift */,
 				8C30CA501C8E71880008B717 /* HAHeaderFooterView.swift */,
 				8C30CA511C8E71880008B717 /* HAHeaderFooterViewModel.swift */,
+				8C30CA571C8E71880008B717 /* HASection.swift */,
+				8C30CA541C8E71880008B717 /* Hakuba.swift */,
 				8C30CA521C8E71880008B717 /* Hakuba+Registration.swift */,
 				8C30CA531C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift */,
-				8C30CA541C8E71880008B717 /* Hakuba.swift */,
 				8C30CA551C8E71880008B717 /* HakubaDelegate.swift */,
 				8C30CA561C8E71880008B717 /* HALabel.swift */,
-				8C30CA571C8E71880008B717 /* HASection.swift */,
+				8C30CA4B1C8E71880008B717 /* ArrayExt.swift */,
 				8C30CA581C8E71880008B717 /* RangeExt.swift */,
 				8C30CA591C8E71880008B717 /* UITableViewCellExt.swift */,
 				8C30CA5A1C8E71880008B717 /* UITableViewExt.swift */,

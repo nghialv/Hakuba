@@ -9,7 +9,6 @@
 import UIKit
 
 public class HAHeaderFooterView: UITableViewHeaderFooterView {
-    private weak var delegate: HABaseViewDelegate?
     public var selectable = true
     
     public required init?(coder aDecoder: NSCoder) {
@@ -27,13 +26,8 @@ public class HAHeaderFooterView: UITableViewHeaderFooterView {
     
     public func configureView(viewModel: HAHeaderFooterViewModel) {
     }
-    
-    public func emitSelectedEvent(view: HABaseViewProtocol) {
-        delegate?.didSelect(view)
-    }
-    
+   
     public func didChangeFloatingState(isFloating: Bool) {
-        
     }
 }
 

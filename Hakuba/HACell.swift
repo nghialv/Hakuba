@@ -11,26 +11,44 @@ import UIKit
 public class HACell: UITableViewCell {
     public private(set) weak var cellmodel: HACellModel?
     
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+    public func configureCell(cellmodel: HACellModel) {
+        self.cellmodel = cellmodel
+    }
+}
+
+// MARK - Cell events
+
+public extension HACell {
+    func willDisplay(tableView: UITableView) {
     }
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setup()
+    func willAppear(tableView: UITableView) {
     }
     
-    public func setup() {
+    func didDisappear(ableView: UITableView) {
     }
     
-    public func configureCell(cellModel: HACellModel) {
-        self.cellmodel = cellModel
+    func willSelect(tableView: UITableView) {
     }
     
-    public func willAppear(data: HACellModel, tableView: UITableView) {
+    func didSelect(tableView: UITableView) {
     }
     
-    public func didDisappear(data: HACellModel, tableView: UITableView) {
+    func willDeselect(tableView: UITableView) {
+    }
+    
+    func didDeselect(tableView: UITableView) {
+    }
+    
+    func willBeginEditing(tableView: UITableView) {
+    }
+    
+    func didEndEditing(tableView: UITableView) {
+    }
+    
+    func didHighlight(tableView: UITableView) {
+    }
+    
+    func didUnhighlight(tableView: UITableView) {
     }
 }

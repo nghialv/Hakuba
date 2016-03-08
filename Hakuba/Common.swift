@@ -37,16 +37,6 @@ public enum ItemBumpType {
     case ReloadFooter(Int)
 }
 
-
-
-public protocol HABaseViewProtocol {
-    func emitSelectedEvent(_: HABaseViewProtocol)
-}
-
-public protocol HABaseViewDelegate : class {
-    func didSelect(view: HABaseViewProtocol)
-}
-
 func classNameOf(aClass: AnyClass) -> String {
     return NSStringFromClass(aClass).componentsSeparatedByString(".").last!
 }
