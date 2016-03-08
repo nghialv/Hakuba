@@ -82,6 +82,10 @@ final public class Hakuba: NSObject {
         tableView?.delegate = nil
         tableView?.dataSource = nil
     }
+    
+    func bumpMe(animation: HAAnimation = .None) -> Self {
+        return self
+    }
 }
 
 
@@ -174,7 +178,7 @@ public extension Hakuba {
 
 extension Hakuba: HASectionDelegate, HACellModelDelegate {
     func bumpMe(type: SectionBumpType, animation: HAAnimation) {
-        
+        tableView?.reloadData()
     }
     
     func bumpMe(type: ItemBumpType) {
@@ -182,6 +186,14 @@ extension Hakuba: HASectionDelegate, HACellModelDelegate {
     }
     
     func getOffscreenCell(identifier: String) -> HACell {
+        if let cell = offscreenCells[identifier] {
+            return cell
+        }
+        
+        if let cell = tableView?.dequeueReusableCellWithIdentifier(identifier) as? HACell {
+            offscreenCells[identifier] = cell
+            return cell
+        }
         return HACell()
     }
     

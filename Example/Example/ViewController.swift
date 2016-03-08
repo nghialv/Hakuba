@@ -19,7 +19,7 @@ enum Section : Int, SectionIndex {
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private var hakuba: Hakuba!
+    private lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
     
     override func viewWillAppear(animated: Bool) {
         //hakuba?.deselectAllCells()
@@ -27,36 +27,39 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hakuba = Hakuba(tableView: tableView)
+        
         hakuba.registerCellByNib(CustomCell)
       
-        // top section
-        let cellmodels0 = (0..<2).map { [weak self] i -> HACellModel in
+        // Top section
+        
+        let topCellmodels = (0..<2).map { [weak self] i -> HACellModel in
             let title = "Section 0 : index \(i)"
+            
             return CustomCellModel(title: title) { _ in
                 print("Did select new cell : \(i)")
                 self?.pushChildViewController()
             }
         }
-        hakuba[Section.Top].reset(cellmodels0)
+        hakuba[Section.Top].reset(topCellmodels)
         
-        // center section
+        // Center section
+        
         let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
         let longTitle2 = "Support dynamic cell height from ios7"
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
-        let cellmodels1 = titles.map { [weak self] title -> HACellModel in
+        let centerCellmodels = titles.map { [weak self] title -> HACellModel in
             let data = CustomCellModel(title: "Section 1: " + title) { _ in
-                print(")Did select cell with title = \(title)")
+                print("Did select cell with title = \(title)")
                 self?.pushChildViewController()
             }
             data.dynamicHeightEnabled = true
             return data
         }
+        
         delay(1.5) {
-            self.hakuba[Section.Center].append(cellmodels1)
+            self.hakuba[Section.Center].append(centerCellmodels)
                                        .bump()
-            
             return
         }
         
@@ -72,15 +75,6 @@ class ViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewControllerWithIdentifier("ChildViewController") as! ChildViewController
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
     }
 }
 
