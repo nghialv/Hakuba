@@ -22,19 +22,18 @@ public extension HACell {
     func willDisplay(tableView: UITableView) {
     }
     
-    func willAppear(tableView: UITableView) {
+    func didEndDisplay(tableView: UITableView) {
     }
     
-    func didDisappear(ableView: UITableView) {
-    }
-    
-    func willSelect(tableView: UITableView) {
+    func willSelect(tableView: UITableView, indexPath: NSIndexPath) -> NSIndexPath? {
+        return indexPath
     }
     
     func didSelect(tableView: UITableView) {
     }
     
-    func willDeselect(tableView: UITableView) {
+    func willDeselect(tableView: UITableView, indexPath: NSIndexPath) -> NSIndexPath? {
+        return indexPath
     }
     
     func didDeselect(tableView: UITableView) {

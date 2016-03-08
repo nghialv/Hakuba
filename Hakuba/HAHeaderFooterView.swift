@@ -27,7 +27,13 @@ public class HAHeaderFooterView: UITableViewHeaderFooterView {
     public func configureView(viewModel: HAHeaderFooterViewModel) {
     }
    
-    public func didChangeFloatingState(isFloating: Bool) {
+    public func didChangeFloatingState(isFloating: Bool, section: Int) {
+    }
+    
+    public func willDisplay(tableView: UITableView, section: Int) {
+    }
+    
+    public func didEndDisplaying(tableView: UITableView, section: Int) {
     }
 }
 

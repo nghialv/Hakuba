@@ -14,17 +14,19 @@ extension Hakuba {
         delegate?.scrollViewDidScroll?(scrollView)
         
         if let indexPath = tableView?.indexPathsForVisibleRows?.first {
-            if currentTopSection != indexPath.section {
+            let topSection = indexPath.section
+            
+            if currentTopSection != topSection {
                 if let headerView = tableView?.headerViewForSection(currentTopSection) as? HAHeaderFooterView {
-                    headerView.didChangeFloatingState(false)
+                    headerView.didChangeFloatingState(false, section: currentTopSection)
                 }
-                if let headerView = tableView?.headerViewForSection(indexPath.section) as? HAHeaderFooterView {
-                    headerView.didChangeFloatingState(true)
+                if let headerView = tableView?.headerViewForSection(topSection) as? HAHeaderFooterView {
+                    headerView.didChangeFloatingState(true, section: topSection)
                 }
-                if currentTopSection > indexPath.section {
-                    willFloatingSection = indexPath.section
+                if currentTopSection > topSection {
+                    willFloatingSection = topSection
                 }
-                currentTopSection = indexPath.section
+                currentTopSection = topSection
             }
         }
         

@@ -12,6 +12,7 @@ protocol HACellModelDelegate: class {
     func bumpMe(type: ItemBumpType)
     func getOffscreenCell(identifier: String) -> HACell
     func tableViewWidth() -> CGFloat
+    func deselectCell(indexPath: NSIndexPath, animated: Bool)
 }
 
 public class HACellModel: NSObject {
@@ -57,7 +58,7 @@ public class HACellModel: NSObject {
     }
     
     public func deselect(animated: Bool) {
-        //delegate?.deselectRow(indexPath, animated: animated)
+        delegate?.deselectCell(indexPath, animated: animated)
     }
 }
 

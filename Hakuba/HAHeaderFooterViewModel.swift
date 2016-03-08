@@ -14,6 +14,7 @@ public class HAHeaderFooterViewModel {
     internal(set) var isHeader = true
     
     public var isEnabled = true
+    public var height: CGFloat = 0
     
     public init<T: HAHeaderFooterView>(view: T.Type, userData: AnyObject?, selectionHandler: HASelectionHandler? = nil) {
         self.reuseIdentifier = view.reuseIdentifier
