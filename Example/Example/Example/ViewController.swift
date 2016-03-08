@@ -22,16 +22,16 @@ class ViewController: UIViewController {
     private var hakuba: Hakuba!
     
     override func viewWillAppear(animated: Bool) {
-        hakuba?.deselectAllCells()
+        //hakuba?.deselectAllCells()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         hakuba = Hakuba(tableView: tableView)
-        hakuba.registerNibForCellClass(CustomCell)
+        hakuba.registerCellByNib(CustomCell)
       
         // top section
-        let cellmodels0 = (0..<2).map { [weak self] i -> MYCellModel in
+        let cellmodels0 = (0..<2).map { [weak self] i -> HACellModel in
             let title = "Section 0 : index \(i)"
             return CustomCellModel(title: title) { _ in
                 print("Did select new cell : \(i)")
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         let longTitle2 = "Support dynamic cell height from ios7"
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
-        let cellmodels1 = titles.map { [weak self] title -> MYCellModel in
+        let cellmodels1 = titles.map { [weak self] title -> HACellModel in
             let data = CustomCellModel(title: "Section 1: " + title) { _ in
                 print(")Did select cell with title = \(title)")
                 self?.pushChildViewController()
@@ -55,17 +55,17 @@ class ViewController: UIViewController {
         }
         delay(1.5) {
             self.hakuba[Section.Center].append(cellmodels1)
-                                       .slide()
+                                       .bump()
             
             return
         }
         
-        delay(3) {
-            self.hakuba[Section.Center].remove(2...4)
-                                       .slide(.Left)
-            
-            return
-        }
+//        delay(3) {
+//            self.hakuba[Section.Center].remove(2...4)
+//                                       .slide(.Left)
+//            
+//            return
+//        }
     }
     
     func pushChildViewController() {

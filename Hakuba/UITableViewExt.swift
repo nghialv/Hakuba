@@ -9,21 +9,21 @@
 import UIKit
 
 extension UITableView {
-    func registerNibForCellClass<T: UITableViewCell>(t: T.Type) {
+    func registerCellByNib<T: UITableViewCell>(t: T.Type) {
         let nib = UINib(nibName: t.nibName, bundle: nil)
         registerNib(nib, forCellReuseIdentifier: t.reuseIdentifier)
     }
     
-    func registerCellClass<T: UITableViewCell>(t: T.Type) {
+    func registerCell<T: UITableViewCell>(t: T.Type) {
         registerClass(t, forCellReuseIdentifier: t.reuseIdentifier)
     }
     
-    func registerNibForHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) {
+    func registerHeaderFooterByNib<T: UITableViewHeaderFooterView>(t: T.Type) {
         let nib = UINib(nibName: t.nibName, bundle: nil)
         registerNib(nib, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
     }
     
-    func registerHeaderFooterClass<T: UITableViewHeaderFooterView>(t: T.Type) {
+    func registerHeaderFooter<T: UITableViewHeaderFooterView>(t: T.Type) {
         registerClass(t, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
     }
     

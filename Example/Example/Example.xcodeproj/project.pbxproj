@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C3446831C8E6F97002BC8CD /* ChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3446801C8E6F97002BC8CD /* ChildViewController.swift */; };
+		8C3446841C8E6F97002BC8CD /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3446811C8E6F97002BC8CD /* CustomCell.swift */; };
+		8C3446851C8E6F97002BC8CD /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C3446821C8E6F97002BC8CD /* CustomCell.xib */; };
+		8C46F1571C8D83E0006C778C /* Hakuba+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46F1561C8D83E0006C778C /* Hakuba+Registration.swift */; };
+		8C46F1591C8D8B35006C778C /* Hakuba+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46F1581C8D8B35006C778C /* Hakuba+UIScrollViewDelegate.swift */; };
 		8C60BC5F1C89D4550006CE38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */; };
 		8C60BC611C89D4550006CE38 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC601C89D4550006CE38 /* ViewController.swift */; };
 		8C60BC641C89D4550006CE38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C60BC621C89D4550006CE38 /* Main.storyboard */; };
@@ -26,6 +31,9 @@
 		8C60BCA01C89D59B0006CE38 /* RangeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC9F1C89D59B0006CE38 /* RangeExt.swift */; };
 		8C60BCA21C89D5F00006CE38 /* UITableViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BCA11C89D5F00006CE38 /* UITableViewExt.swift */; };
 		8C60BCA41C89D6020006CE38 /* UITableViewHeaderFooterViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BCA31C89D6020006CE38 /* UITableViewHeaderFooterViewExt.swift */; };
+		8CECF8161C8B0AE8000701A5 /* HALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CECF8151C8B0AE8000701A5 /* HALabel.swift */; };
+		8CECF8181C8B0B82000701A5 /* HAHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CECF8171C8B0B82000701A5 /* HAHeaderFooterView.swift */; };
+		8CECF81A1C8B0B9F000701A5 /* HAHeaderFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CECF8191C8B0B9F000701A5 /* HAHeaderFooterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +54,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C3446801C8E6F97002BC8CD /* ChildViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildViewController.swift; sourceTree = "<group>"; };
+		8C3446811C8E6F97002BC8CD /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		8C3446821C8E6F97002BC8CD /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		8C46F1561C8D83E0006C778C /* Hakuba+Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hakuba+Registration.swift"; sourceTree = "<group>"; };
+		8C46F1581C8D8B35006C778C /* Hakuba+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hakuba+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		8C60BC5B1C89D4550006CE38 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C60BC601C89D4550006CE38 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +84,9 @@
 		8C60BC9F1C89D59B0006CE38 /* RangeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeExt.swift; sourceTree = "<group>"; };
 		8C60BCA11C89D5F00006CE38 /* UITableViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExt.swift; sourceTree = "<group>"; };
 		8C60BCA31C89D6020006CE38 /* UITableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
+		8CECF8151C8B0AE8000701A5 /* HALabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HALabel.swift; sourceTree = "<group>"; };
+		8CECF8171C8B0B82000701A5 /* HAHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HAHeaderFooterView.swift; sourceTree = "<group>"; };
+		8CECF8191C8B0B9F000701A5 /* HAHeaderFooterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HAHeaderFooterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +140,9 @@
 			children = (
 				8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */,
 				8C60BC601C89D4550006CE38 /* ViewController.swift */,
+				8C3446811C8E6F97002BC8CD /* CustomCell.swift */,
+				8C3446821C8E6F97002BC8CD /* CustomCell.xib */,
+				8C3446801C8E6F97002BC8CD /* ChildViewController.swift */,
 				8C60BC621C89D4550006CE38 /* Main.storyboard */,
 				8C60BC651C89D4550006CE38 /* Assets.xcassets */,
 				8C60BC671C89D4550006CE38 /* LaunchScreen.storyboard */,
@@ -153,18 +172,23 @@
 		8C60BC8C1C89D4990006CE38 /* Hakuba */ = {
 			isa = PBXGroup;
 			children = (
-				8C60BC931C89D4F90006CE38 /* ArrayExt.swift */,
 				8C60BC911C89D4D90006CE38 /* Common.swift */,
-				8C60BC9F1C89D59B0006CE38 /* RangeExt.swift */,
-				8C60BC991C89D5630006CE38 /* HABumpTracker.swift */,
-				8C60BC9B1C89D57F0006CE38 /* HACell.swift */,
-				8C60BC9D1C89D5880006CE38 /* HACellModel.swift */,
-				8C60BC971C89D54E0006CE38 /* HASection.swift */,
 				8C60BC8D1C89D4A30006CE38 /* Hakuba.swift */,
 				8C60BC8F1C89D4C50006CE38 /* HakubaDelegate.swift */,
-				8C60BC951C89D5070006CE38 /* UITableViewCellExt.swift */,
+				8C60BC991C89D5630006CE38 /* HABumpTracker.swift */,
+				8C60BC971C89D54E0006CE38 /* HASection.swift */,
+				8C60BC9B1C89D57F0006CE38 /* HACell.swift */,
+				8C60BC9D1C89D5880006CE38 /* HACellModel.swift */,
+				8CECF8171C8B0B82000701A5 /* HAHeaderFooterView.swift */,
+				8CECF8191C8B0B9F000701A5 /* HAHeaderFooterViewModel.swift */,
+				8C60BC931C89D4F90006CE38 /* ArrayExt.swift */,
+				8C60BC9F1C89D59B0006CE38 /* RangeExt.swift */,
 				8C60BCA11C89D5F00006CE38 /* UITableViewExt.swift */,
+				8C60BC951C89D5070006CE38 /* UITableViewCellExt.swift */,
 				8C60BCA31C89D6020006CE38 /* UITableViewHeaderFooterViewExt.swift */,
+				8CECF8151C8B0AE8000701A5 /* HALabel.swift */,
+				8C46F1561C8D83E0006C778C /* Hakuba+Registration.swift */,
+				8C46F1581C8D8B35006C778C /* Hakuba+UIScrollViewDelegate.swift */,
 			);
 			name = Hakuba;
 			path = ../../Hakuba;
@@ -275,6 +299,7 @@
 			files = (
 				8C60BC691C89D4550006CE38 /* LaunchScreen.storyboard in Resources */,
 				8C60BC661C89D4550006CE38 /* Assets.xcassets in Resources */,
+				8C3446851C8E6F97002BC8CD /* CustomCell.xib in Resources */,
 				8C60BC641C89D4550006CE38 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,12 +333,19 @@
 				8C60BCA21C89D5F00006CE38 /* UITableViewExt.swift in Sources */,
 				8C60BC901C89D4C50006CE38 /* HakubaDelegate.swift in Sources */,
 				8C60BC921C89D4D90006CE38 /* Common.swift in Sources */,
+				8C46F1571C8D83E0006C778C /* Hakuba+Registration.swift in Sources */,
 				8C60BC961C89D5070006CE38 /* UITableViewCellExt.swift in Sources */,
+				8CECF8161C8B0AE8000701A5 /* HALabel.swift in Sources */,
+				8C3446831C8E6F97002BC8CD /* ChildViewController.swift in Sources */,
 				8C60BC9C1C89D57F0006CE38 /* HACell.swift in Sources */,
 				8C60BCA41C89D6020006CE38 /* UITableViewHeaderFooterViewExt.swift in Sources */,
+				8CECF81A1C8B0B9F000701A5 /* HAHeaderFooterViewModel.swift in Sources */,
 				8C60BC5F1C89D4550006CE38 /* AppDelegate.swift in Sources */,
 				8C60BC941C89D4F90006CE38 /* ArrayExt.swift in Sources */,
 				8C60BC9A1C89D5630006CE38 /* HABumpTracker.swift in Sources */,
+				8C46F1591C8D8B35006C778C /* Hakuba+UIScrollViewDelegate.swift in Sources */,
+				8C3446841C8E6F97002BC8CD /* CustomCell.swift in Sources */,
+				8CECF8181C8B0B82000701A5 /* HAHeaderFooterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +574,7 @@
 				8C60BC851C89D4550006CE38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8C60BC861C89D4550006CE38 /* Build configuration list for PBXNativeTarget "ExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -550,6 +583,7 @@
 				8C60BC881C89D4550006CE38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8C60BC891C89D4550006CE38 /* Build configuration list for PBXNativeTarget "ExampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +592,7 @@
 				8C60BC8B1C89D4550006CE38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
