@@ -90,16 +90,27 @@ final public class Hakuba: NSObject {
     }
     
     public func bump(animation: HAAnimation = .None) -> Self {
-        let changedCount = sections.reduce(0) {
-            $0 + ($1.changed ? 1 : 0)
+        let changedCount = sections.reduce(0) { $0 + ($1.changed ? 1 : 0) }
+        
+        if changedCount == 0 {
+            switch bumpTracker.getHakubaBumpType() {
+            case .Reload:
+                tableView?.reloadData()
+                
+            case let .Insert(indexSet):
+                tableView?.insertSections(indexSet, withRowAnimation: animation)
+                
+            case let .Delete(indexSet):
+                tableView?.deleteSections(indexSet, withRowAnimation: animation)
+                
+            case let .Move(from, to):
+                tableView?.moveSection(from, toSection: to)
+            }
+        } else {
+            tableView?.reloadData()
+            sections.forEach { $0.didReloadTableView() }
         }
         
-        if changedCount == 1 {
-            
-        }
-        
-        tableView?.reloadData()
-        sections.forEach { $0.didReloadTableView() }
         bumpTracker.didBump()
         return self
     }
