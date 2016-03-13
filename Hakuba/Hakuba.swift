@@ -121,7 +121,7 @@ public extension Hakuba {
         tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
     }
     
-    func deselectAllCells(animated: Bool) {
+    func deselectAllCells(animated animated: Bool) {
         selectedRows.forEach {
             tableView?.deselectRowAtIndexPath($0, animated: animated)
         }

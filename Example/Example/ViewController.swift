@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     private lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
     
     override func viewWillAppear(animated: Bool) {
-        hakuba.deselectAllCells(true)
+        hakuba.deselectAllCells(animated: true)
     }
     
     override func viewDidLoad() {
