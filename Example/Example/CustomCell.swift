@@ -17,13 +17,13 @@ class CustomCellModel: HACellModel {
     }
 }
 
-class CustomCell: HACell {
+class CustomCell: HACell, HACellType {
+    typealias CellModel = CustomCellModel
+    
     @IBOutlet weak var titleLabel: HALabel!
     
-    override func configureCell(cellmodel: HACellModel) {
-        super.configureCell(cellmodel)
-        
-        guard let cellmodel = cellmodel as? CustomCellModel else {
+    override func configure() {
+        guard let cellmodel = cellmodel else {
             return
         }
         

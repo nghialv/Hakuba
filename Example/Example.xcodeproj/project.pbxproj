@@ -34,6 +34,7 @@
 		8C60BC691C89D4550006CE38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C60BC671C89D4550006CE38 /* LaunchScreen.storyboard */; };
 		8C60BC741C89D4550006CE38 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC731C89D4550006CE38 /* ExampleTests.swift */; };
 		8C60BC7F1C89D4550006CE38 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC7E1C89D4550006CE38 /* ExampleUITests.swift */; };
+		8CFF14821C9568C9005699CE /* HACellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14811C9568C9005699CE /* HACellType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		8C60BC7A1C89D4550006CE38 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C60BC7E1C89D4550006CE38 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		8C60BC801C89D4550006CE38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8CFF14811C9568C9005699CE /* HACellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HACellType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			children = (
 				8C30CA4C1C8E71880008B717 /* Common.swift */,
 				8C30CA4D1C8E71880008B717 /* HABumpTracker.swift */,
+				8CFF14811C9568C9005699CE /* HACellType.swift */,
 				8C30CA4E1C8E71880008B717 /* HACell.swift */,
 				8C30CA4F1C8E71880008B717 /* HACellModel.swift */,
 				8C30CA501C8E71880008B717 /* HAHeaderFooterView.swift */,
@@ -325,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CFF14821C9568C9005699CE /* HACellType.swift in Sources */,
 				8C30CA5F1C8E71880008B717 /* HACell.swift in Sources */,
 				8C30CA681C8E71880008B717 /* HASection.swift in Sources */,
 				8C30CA671C8E71880008B717 /* HALabel.swift in Sources */,

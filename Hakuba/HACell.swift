@@ -9,10 +9,14 @@
 import UIKit
 
 public class HACell: UITableViewCell {
-    public private(set) weak var cellmodel: HACellModel?
+    weak var _cellmodel: HACellModel?
     
-    public func configureCell(cellmodel: HACellModel) {
-        self.cellmodel = cellmodel
+    func configureCell(cellmodel: HACellModel) {
+        _cellmodel = cellmodel
+        configure()
+    }
+    
+    public func configure() {
     }
 }
 
