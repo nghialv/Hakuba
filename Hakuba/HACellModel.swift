@@ -45,7 +45,7 @@ public class HACellModel: NSObject {
     private var estimatedHeight: CGFloat = 0
     private var calculatedHeight: CGFloat?
     
-    public init<T: HACell>(cell: T.Type, height: CGFloat = 44, selectionHandler: HASelectionHandler? = nil) {
+    public init<T where T: HACell, T: HACellType>(cell: T.Type, height: CGFloat = 44, selectionHandler: HASelectionHandler? = nil) {
         self.reuseIdentifier = cell.reuseIdentifier
         self.estimatedHeight = height
         self.selectionHandler = selectionHandler
