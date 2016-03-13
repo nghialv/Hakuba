@@ -83,6 +83,14 @@ final public class Hakuba: NSObject {
         return sections.get(indexPath.section)?[indexPath.row]
     }
     
+    public func getSection(index: Int) -> HASection? {
+        return sections.get(index)
+    }
+    
+    public func getSection(index: SectionIndex) -> HASection? {
+        return getSection(index.intValue)
+    }
+    
     public init(tableView: UITableView) {
         super.init()
         self.tableView = tableView
@@ -95,7 +103,18 @@ final public class Hakuba: NSObject {
         tableView?.dataSource = nil
     }
     
-    func bumpMe(animation: HAAnimation = .None) -> Self {
+    public func bump(animation: HAAnimation = .None) -> Self {
+        let changedCount = sections.reduce(0) {
+            $0 + ($1.changed ? 1 : 0)
+        }
+        
+        if changedCount == 1 {
+            
+        }
+        
+        tableView?.reloadData()
+        sections.forEach { $0.didReloadTableView() }
+        bumpTracker.didBump()
         return self
     }
 }
@@ -164,10 +183,15 @@ public extension Hakuba {
     }
     
     func insert(sections: [HASection], atIndex index: Int) -> Self {
+        guard sections.isNotEmpty else {
+            return self
+        }
+        
         let sIndex = min(max(index, 0), sectionsCount)
         setupSections(sections, fromIndex: sIndex)
         let r = self.sections.insert(sections, atIndex: sIndex)
         bumpTracker.didInsert(Array(r))
+        
         return self
     }
     
@@ -182,23 +206,66 @@ public extension Hakuba {
     
     // MARK - Remove
     
-    func remove(indexes: [Int]) -> Self {
-        return self
+    func remove(index: Int) -> Self {
+        return remove(indexes: [index])
     }
     
-    func removeSection(index: Int) -> Self {
-        return remove([index])
+    func remove(indexes indexes: [Int]) -> Self {
+        guard indexes.isNotEmpty else {
+            return self
+        }
+        
+        let sortedIndexes = indexes
+            .sort(<)
+            .filter { $0 >= 0 && $0 < self.sectionsCount }
+        
+        var remainSections: [HASection] = []
+        var i = 0
+        
+        for j in 0..<sectionsCount {
+            if let k = sortedIndexes.get(i) where k == j {
+                i++
+            } else {
+                remainSections.append(sections[j])
+            }
+        }
+        
+        sections = remainSections
+        setupSections(sections, fromIndex: 0)
+        
+        bumpTracker.didRemove(sortedIndexes)
+        
+        return self
     }
     
     func removeLast() -> Self {
         let index = sectionsCount - 1
-        if index >= 0 {
-            removeSection(index)
+        
+        guard index >= 0 else {
+            return self
         }
-        return self
+        
+        return remove(index)
     }
     
     func remove(section: HASection) -> Self {
+        let index = section.index
+        
+        guard index >= 0 && index < sectionsCount else {
+            return self
+        }
+        
+        return remove(index)
+    }
+    
+    // MAKR - Move
+    
+    func move(from: Int, to: Int) -> Self {
+        sections.move(fromIndex: from, toIndex: to)
+        setupSections([sections[from]], fromIndex: from)
+        setupSections([sections[to]], fromIndex: to)
+        
+        bumpTracker.didMove(from, to: to)
         return self
     }
 }
@@ -207,20 +274,19 @@ public extension Hakuba {
 
 extension Hakuba: HASectionDelegate, HACellModelDelegate {
     func bumpMe(type: SectionBumpType, animation: HAAnimation) {
-        tableView?.reloadData()
-//        switch type {
-//        case .Reload(let indexSet):
-//            tableView?.reloadSections(indexSet, withRowAnimation: animation)
-//            
-//        case .Insert(let indexPaths):
-//            tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-//            
-//        case .Move(let ori, let des):
-//            tableView?.moveRowAtIndexPath(ori, toIndexPath: des)
-//            
-//        case .Delete(let indexPaths):
-//            tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-//        }
+        switch type {
+        case .Reload(let indexSet):
+            tableView?.reloadSections(indexSet, withRowAnimation: animation)
+        
+        case .Insert(let indexPaths):
+            tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        
+        case .Move(let ori, let des):
+            tableView?.moveRowAtIndexPath(ori, toIndexPath: des)
+            
+        case .Delete(let indexPaths):
+            tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        }
     }
     
     func bumpMe(type: ItemBumpType, animation: HAAnimation) {

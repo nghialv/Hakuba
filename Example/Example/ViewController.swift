@@ -27,7 +27,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         hakuba.registerCellByNib(CustomCell)
       
         // Top section
@@ -40,7 +39,13 @@ class ViewController: UIViewController {
                 self?.pushChildViewController()
             }
         }
-        hakuba[Section.Top].reset(topCellmodels)
+        
+        hakuba
+            .reset([HASection(), HASection()])
+            .bump()
+        
+        hakuba[Section.Top]
+            .reset(topCellmodels)
             .bump()
         
         // Center section
@@ -59,17 +64,22 @@ class ViewController: UIViewController {
         }
         
         delay(1.5) {
-            self.hakuba[Section.Center].append(centerCellmodels)
-                                       .bump(.Left)
-            return
+            self.hakuba[Section.Center]
+                .append(centerCellmodels)
+                .bump(.Left)
         }
         
 //        delay(3) {
 //            self.hakuba[Section.Center].remove(2...4)
 //                                       .slide(.Left)
 //            
-//            return
 //        }
+        
+        delay(3) {
+            self.hakuba
+                .move(0, to: 1)
+                .bump()
+        }
     }
     
     func pushChildViewController() {

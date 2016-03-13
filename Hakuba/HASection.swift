@@ -47,7 +47,7 @@ public class HASection {
     }
     
     func didReloadTableView() {
-        //bumpTracker.didFire(self.count)
+        bumpTracker.didBump()
     }
     
     func bump(animation: HAAnimation = .None) -> Self {
@@ -96,6 +96,10 @@ public extension HASection {
     }
 
     func insert(cellmodels: [HACellModel], atIndex index: Int) -> Self {
+        guard cellmodels.isNotEmpty else {
+            return self
+        }
+        
         let start = min(count, index)
         self.cellmodels.insert(cellmodels, atIndex: start)
         
@@ -120,7 +124,13 @@ public extension HASection {
     // MARK - Remove
     
     func remove(indexes: [Int]) -> Self {
-        let sortedIndexes = indexes.sort(<).filter { $0 >= 0 && $0 < self.count }
+        guard indexes.isNotEmpty else {
+            return self
+        }
+        
+        let sortedIndexes = indexes
+            .sort(<)
+            .filter { $0 >= 0 && $0 < self.count }
         
         var remainCellmodels: [HACellModel] = []
         var i = 0
@@ -132,10 +142,11 @@ public extension HASection {
                 remainCellmodels.append(cellmodels[j])
             }
         }
+        
         cellmodels = remainCellmodels
         setupCellmodels(cellmodels, indexFrom: 0)
         
-        bumpTracker.didRemove(indexes)
+        bumpTracker.didRemove(sortedIndexes)
         
         return self
     }
@@ -145,14 +156,30 @@ public extension HASection {
     }
     
     func removeLast() -> Self {
-        self.remove(cellmodels.count - 1)
-        return self
+        let index = cellmodels.count - 1
+        guard index >= 0 else {
+            return self
+        }
+        
+        return remove(index)
     }
     
     func remove(cellmodel: HACellModel) -> Self {
-        if let index = cellmodels.indexOf(cellmodel) {
-            return remove(index)
+        guard let index = cellmodels.indexOf(cellmodel) else {
+            return self
         }
+        
+        return remove(index)
+    }
+    
+    // MAKR - Move
+    
+    func move(from: Int, to: Int) -> Self {
+        cellmodels.move(fromIndex: from, toIndex: to)
+        setupCellmodels([cellmodels[from]], indexFrom: from)
+        setupCellmodels([cellmodels[to]], indexFrom: to)
+        
+        bumpTracker.didMove(from, to: to)
         return self
     }
 }

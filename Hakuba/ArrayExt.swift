@@ -9,6 +9,10 @@
 import Foundation
 
 extension Array {
+    var isNotEmpty: Bool {
+        return !isEmpty
+    }
+    
     func hasIndex(index: Int) -> Bool {
         return index >= 0 && index < count
     }
