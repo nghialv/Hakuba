@@ -123,6 +123,15 @@ public extension HASection {
     
     // MARK - Remove
     
+    func remove(index: Int) -> Self {
+        return remove([index])
+    }
+
+    func remove(range: Range<Int>) -> Self {
+        let indexes = range.map { $0 }
+        return remove(indexes)
+    }
+    
     func remove(indexes: [Int]) -> Self {
         guard indexes.isNotEmpty else {
             return self
@@ -151,10 +160,6 @@ public extension HASection {
         return self
     }
 
-    func remove(index: Int) -> Self {
-        return remove([index])
-    }
-    
     func removeLast() -> Self {
         let index = cellmodels.count - 1
         guard index >= 0 else {

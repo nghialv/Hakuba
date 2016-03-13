@@ -42,10 +42,13 @@ class ViewController: UIViewController {
         
         hakuba
             .reset([HASection(), HASection()])
-            .bump()
+            //.bump()
         
         hakuba[Section.Top]
             .reset(topCellmodels)
+            //.bump()
+        
+        hakuba
             .bump()
         
         // Center section
@@ -69,13 +72,13 @@ class ViewController: UIViewController {
                 .bump(.Left)
         }
         
-//        delay(3) {
-//            self.hakuba[Section.Center].remove(2...4)
-//                                       .slide(.Left)
-//            
-//        }
-        
         delay(3) {
+            self.hakuba[Section.Center]
+                .remove(2...4)
+                .bump(.Right)
+        }
+        
+        delay(5) {
             self.hakuba
                 .move(0, to: 1)
                 .bump()

@@ -53,25 +53,11 @@ final public class Hakuba: NSObject {
     
     public subscript(index: Int) -> HASection {
         get {
-            if let section = sections.get(index) {
-                return section
-            }
-            
-            let newSections = (sectionsCount...index).map { _ in HASection() }
-            setupSections(newSections, fromIndex: sectionsCount)
-            
-            sections += newSections
             return sections[index]
         }
         set {
-            if index < sectionsCount {
-                sections[index] = newValue
-                setupSections([newValue], fromIndex: index)
-            } else {
-                let newSections = (sectionsCount..<index).map { _ in HASection() } + [newValue]
-                setupSections(newSections, fromIndex: sectionsCount)
-                sections += newSections
-            }
+            setupSections([newValue], fromIndex: index)
+            sections[index] = newValue
         }
     }
     
@@ -208,6 +194,11 @@ public extension Hakuba {
     
     func remove(index: Int) -> Self {
         return remove(indexes: [index])
+    }
+    
+    func remove(range: Range<Int>) -> Self {
+        let indexes = range.map { $0 }
+        return remove(indexes: indexes)
     }
     
     func remove(indexes indexes: [Int]) -> Self {
