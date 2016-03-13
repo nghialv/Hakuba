@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HACellModelDelegate: class {
-    func bumpMe(type: ItemBumpType)
+    func bumpMe(type: ItemBumpType, animation: HAAnimation)
     func getOffscreenCell(identifier: String) -> HACell
     func tableViewWidth() -> CGFloat
     func deselectCell(indexPath: NSIndexPath, animated: Bool)
@@ -53,7 +53,7 @@ public class HACellModel: NSObject {
     
     public func bump(animation: HAAnimation = .None) -> Self {
         calculatedHeight = nil
-        delegate?.bumpMe(ItemBumpType.Reload(indexPath, animation))
+        delegate?.bumpMe(ItemBumpType.Reload(indexPath), animation: animation)
         return self
     }
     

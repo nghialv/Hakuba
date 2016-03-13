@@ -9,7 +9,6 @@
 import UIKit
 
 public typealias HASelectionHandler = (HACell) -> ()
-public typealias HADeselectionHandler = HASelectionHandler
 
 public typealias HAAnimation = UITableViewRowAnimation
 
@@ -32,7 +31,7 @@ public enum SectionBumpType {
 }
 
 public enum ItemBumpType {
-    case Reload(NSIndexPath, HAAnimation)
+    case Reload(NSIndexPath)
     case ReloadHeader(Int)
     case ReloadFooter(Int)
 }

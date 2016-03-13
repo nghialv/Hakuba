@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     private lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
     
     override func viewWillAppear(animated: Bool) {
-        //hakuba?.deselectAllCells()
+        hakuba.deselectAllCells(true)
     }
     
     override func viewDidLoad() {
@@ -41,6 +41,7 @@ class ViewController: UIViewController {
             }
         }
         hakuba[Section.Top].reset(topCellmodels)
+            .bump()
         
         // Center section
         
@@ -59,7 +60,7 @@ class ViewController: UIViewController {
         
         delay(1.5) {
             self.hakuba[Section.Center].append(centerCellmodels)
-                                       .bump()
+                                       .bump(.Left)
             return
         }
         

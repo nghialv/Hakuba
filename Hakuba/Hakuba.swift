@@ -20,6 +20,8 @@ final public class Hakuba: NSObject {
     private let bumpTracker = HABumpTracker()
     private var offscreenCells: [String: HACell] = [:]
     
+    public private(set) var selectedRows: [NSIndexPath] = []
+    
     var currentTopSection = 0
     var willFloatingSection = -1
     
@@ -100,6 +102,13 @@ public extension Hakuba {
         tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
     }
     
+    func deselectAllCells(animated: Bool) {
+        selectedRows.forEach {
+            tableView?.deselectRowAtIndexPath($0, animated: animated)
+        }
+        selectedRows = []
+    }
+    
     func getCell(indexPath: NSIndexPath) -> HACell? {
         return tableView?.cellForRowAtIndexPath(indexPath) as? HACell
     }
@@ -119,6 +128,9 @@ public extension Hakuba {
     }
     
     func reset(sections: [HASection]) -> Self {
+        setupSections(sections, fromIndex: 0)
+        self.sections = sections
+        bumpTracker.didReset()
         return self
     }
     
@@ -139,6 +151,10 @@ public extension Hakuba {
     }
     
     func insert(sections: [HASection], atIndex index: Int) -> Self {
+        let sIndex = min(max(index, 0), sectionsCount)
+        setupSections(sections, fromIndex: sIndex)
+        let r = self.sections.insert(sections, atIndex: sIndex)
+        bumpTracker.didInsert(Array(r))
         return self
     }
     
@@ -179,10 +195,32 @@ public extension Hakuba {
 extension Hakuba: HASectionDelegate, HACellModelDelegate {
     func bumpMe(type: SectionBumpType, animation: HAAnimation) {
         tableView?.reloadData()
+//        switch type {
+//        case .Reload(let indexSet):
+//            tableView?.reloadSections(indexSet, withRowAnimation: animation)
+//            
+//        case .Insert(let indexPaths):
+//            tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+//            
+//        case .Move(let ori, let des):
+//            tableView?.moveRowAtIndexPath(ori, toIndexPath: des)
+//            
+//        case .Delete(let indexPaths):
+//            tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+//        }
     }
     
-    func bumpMe(type: ItemBumpType) {
-        
+    func bumpMe(type: ItemBumpType, animation: HAAnimation) {
+        switch type {
+        case .Reload(let indexPath):
+            tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+            
+        case .ReloadHeader:
+            break
+            
+        case .ReloadFooter:
+            break
+        }
     }
     
     func getOffscreenCell(identifier: String) -> HACell {
@@ -221,6 +259,8 @@ extension Hakuba: UITableViewDelegate {
             return
         }
         
+        selectedRows = selectedRows.filter { $0 != indexPath } + [indexPath]
+        
         cellmodel.didSelect(cell)
         cell.didSelect(tableView)
     }
@@ -231,6 +271,7 @@ extension Hakuba: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         getCell(indexPath)?.didDeselect(tableView)
+        selectedRows = selectedRows.filter { $0 != indexPath }
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
