@@ -249,6 +249,10 @@ public extension Hakuba {
         return remove(index)
     }
     
+    func removeAll() -> Self {
+        return reset()
+    }
+    
     // MAKR - Move
     
     func move(from: Int, to: Int) -> Self {

@@ -22,8 +22,11 @@ class CustomCell: HACell {
     
     override func configureCell(cellmodel: HACellModel) {
         super.configureCell(cellmodel)
-        if let title = (cellmodel as? CustomCellModel)?.title {
-            titleLabel.text = title + "(\(cellmodel.indexPath.section),\(cellmodel.indexPath.row))"
+        
+        guard let cellmodel = cellmodel as? CustomCellModel else {
+            return
         }
+        
+        titleLabel.text = cellmodel.title + "(\(cellmodel.indexPath.section),\(cellmodel.indexPath.row))"
     }
 }
