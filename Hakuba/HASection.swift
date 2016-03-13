@@ -19,6 +19,10 @@ public class HASection {
     
     internal(set) var index: Int = 0
     
+    var changed: Bool {
+        return bumpTracker.changed
+    }
+    
     public var header: HAHeaderFooterViewModel? {
         didSet {
             header?.section = index

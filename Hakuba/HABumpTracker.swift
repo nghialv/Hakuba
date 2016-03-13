@@ -17,7 +17,14 @@ private enum UpdateState {
 }
 
 final class HABumpTracker {
-    private var state = UpdateState.Begin
+    private var state: UpdateState = .Begin
+    
+    var changed: Bool {
+        if case .Begin = state {
+            return false
+        }
+        return true
+    }
     
     func didBump() {
         state = .Begin

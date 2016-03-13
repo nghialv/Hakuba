@@ -20,7 +20,17 @@ final public class Hakuba: NSObject {
     private let bumpTracker = HABumpTracker()
     private var offscreenCells: [String: HACell] = [:]
     
-    public private(set) var selectedRows: [NSIndexPath] = []
+    public var selectedRows: [NSIndexPath] {
+        return tableView?.indexPathsForSelectedRows ?? []
+    }
+    
+    public var visibleRows: [NSIndexPath] {
+        return tableView?.indexPathsForVisibleRows ?? []
+    }
+    
+    public var visibleCells: [HACell] {
+        return (tableView?.visibleCells as? [HACell]) ?? []
+    }
     
     var currentTopSection = 0
     var willFloatingSection = -1
@@ -98,6 +108,10 @@ public extension Hakuba {
         tableView?.setEditing(editing, animated: animated)
     }
     
+    func selectCell(indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+        tableView?.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+    }
+    
     func deselectCell(indexPath: NSIndexPath, animated: Bool) {
         tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
     }
@@ -106,7 +120,6 @@ public extension Hakuba {
         selectedRows.forEach {
             tableView?.deselectRowAtIndexPath($0, animated: animated)
         }
-        selectedRows = []
     }
     
     func getCell(indexPath: NSIndexPath) -> HACell? {
@@ -259,8 +272,6 @@ extension Hakuba: UITableViewDelegate {
             return
         }
         
-        selectedRows = selectedRows.filter { $0 != indexPath } + [indexPath]
-        
         cellmodel.didSelect(cell)
         cell.didSelect(tableView)
     }
@@ -271,7 +282,6 @@ extension Hakuba: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         getCell(indexPath)?.didDeselect(tableView)
-        selectedRows = selectedRows.filter { $0 != indexPath }
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
