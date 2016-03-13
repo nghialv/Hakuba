@@ -36,37 +36,37 @@ Features
 
 ``` swift
 	// viewController swift file
-	
+
 	hakuba = Hakuba(tableView: tableView)
-	
+
 	let cellmodel = YourCellModel(title: "Title", des: "description") {
 		println("Did select cell with title = \(title)")
 	}
-	
+
 	hakuba[2].append(cellmodel)		// append a new cell model in datasource
-			 .slide(.Fade)			// show the cell of your cell model in the table view
-	
+			 .bump(.Fade)			// show the cell of your cell model in the table view
+
 	hakuba[1].remove(1...3)
-			 .slide(.Right)
+			 .bump(.Right)
 ```
 ``` swift
 	// your cell swift file
-	
+
 	class YourCellModel : MYCellModel {
 		let title: String
 		let des: String
-		
+
 		init(title: String, des: String, selectionHandler: MYSelectionHandler) {
 			self.title = title
 			self.des = des
 			super.init(YourCell.self, selectionHandler: selectionHandler)
 		}
 	}
-	
+
 
 	class YourCell : MYTableViewCell {
 		@IBOutlet weak var titleLabel: UILabel!
-    
+
 		override func configureCell(data: MYCellModel) {
 			super.configureCell(data)
 			if let cellmodel = data as? YourCellModel {
@@ -92,21 +92,21 @@ Usage
 
 	// inserting
 	hakuba.insert(section, atIndex: 1)
-		  .slide()
-	
+		  .bump()
+
 	// removing
 	hakuba.remove(index)
-	   	  .slide(.Left)
-	
+	   	  .bump(.Left)
+
 	hakuba.removeAll()
-	   	  .slide()
-	   	  
+	   	  .bump()
+
 	// handing section index by enum
 	enum Section : Int, MYSectionIndex {
 		case Top = 0
 		case Center
 		case Bottom
-		
+
 		var intValue: Int {
 			return self.rawValue
     	}
@@ -119,36 +119,36 @@ Usage
 ``` swift
 	// 1. appending
 	hakuba[0].append(cellmodel)				// append a cellmodel
-		     .slide(.Fade)					// and slide with `Fade` animation
+		     .bump(.Fade)					// and bump with `Fade` animation
 
 	hakuba[1].append(cellmodels)			// append a list of cellmodes
-		  	.slide(.Left)					
-	
+		  	.bump(.Left)					
+
 	// by using section
 	let section = hakuba[Section.Top]
 	section.append(cellmodel)
-		   .slide()
+		   .bump()
 
 
 	// 2. inserting
 	section.insert(cellmodels, atIndex: 1)
-		   .slide(.Middle)
-	
-	
+		   .bump(.Middle)
+
+
 	// 3. reseting
 	section.reset(cellmodels)				// replace current data in section by the new data
-		   .slide()
+		   .bump()
 	section.reset()							// or remove all data in section
-		   .slide()
-		   
+		   .bump()
+
 
 	// 4. removing
 	section.remove(1)
-		   .slide(.Right)
+		   .bump(.Right)
 	section.remove(2...5)
-		   .slide()
+		   .bump()
 	section.removeLast()
-	       .slide()
+	       .bump()
 ```
 
 
@@ -156,13 +156,13 @@ Usage
 	// updating cell data
 	let section = hakuba[Section.Top]
 	section[1].property = newData
-	section[1].slide()		
+	section[1].bump()		
 ```
 
 
 ``` swift
-	section.sort().slide()
-	section.shuffle().slide()
+	section.sort().bump()
+	section.shuffle().bump()
 	section.map
 	section.filter
 	section.reduce
@@ -183,7 +183,7 @@ Usage
 	let cellmodel = MYCellModel(cellClass: YourCell.self, userData: celldata) {
 		println("Did select")
 	}
-	
+
 	// create a list of cell models from api results
 	let items = [...] // or your data from API
 
@@ -201,7 +201,7 @@ Usage
 	hakuba.registerCellClass(CellClassName)
 	hakuba.registerHeaderFooterNib(HeaderOrFooterClassName)
 	hakuba.registerHeaderFooterClass(HeaderOrFooterClassName)
-	
+
 	// register a list of cells by using variadic parameters
 	hakuba.registerCellNib(CellClass1.self, CellClass2.self, ..., CellClassN.self)
 ```
@@ -213,7 +213,7 @@ Usage
 		println("Did select header view")
 	}
 	hakuba[Section.Top].header = header
-	
+
 	// hide header in section 1
 	hakuba[Section.Center].header?.enabled = false
 ```
@@ -228,7 +228,7 @@ Usage
 	}
 ```
 
-* Commit editing 
+* Commit editing
 
 ``` swift
 	hakuba.commitEditingHandler = { [weak self] style, indexPath in
@@ -249,7 +249,7 @@ Usage
 		println("Did select cell")
 	}
 	cellmodel.dynamicHeightEnabled = true
-	
+
 ```
 
 * Callback methods in the cell class
