@@ -475,7 +475,7 @@ extension Hakuba: UITableViewDataSource {
         }
         
         cell.configureCell(cellmodel)
-        
+      
         return cell
     }
     

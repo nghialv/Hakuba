@@ -42,13 +42,10 @@ class ViewController: UIViewController {
         
         hakuba
             .reset([HASection(), HASection()])
-            //.bump()
+            .bump()
         
         hakuba[Section.Top]
             .reset(topCellmodels)
-            //.bump()
-        
-        hakuba
             .bump()
         
         // Center section

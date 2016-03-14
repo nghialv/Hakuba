@@ -35,6 +35,7 @@
 		8C60BC741C89D4550006CE38 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC731C89D4550006CE38 /* ExampleTests.swift */; };
 		8C60BC7F1C89D4550006CE38 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC7E1C89D4550006CE38 /* ExampleUITests.swift */; };
 		8CFF14821C9568C9005699CE /* HACellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14811C9568C9005699CE /* HACellType.swift */; };
+		8CFF14A61C96758A005699CE /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14A51C96758A005699CE /* CustomCellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		8C60BC7E1C89D4550006CE38 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		8C60BC801C89D4550006CE38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CFF14811C9568C9005699CE /* HACellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HACellType.swift; sourceTree = "<group>"; };
+		8CFF14A51C96758A005699CE /* CustomCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 				8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */,
 				8C60BC601C89D4550006CE38 /* ViewController.swift */,
 				8C3446811C8E6F97002BC8CD /* CustomCell.swift */,
+				8CFF14A51C96758A005699CE /* CustomCellModel.swift */,
 				8C3446821C8E6F97002BC8CD /* CustomCell.xib */,
 				8C3446801C8E6F97002BC8CD /* ChildViewController.swift */,
 				8C60BC621C89D4550006CE38 /* Main.storyboard */,
@@ -330,6 +333,7 @@
 			files = (
 				8CFF14821C9568C9005699CE /* HACellType.swift in Sources */,
 				8C30CA5F1C8E71880008B717 /* HACell.swift in Sources */,
+				8CFF14A61C96758A005699CE /* CustomCellModel.swift in Sources */,
 				8C30CA681C8E71880008B717 /* HASection.swift in Sources */,
 				8C30CA671C8E71880008B717 /* HALabel.swift in Sources */,
 				8C30CA621C8E71880008B717 /* HAHeaderFooterViewModel.swift in Sources */,

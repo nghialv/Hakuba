@@ -8,15 +8,6 @@
 
 import UIKit
 
-class CustomCellModel: HACellModel {
-    let title: String
-    
-    init(title: String, selectionHandler: HASelectionHandler) {
-        self.title = title
-        super.init(cell: CustomCell.self, height: 40, selectionHandler: selectionHandler)
-    }
-}
-
 class CustomCell: HACell, HACellType {
     typealias CellModel = CustomCellModel
     
@@ -28,5 +19,10 @@ class CustomCell: HACell, HACellType {
         }
         
         titleLabel.text = cellmodel.title + "(\(cellmodel.indexPath.section),\(cellmodel.indexPath.row))"
+    }
+    
+    override func willDisplay(tableView: UITableView) {
+        super.willDisplay(tableView)
+        
     }
 }
