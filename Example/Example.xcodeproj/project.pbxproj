@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		8C30CA5C1C8E71880008B717 /* ArrayExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4B1C8E71880008B717 /* ArrayExt.swift */; };
 		8C30CA5D1C8E71880008B717 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4C1C8E71880008B717 /* Common.swift */; };
-		8C30CA5E1C8E71880008B717 /* HABumpTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4D1C8E71880008B717 /* HABumpTracker.swift */; };
-		8C30CA5F1C8E71880008B717 /* HACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4E1C8E71880008B717 /* HACell.swift */; };
-		8C30CA601C8E71880008B717 /* HACellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4F1C8E71880008B717 /* HACellModel.swift */; };
-		8C30CA611C8E71880008B717 /* HAHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA501C8E71880008B717 /* HAHeaderFooterView.swift */; };
-		8C30CA621C8E71880008B717 /* HAHeaderFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA511C8E71880008B717 /* HAHeaderFooterViewModel.swift */; };
+		8C30CA5E1C8E71880008B717 /* BumpTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4D1C8E71880008B717 /* BumpTracker.swift */; };
+		8C30CA5F1C8E71880008B717 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4E1C8E71880008B717 /* Cell.swift */; };
+		8C30CA601C8E71880008B717 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA4F1C8E71880008B717 /* CellModel.swift */; };
+		8C30CA611C8E71880008B717 /* HeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA501C8E71880008B717 /* HeaderFooterView.swift */; };
+		8C30CA621C8E71880008B717 /* HeaderFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA511C8E71880008B717 /* HeaderFooterViewModel.swift */; };
 		8C30CA631C8E71880008B717 /* Hakuba+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA521C8E71880008B717 /* Hakuba+Registration.swift */; };
 		8C30CA641C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA531C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift */; };
 		8C30CA651C8E71880008B717 /* Hakuba.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA541C8E71880008B717 /* Hakuba.swift */; };
 		8C30CA661C8E71880008B717 /* HakubaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA551C8E71880008B717 /* HakubaDelegate.swift */; };
-		8C30CA671C8E71880008B717 /* HALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA561C8E71880008B717 /* HALabel.swift */; };
-		8C30CA681C8E71880008B717 /* HASection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA571C8E71880008B717 /* HASection.swift */; };
+		8C30CA671C8E71880008B717 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA561C8E71880008B717 /* Label.swift */; };
+		8C30CA681C8E71880008B717 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA571C8E71880008B717 /* Section.swift */; };
 		8C30CA691C8E71880008B717 /* RangeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA581C8E71880008B717 /* RangeExt.swift */; };
-		8C30CA6A1C8E71880008B717 /* UITableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA591C8E71880008B717 /* UITableViewCellExt.swift */; };
-		8C30CA6B1C8E71880008B717 /* UITableViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA5A1C8E71880008B717 /* UITableViewExt.swift */; };
-		8C30CA6C1C8E71880008B717 /* UITableViewHeaderFooterViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA5B1C8E71880008B717 /* UITableViewHeaderFooterViewExt.swift */; };
+		8C30CA6A1C8E71880008B717 /* TableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA591C8E71880008B717 /* TableViewCellExt.swift */; };
+		8C30CA6B1C8E71880008B717 /* TableViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA5A1C8E71880008B717 /* TableViewExt.swift */; };
+		8C30CA6C1C8E71880008B717 /* TableViewHeaderFooterViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30CA5B1C8E71880008B717 /* TableViewHeaderFooterViewExt.swift */; };
 		8C3446831C8E6F97002BC8CD /* ChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3446801C8E6F97002BC8CD /* ChildViewController.swift */; };
 		8C3446841C8E6F97002BC8CD /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3446811C8E6F97002BC8CD /* CustomCell.swift */; };
 		8C3446851C8E6F97002BC8CD /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C3446821C8E6F97002BC8CD /* CustomCell.xib */; };
@@ -34,7 +34,7 @@
 		8C60BC691C89D4550006CE38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C60BC671C89D4550006CE38 /* LaunchScreen.storyboard */; };
 		8C60BC741C89D4550006CE38 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC731C89D4550006CE38 /* ExampleTests.swift */; };
 		8C60BC7F1C89D4550006CE38 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC7E1C89D4550006CE38 /* ExampleUITests.swift */; };
-		8CFF14821C9568C9005699CE /* HACellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14811C9568C9005699CE /* HACellType.swift */; };
+		8CFF14821C9568C9005699CE /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14811C9568C9005699CE /* CellType.swift */; };
 		8CFF14A61C96758A005699CE /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14A51C96758A005699CE /* CustomCellModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,21 +58,21 @@
 /* Begin PBXFileReference section */
 		8C30CA4B1C8E71880008B717 /* ArrayExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExt.swift; sourceTree = "<group>"; };
 		8C30CA4C1C8E71880008B717 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
-		8C30CA4D1C8E71880008B717 /* HABumpTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HABumpTracker.swift; sourceTree = "<group>"; };
-		8C30CA4E1C8E71880008B717 /* HACell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HACell.swift; sourceTree = "<group>"; };
-		8C30CA4F1C8E71880008B717 /* HACellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HACellModel.swift; sourceTree = "<group>"; };
-		8C30CA501C8E71880008B717 /* HAHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HAHeaderFooterView.swift; sourceTree = "<group>"; };
-		8C30CA511C8E71880008B717 /* HAHeaderFooterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HAHeaderFooterViewModel.swift; sourceTree = "<group>"; };
+		8C30CA4D1C8E71880008B717 /* BumpTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BumpTracker.swift; sourceTree = "<group>"; };
+		8C30CA4E1C8E71880008B717 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		8C30CA4F1C8E71880008B717 /* CellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		8C30CA501C8E71880008B717 /* HeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterView.swift; sourceTree = "<group>"; };
+		8C30CA511C8E71880008B717 /* HeaderFooterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterViewModel.swift; sourceTree = "<group>"; };
 		8C30CA521C8E71880008B717 /* Hakuba+Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hakuba+Registration.swift"; sourceTree = "<group>"; };
 		8C30CA531C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hakuba+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		8C30CA541C8E71880008B717 /* Hakuba.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hakuba.swift; sourceTree = "<group>"; };
 		8C30CA551C8E71880008B717 /* HakubaDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HakubaDelegate.swift; sourceTree = "<group>"; };
-		8C30CA561C8E71880008B717 /* HALabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HALabel.swift; sourceTree = "<group>"; };
-		8C30CA571C8E71880008B717 /* HASection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HASection.swift; sourceTree = "<group>"; };
+		8C30CA561C8E71880008B717 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		8C30CA571C8E71880008B717 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		8C30CA581C8E71880008B717 /* RangeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeExt.swift; sourceTree = "<group>"; };
-		8C30CA591C8E71880008B717 /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
-		8C30CA5A1C8E71880008B717 /* UITableViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExt.swift; sourceTree = "<group>"; };
-		8C30CA5B1C8E71880008B717 /* UITableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
+		8C30CA591C8E71880008B717 /* TableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellExt.swift; sourceTree = "<group>"; };
+		8C30CA5A1C8E71880008B717 /* TableViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewExt.swift; sourceTree = "<group>"; };
+		8C30CA5B1C8E71880008B717 /* TableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
 		8C3446801C8E6F97002BC8CD /* ChildViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildViewController.swift; sourceTree = "<group>"; };
 		8C3446811C8E6F97002BC8CD /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		8C3446821C8E6F97002BC8CD /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		8C60BC7A1C89D4550006CE38 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C60BC7E1C89D4550006CE38 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		8C60BC801C89D4550006CE38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8CFF14811C9568C9005699CE /* HACellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HACellType.swift; sourceTree = "<group>"; };
+		8CFF14811C9568C9005699CE /* CellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		8CFF14A51C96758A005699CE /* CustomCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,23 +122,23 @@
 			isa = PBXGroup;
 			children = (
 				8C30CA4C1C8E71880008B717 /* Common.swift */,
-				8C30CA4D1C8E71880008B717 /* HABumpTracker.swift */,
-				8CFF14811C9568C9005699CE /* HACellType.swift */,
-				8C30CA4E1C8E71880008B717 /* HACell.swift */,
-				8C30CA4F1C8E71880008B717 /* HACellModel.swift */,
-				8C30CA501C8E71880008B717 /* HAHeaderFooterView.swift */,
-				8C30CA511C8E71880008B717 /* HAHeaderFooterViewModel.swift */,
-				8C30CA571C8E71880008B717 /* HASection.swift */,
+				8C30CA4D1C8E71880008B717 /* BumpTracker.swift */,
+				8CFF14811C9568C9005699CE /* CellType.swift */,
+				8C30CA4E1C8E71880008B717 /* Cell.swift */,
+				8C30CA4F1C8E71880008B717 /* CellModel.swift */,
+				8C30CA501C8E71880008B717 /* HeaderFooterView.swift */,
+				8C30CA511C8E71880008B717 /* HeaderFooterViewModel.swift */,
+				8C30CA571C8E71880008B717 /* Section.swift */,
 				8C30CA541C8E71880008B717 /* Hakuba.swift */,
 				8C30CA521C8E71880008B717 /* Hakuba+Registration.swift */,
 				8C30CA531C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift */,
 				8C30CA551C8E71880008B717 /* HakubaDelegate.swift */,
-				8C30CA561C8E71880008B717 /* HALabel.swift */,
+				8C30CA561C8E71880008B717 /* Label.swift */,
 				8C30CA4B1C8E71880008B717 /* ArrayExt.swift */,
 				8C30CA581C8E71880008B717 /* RangeExt.swift */,
-				8C30CA591C8E71880008B717 /* UITableViewCellExt.swift */,
-				8C30CA5A1C8E71880008B717 /* UITableViewExt.swift */,
-				8C30CA5B1C8E71880008B717 /* UITableViewHeaderFooterViewExt.swift */,
+				8C30CA591C8E71880008B717 /* TableViewCellExt.swift */,
+				8C30CA5A1C8E71880008B717 /* TableViewExt.swift */,
+				8C30CA5B1C8E71880008B717 /* TableViewHeaderFooterViewExt.swift */,
 			);
 			name = Hakuba;
 			path = ../Hakuba;
@@ -331,27 +331,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CFF14821C9568C9005699CE /* HACellType.swift in Sources */,
-				8C30CA5F1C8E71880008B717 /* HACell.swift in Sources */,
+				8CFF14821C9568C9005699CE /* CellType.swift in Sources */,
+				8C30CA5F1C8E71880008B717 /* Cell.swift in Sources */,
 				8CFF14A61C96758A005699CE /* CustomCellModel.swift in Sources */,
-				8C30CA681C8E71880008B717 /* HASection.swift in Sources */,
-				8C30CA671C8E71880008B717 /* HALabel.swift in Sources */,
-				8C30CA621C8E71880008B717 /* HAHeaderFooterViewModel.swift in Sources */,
+				8C30CA681C8E71880008B717 /* Section.swift in Sources */,
+				8C30CA671C8E71880008B717 /* Label.swift in Sources */,
+				8C30CA621C8E71880008B717 /* HeaderFooterViewModel.swift in Sources */,
 				8C30CA641C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift in Sources */,
 				8C30CA631C8E71880008B717 /* Hakuba+Registration.swift in Sources */,
-				8C30CA5E1C8E71880008B717 /* HABumpTracker.swift in Sources */,
+				8C30CA5E1C8E71880008B717 /* BumpTracker.swift in Sources */,
 				8C60BC611C89D4550006CE38 /* ViewController.swift in Sources */,
 				8C30CA5C1C8E71880008B717 /* ArrayExt.swift in Sources */,
 				8C30CA691C8E71880008B717 /* RangeExt.swift in Sources */,
-				8C30CA6C1C8E71880008B717 /* UITableViewHeaderFooterViewExt.swift in Sources */,
+				8C30CA6C1C8E71880008B717 /* TableViewHeaderFooterViewExt.swift in Sources */,
 				8C30CA661C8E71880008B717 /* HakubaDelegate.swift in Sources */,
 				8C30CA651C8E71880008B717 /* Hakuba.swift in Sources */,
 				8C3446831C8E6F97002BC8CD /* ChildViewController.swift in Sources */,
-				8C30CA6A1C8E71880008B717 /* UITableViewCellExt.swift in Sources */,
-				8C30CA611C8E71880008B717 /* HAHeaderFooterView.swift in Sources */,
-				8C30CA601C8E71880008B717 /* HACellModel.swift in Sources */,
+				8C30CA6A1C8E71880008B717 /* TableViewCellExt.swift in Sources */,
+				8C30CA611C8E71880008B717 /* HeaderFooterView.swift in Sources */,
+				8C30CA601C8E71880008B717 /* CellModel.swift in Sources */,
 				8C60BC5F1C89D4550006CE38 /* AppDelegate.swift in Sources */,
-				8C30CA6B1C8E71880008B717 /* UITableViewExt.swift in Sources */,
+				8C30CA6B1C8E71880008B717 /* TableViewExt.swift in Sources */,
 				8C30CA5D1C8E71880008B717 /* Common.swift in Sources */,
 				8C3446841C8E6F97002BC8CD /* CustomCell.swift in Sources */,
 			);
