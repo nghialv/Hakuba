@@ -10,7 +10,7 @@ Hakuba
 [![Issues](https://img.shields.io/github/issues/nghialv/Hakuba.svg?style=flat
 )](https://github.com/nghialv/Hakuba/issues?state=open)
 
-I want to slim down HA view controllers.
+I want to slim down  view controllers.
 
 I want to manage tableview without the code of `UITableViewDelegate` and `UITableViewDataSource`.
 
@@ -54,11 +54,11 @@ Features
 ``` swift
 	// your cell swift file
 
-	class YourCellModel : HACellModel {
+	class YourCellModel : CellModel {
 		let title: String
 		let des: String
 
-		init(title: String, des: String, selectionHandler: HASelectionHandler) {
+		init(title: String, des: String, selectionHandler: SelectionHandler) {
 			self.title = title
 			self.des = des
 			super.init(YourCell.self, selectionHandler: selectionHandler)
@@ -66,10 +66,10 @@ Features
 	}
 
 
-	class YourCell : HATableViewCell {
+	class YourCell : TableViewCell {
 		@IBOutlet weak var titleLabel: UILabel!
 
-		override func configureCell(data: HACellModel) {
+		override func configureCell(data: CellModel) {
 			super.configureCell(data)
 			guard let cellmodel = data as? YourCellModel else {
 				return
@@ -92,7 +92,7 @@ Usage
 * Section handling
 
 ``` swift
-	let section = HASection() // create a new section
+	let section = Section() // create a new section
 
 	// inserting
 	hakuba
@@ -109,7 +109,7 @@ Usage
 		.bump()
 
 	// handing section index by enum
-	enum Section : Int, HASectionIndex {
+	enum Section : Int, SectionIndex {
 		case Top = 0
 		case Center
 		case Bottom
@@ -199,15 +199,15 @@ Usage
 
 ``` swift
 	// create a cell model
-	let cellmodel = HACellModel(cellClass: YourCell.self, userData: celldata) {
+	let cellmodel = CellModel(cellClass: YourCell.self, userData: celldata) {
 		println("Did select")
 	}
 
 	// create a list of cell models from api results
 	let items = [...] // or your data from API
 
-    let cellmodels = items.map { item -> HACellModel in
-        return HACellModel(cellClass: YourCell.self, userData: item) {
+    let cellmodels = items.map { item -> CellModel in
+        return CellModel(cellClass: YourCell.self, userData: item) {
             println("Did select cell")
         }
     }
@@ -228,7 +228,7 @@ Usage
 * Section header/footer
 
 ``` swift
-	let header = HAHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
+	let header = HeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
 		println("Did select header view")
 	}
 	hakuba[Section.Top].header = header
@@ -264,7 +264,7 @@ Usage
 * Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the `height` parameter and set `dynamicHeightEnabled = true`
 
 ``` swift
-	let cellmodel = HACellModel(cellClass: YourCell.self, height: 50, userData: yourCellData) {
+	let cellmodel = CellModel(cellClass: YourCell.self, height: 50, userData: yourCellData) {
 		println("Did select cell")
 	}
 	cellmodel.dynamicHeightEnabled = true
@@ -274,8 +274,8 @@ Usage
 * Callback methods in the cell class
 
 ``` swift
-	func willAppear(data: HACellModel)
-	func didDisappear(data: HACellModel)
+	func willAppear(data: CellModel)
+	func didDisappear(data: CellModel)
 ```
 
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum Section : Int, SectionIndex {
+enum ExSection : Int, SectionIndex {
     case Top = 0
     case Center
     
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
       
         // Top section
         
-        let topCellmodels = (0..<2).map { [weak self] i -> HACellModel in
+        let topCellmodels = (0..<2).map { [weak self] i -> CellModel in
             let title = "Section 0 : index \(i)"
             
             return CustomCellModel(title: title) { _ in
@@ -41,10 +41,10 @@ class ViewController: UIViewController {
         }
         
         hakuba
-            .reset([HASection(), HASection()])
+            .reset([Section(), Section()])
             .bump()
         
-        hakuba[Section.Top]
+        hakuba[ExSection.Top]
             .reset(topCellmodels)
             .bump()
         
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         let longTitle2 = "Support dynamic cell height from ios7"
         let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
         
-        let centerCellmodels = titles.map { [weak self] title -> HACellModel in
+        let centerCellmodels = titles.map { [weak self] title -> CellModel in
             let data = CustomCellModel(title: "Section 1: " + title) { _ in
                 print("Did select cell with title = \(title)")
                 self?.pushChildViewController()
@@ -64,13 +64,13 @@ class ViewController: UIViewController {
         }
         
         delay(1.5) {
-            self.hakuba[Section.Center]
+            self.hakuba[ExSection.Center]
                 .append(centerCellmodels)
                 .bump(.Left)
         }
         
         delay(3) {
-            self.hakuba[Section.Center]
+            self.hakuba[ExSection.Center]
                 .remove(2...4)
                 .bump(.Right)
         }
@@ -82,19 +82,19 @@ class ViewController: UIViewController {
         }
         
         delay(7.5) {
-            self.hakuba[Section.Center]
+            self.hakuba[ExSection.Center]
                 .remove(1)
                 .bump(.Middle)
         }
         
         delay(10) {
-            self.hakuba[Section.Center]
+            self.hakuba[ExSection.Center]
                 .remove(0)
                 .bump(.Right)
         }
         
         delay(12.5) {
-            self.hakuba[Section.Center]
+            self.hakuba[ExSection.Center]
                 .remove(0)
                 .bump(.Right)
         }

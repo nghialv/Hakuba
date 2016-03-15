@@ -11,14 +11,14 @@ import UIKit
 final public class Hakuba: NSObject {
     weak var tableView: UITableView?
     public weak var delegate: HakubaDelegate?
-    public private(set) var sections: [HASection] = []
+    public private(set) var sections: [Section] = []
     
     public var loadmoreHandler: (() -> ())?
     public var loadmoreEnabled = false
     public var loadmoreThreshold: CGFloat = 25
     
-    private let bumpTracker = HABumpTracker()
-    private var offscreenCells: [String: HACell] = [:]
+    private let bumpTracker = BumpTracker()
+    private var offscreenCells: [String: Cell] = [:]
     
     public var selectedRows: [NSIndexPath] {
         return tableView?.indexPathsForSelectedRows ?? []
@@ -28,8 +28,8 @@ final public class Hakuba: NSObject {
         return tableView?.indexPathsForVisibleRows ?? []
     }
     
-    public var visibleCells: [HACell] {
-        return (tableView?.visibleCells as? [HACell]) ?? []
+    public var visibleCells: [Cell] {
+        return (tableView?.visibleCells as? [Cell]) ?? []
     }
     
     var currentTopSection = 0
@@ -42,7 +42,7 @@ final public class Hakuba: NSObject {
     public var cellEditable = false
     public var commitEditingHandler: ((UITableViewCellEditingStyle, NSIndexPath) -> ())?
     
-    public subscript(index: SectionIndex) -> HASection {
+    public subscript(index: SectionIndex) -> Section {
         get {
             return self[index.intValue]
         }
@@ -51,7 +51,7 @@ final public class Hakuba: NSObject {
         }
     }
     
-    public subscript(index: Int) -> HASection {
+    public subscript(index: Int) -> Section {
         get {
             return sections[index]
         }
@@ -61,19 +61,19 @@ final public class Hakuba: NSObject {
         }
     }
     
-    subscript(indexPath: NSIndexPath) -> HACellModel? {
+    subscript(indexPath: NSIndexPath) -> CellModel? {
         return self[indexPath.section][indexPath.row]
     }
     
-    public func getCellmodel(indexPath: NSIndexPath) -> HACellModel? {
+    public func getCellmodel(indexPath: NSIndexPath) -> CellModel? {
         return sections.get(indexPath.section)?[indexPath.row]
     }
     
-    public func getSection(index: Int) -> HASection? {
+    public func getSection(index: Int) -> Section? {
         return sections.get(index)
     }
     
-    public func getSection(index: SectionIndex) -> HASection? {
+    public func getSection(index: SectionIndex) -> Section? {
         return getSection(index.intValue)
     }
     
@@ -138,8 +138,8 @@ public extension Hakuba {
         }
     }
     
-    func getCell(indexPath: NSIndexPath) -> HACell? {
-        return tableView?.cellForRowAtIndexPath(indexPath) as? HACell
+    func getCell(indexPath: NSIndexPath) -> Cell? {
+        return tableView?.cellForRowAtIndexPath(indexPath) as? Cell
     }
 }
 
@@ -152,11 +152,11 @@ public extension Hakuba {
         return reset([])
     }
     
-    func reset(section: HASection) -> Self {
+    func reset(section: Section) -> Self {
         return reset([section])
     }
     
-    func reset(sections: [HASection]) -> Self {
+    func reset(sections: [Section]) -> Self {
         setupSections(sections, fromIndex: 0)
         self.sections = sections
         bumpTracker.didReset()
@@ -165,21 +165,21 @@ public extension Hakuba {
     
     // MARK - Append
     
-    func append(section: HASection) -> Self {
+    func append(section: Section) -> Self {
         return append([section])
     }
     
-    func append(sections: [HASection]) -> Self {
+    func append(sections: [Section]) -> Self {
         return insert(sections, atIndex: sectionsCount)
     }
     
     // MARK - Insert
     
-    func insert(section: HASection, atIndex index: Int) -> Self {
+    func insert(section: Section, atIndex index: Int) -> Self {
         return insert([section], atIndex: index)
     }
     
-    func insert(sections: [HASection], atIndex index: Int) -> Self {
+    func insert(sections: [Section], atIndex index: Int) -> Self {
         guard sections.isNotEmpty else {
             return self
         }
@@ -192,11 +192,11 @@ public extension Hakuba {
         return self
     }
     
-    func insertBeforeLast(section: HASection) -> Self {
+    func insertBeforeLast(section: Section) -> Self {
         return insertBeforeLast([section])
     }
     
-    func insertBeforeLast(sections: [HASection]) -> Self {
+    func insertBeforeLast(sections: [Section]) -> Self {
         let index = max(sections.count - 1, 0)
         return insert(sections, atIndex: index)
     }
@@ -221,7 +221,7 @@ public extension Hakuba {
             .sort(<)
             .filter { $0 >= 0 && $0 < self.sectionsCount }
         
-        var remainSections: [HASection] = []
+        var remainSections: [Section] = []
         var i = 0
         
         for j in 0..<sectionsCount {
@@ -250,7 +250,7 @@ public extension Hakuba {
         return remove(index)
     }
     
-    func remove(section: HASection) -> Self {
+    func remove(section: Section) -> Self {
         let index = section.index
         
         guard index >= 0 && index < sectionsCount else {
@@ -276,9 +276,9 @@ public extension Hakuba {
     }
 }
 
-// MARK - HASectionDelegate, HACellModelDelegate
+// MARK - SectionDelegate, CellModelDelegate
 
-extension Hakuba: HASectionDelegate, HACellModelDelegate {
+extension Hakuba: SectionDelegate, CellModelDelegate {
     func bumpMe(type: SectionBumpType, animation: HAAnimation) {
         switch type {
         case .Reload(let indexSet):
@@ -308,16 +308,16 @@ extension Hakuba: HASectionDelegate, HACellModelDelegate {
         }
     }
     
-    func getOffscreenCell(identifier: String) -> HACell {
+    func getOffscreenCell(identifier: String) -> Cell {
         if let cell = offscreenCells[identifier] {
             return cell
         }
         
-        if let cell = tableView?.dequeueReusableCellWithIdentifier(identifier) as? HACell {
+        if let cell = tableView?.dequeueReusableCellWithIdentifier(identifier) as? Cell {
             offscreenCells[identifier] = cell
             return cell
         }
-        return HACell()
+        return Cell()
     }
     
     func tableViewWidth() -> CGFloat {
@@ -357,11 +357,11 @@ extension Hakuba: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        (cell as? HACell)?.willDisplay(tableView)
+        (cell as? Cell)?.willDisplay(tableView)
     }
     
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        (cell as? HACell)?.didEndDisplay(tableView)
+        (cell as? Cell)?.didEndDisplay(tableView)
     }
     
     public func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
@@ -397,7 +397,7 @@ extension Hakuba {
             return nil
         }
         
-        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(header.reuseIdentifier) as? HAHeaderFooterView
+        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(header.reuseIdentifier) as? HeaderFooterView
         headerView?.configureView(header)
         
         return headerView
@@ -416,14 +416,14 @@ extension Hakuba {
             return nil
         }
         
-        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(footer.reuseIdentifier) as? HAHeaderFooterView
+        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(footer.reuseIdentifier) as? HeaderFooterView
         footerView?.configureView(footer)
         
         return footerView
     }
     
     public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? HAHeaderFooterView where section == willFloatingSection else {
+        guard let view = view as? HeaderFooterView where section == willFloatingSection else {
             return
         }
         
@@ -433,7 +433,7 @@ extension Hakuba {
     }
     
     public func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        guard let view = view as? HAHeaderFooterView else {
+        guard let view = view as? HeaderFooterView else {
             return
         }
         
@@ -441,7 +441,7 @@ extension Hakuba {
     }
     
     public func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? HAHeaderFooterView else {
+        guard let view = view as? HeaderFooterView else {
             return
         }
         
@@ -449,7 +449,7 @@ extension Hakuba {
     }
     
     public func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
-        guard let view = view as? HAHeaderFooterView else {
+        guard let view = view as? HeaderFooterView else {
             return
         }
         
@@ -470,7 +470,7 @@ extension Hakuba: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         guard let cellmodel = getCellmodel(indexPath),
-            cell = tableView.dequeueReusableCellWithIdentifier(cellmodel.reuseIdentifier, forIndexPath: indexPath) as? HACell else {
+            cell = tableView.dequeueReusableCellWithIdentifier(cellmodel.reuseIdentifier, forIndexPath: indexPath) as? Cell else {
             return UITableViewCell()
         }
         
@@ -495,7 +495,7 @@ extension Hakuba: UITableViewDataSource {
 // MARK - Private methods
 
 private extension Hakuba {
-    func setupSections(sections: [HASection], var fromIndex start: Int) {
+    func setupSections(sections: [Section], var fromIndex start: Int) {
         sections.forEach {
             $0.setup(start++, delegate: self)
         }

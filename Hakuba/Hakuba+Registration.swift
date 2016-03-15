@@ -9,24 +9,24 @@
 import UIKit
 
 public extension Hakuba {
-    func registerCellByNib<T where T: HACell, T: HACellType>(cellType: T.Type) -> Self {
+    func registerCellByNib<T where T: Cell, T: CellType>(cellType: T.Type) -> Self {
         tableView?.registerCellByNib(cellType)
         return self
     }
     
-    func registerCellsByNib<T where T: HACell, T: HACellType>(cellTypes: T.Type...) -> Self {
+    func registerCellsByNib<T where T: Cell, T: CellType>(cellTypes: T.Type...) -> Self {
         for cellType in cellTypes {
             registerCellByNib(cellType)
         }
         return self
     }
     
-    func registerCell<T: HACell>(cellType: T.Type) -> Self {
+    func registerCell<T: Cell>(cellType: T.Type) -> Self {
         tableView?.registerCell(cellType)
         return self
     }
     
-    func registerCells<T: HACell>(cellTypes: T.Type...) -> Self {
+    func registerCells<T: Cell>(cellTypes: T.Type...) -> Self {
         for cellType in cellTypes {
             registerCell(cellType)
         }

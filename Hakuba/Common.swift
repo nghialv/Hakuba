@@ -8,7 +8,7 @@
 
 import UIKit
 
-public typealias HASelectionHandler = (HACell) -> ()
+public typealias HASelectionHandler = (Cell) -> ()
 
 public typealias HAAnimation = UITableViewRowAnimation
 

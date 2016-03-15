@@ -17,10 +17,10 @@ extension Hakuba {
             let topSection = indexPath.section
             
             if currentTopSection != topSection {
-                if let headerView = tableView?.headerViewForSection(currentTopSection) as? HAHeaderFooterView {
+                if let headerView = tableView?.headerViewForSection(currentTopSection) as? HeaderFooterView {
                     headerView.didChangeFloatingState(false, section: currentTopSection)
                 }
-                if let headerView = tableView?.headerViewForSection(topSection) as? HAHeaderFooterView {
+                if let headerView = tableView?.headerViewForSection(topSection) as? HeaderFooterView {
                     headerView.didChangeFloatingState(true, section: topSection)
                 }
                 if currentTopSection > topSection {

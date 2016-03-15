@@ -1,5 +1,5 @@
 //
-//  HAHeaderFooterView.swift
+//  HeaderFooterView.swift
 //  Example
 //
 //  Created by Le VanNghia on 3/5/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class HAHeaderFooterView: UITableViewHeaderFooterView {
+public class HeaderFooterView: UITableViewHeaderFooterView {
     public var selectable = true
     
     public required init?(coder aDecoder: NSCoder) {
@@ -24,7 +24,7 @@ public class HAHeaderFooterView: UITableViewHeaderFooterView {
     public func setup() {
     }
     
-    public func configureView(viewModel: HAHeaderFooterViewModel) {
+    public func configureView(viewModel: HeaderFooterViewModel) {
     }
    
     public func didChangeFloatingState(isFloating: Bool, section: Int) {
@@ -39,7 +39,7 @@ public class HAHeaderFooterView: UITableViewHeaderFooterView {
 
 // MARK - Hightlight
 
-public extension HAHeaderFooterView {
+public extension HeaderFooterView {
     func highlight(animated: Bool) {
     }
     
@@ -49,7 +49,7 @@ public extension HAHeaderFooterView {
 
 // MARK - Touch events
 
-public extension HAHeaderFooterView {
+public extension HeaderFooterView {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         if selectable {

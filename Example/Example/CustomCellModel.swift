@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CustomCellModel: HACellModel {
+class CustomCellModel: CellModel {
     let title: String
     
     init(title: String, selectionHandler: HASelectionHandler) {

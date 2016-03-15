@@ -1,5 +1,5 @@
 //
-//  HACellModel.swift
+//  CellModel.swift
 //  Example
 //
 //  Created by Le VanNghia on 3/4/16.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol HACellModelDelegate: class {
+protocol CellModelDelegate: class {
     func bumpMe(type: ItemBumpType, animation: HAAnimation)
-    func getOffscreenCell(identifier: String) -> HACell
+    func getOffscreenCell(identifier: String) -> Cell
     func tableViewWidth() -> CGFloat
     func deselectCell(indexPath: NSIndexPath, animated: Bool)
 }
 
-public class HACellModel: NSObject {
-    weak var delegate: HACellModelDelegate?
+public class CellModel: NSObject {
+    weak var delegate: CellModelDelegate?
     
     public let reuseIdentifier: String
     public internal(set) var indexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -45,7 +45,7 @@ public class HACellModel: NSObject {
     private var estimatedHeight: CGFloat = 0
     private var calculatedHeight: CGFloat?
     
-    public init<T where T: HACell, T: HACellType>(cell: T.Type, height: CGFloat = 44, selectionHandler: HASelectionHandler? = nil) {
+    public init<T where T: Cell, T: CellType>(cell: T.Type, height: CGFloat = 44, selectionHandler: HASelectionHandler? = nil) {
         self.reuseIdentifier = cell.reuseIdentifier
         self.estimatedHeight = height
         self.selectionHandler = selectionHandler
@@ -64,20 +64,20 @@ public class HACellModel: NSObject {
 
 // MARK - Internal methods
 
-extension HACellModel {
-    func setup(indexPath: NSIndexPath, delegate: HACellModelDelegate) {
+extension CellModel {
+    func setup(indexPath: NSIndexPath, delegate: CellModelDelegate) {
         self.indexPath = indexPath
         self.delegate = delegate
     }
     
-    func didSelect(cell: HACell) {
+    func didSelect(cell: Cell) {
         selectionHandler?(cell)
     }
 }
 
 // MARK - Private methods
 
-private extension HACellModel {
+private extension CellModel {
     func calculateHeight() -> CGFloat {
         if let height = calculatedHeight {
             return height

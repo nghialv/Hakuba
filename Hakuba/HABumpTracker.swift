@@ -1,5 +1,5 @@
 //
-//  HABumpTracker.swift
+//  BumpTracker.swift
 //  Example
 //
 //  Created by Le VanNghia on 3/4/16.
@@ -16,7 +16,7 @@ private enum UpdateState {
     case Remove([Int])
 }
 
-final class HABumpTracker {
+final class BumpTracker {
     private var state: UpdateState = .Begin
     
     var changed: Bool {

@@ -8,10 +8,10 @@
 
 import UIKit
 
-class CustomCell: HACell, HACellType {
+class CustomCell: Cell, CellType {
     typealias CellModel = CustomCellModel
     
-    @IBOutlet weak var titleLabel: HALabel!
+    @IBOutlet weak var titleLabel: Label!
     
     override func configure() {
         guard let cellmodel = cellmodel else {

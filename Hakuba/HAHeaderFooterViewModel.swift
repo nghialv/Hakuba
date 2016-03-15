@@ -1,5 +1,5 @@
 //
-//  HAHeaderFooterViewModel.swift
+//  HeaderFooterViewModel.swift
 //  Example
 //
 //  Created by Le VanNghia on 3/5/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class HAHeaderFooterViewModel {
+public class HeaderFooterViewModel {
     let reuseIdentifier: String
     internal(set) var section: Int = 0
     internal(set) var isHeader = true
@@ -16,7 +16,7 @@ public class HAHeaderFooterViewModel {
     public var isEnabled = true
     public var height: CGFloat = 0
     
-    public init<T: HAHeaderFooterView>(view: T.Type, userData: AnyObject?, selectionHandler: HASelectionHandler? = nil) {
+    public init<T: HeaderFooterView>(view: T.Type, userData: AnyObject?, selectionHandler: HASelectionHandler? = nil) {
         self.reuseIdentifier = view.reuseIdentifier
     }
     

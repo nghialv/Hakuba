@@ -1,5 +1,5 @@
 //
-//  HACell.swift
+//  Cell.swift
 //  Example
 //
 //  Created by Le VanNghia on 3/4/16.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class HACell: UITableViewCell {
-    weak var _cellmodel: HACellModel?
+public class Cell: UITableViewCell {
+    weak var _cellmodel: CellModel?
     
-    func configureCell(cellmodel: HACellModel) {
+    func configureCell(cellmodel: CellModel) {
         _cellmodel = cellmodel
         configure()
     }
@@ -22,7 +22,7 @@ public class HACell: UITableViewCell {
 
 // MARK - Cell events
 
-public extension HACell {
+public extension Cell {
     func willDisplay(tableView: UITableView) {
     }
     

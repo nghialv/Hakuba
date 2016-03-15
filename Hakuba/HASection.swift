@@ -1,5 +1,5 @@
 //
-//  HASection.swift
+//  Section.swift
 //  Example
 //
 //  Created by Le VanNghia on 3/4/16.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol HASectionDelegate: class {
+protocol SectionDelegate: class {
     func bumpMe(type: SectionBumpType, animation: HAAnimation)
 }
 
-public class HASection {
-    weak var delegate: HASectionDelegate?
-    public private(set) var cellmodels: [HACellModel] = []
-    private let bumpTracker = HABumpTracker()
+public class Section {
+    weak var delegate: SectionDelegate?
+    public private(set) var cellmodels: [CellModel] = []
+    private let bumpTracker = BumpTracker()
     
     internal(set) var index: Int = 0
     
@@ -23,21 +23,21 @@ public class HASection {
         return bumpTracker.changed
     }
     
-    public var header: HAHeaderFooterViewModel? {
+    public var header: HeaderFooterViewModel? {
         didSet {
             header?.section = index
             header?.isHeader = true
         }
     }
     
-    public var footer: HAHeaderFooterViewModel? {
+    public var footer: HeaderFooterViewModel? {
         didSet {
             footer?.section = index
             footer?.isHeader = false
         }
     }
     
-    public subscript(index: Int) -> HACellModel? {
+    public subscript(index: Int) -> CellModel? {
         get {
             return cellmodels.get(index)
         }
@@ -60,7 +60,7 @@ public class HASection {
 
 // MARK - Public methods
 
-public extension HASection {
+public extension Section {
     
     // MARK - Reset
     
@@ -68,11 +68,11 @@ public extension HASection {
         return reset([])
     }
     
-    func reset(cellmodel: HACellModel) -> Self {
+    func reset(cellmodel: CellModel) -> Self {
         return reset([cellmodel])
     }
     
-    func reset(cellmodels: [HACellModel]) -> Self {
+    func reset(cellmodels: [CellModel]) -> Self {
         setupCellmodels(cellmodels, indexFrom: 0)
         self.cellmodels = cellmodels
         bumpTracker.didReset()
@@ -81,21 +81,21 @@ public extension HASection {
     
     // MARK - Append
     
-    func append(cellmodel: HACellModel) -> Self {
+    func append(cellmodel: CellModel) -> Self {
         return append([cellmodel])
     }
     
-    func append(cellmodels: [HACellModel]) -> Self {
+    func append(cellmodels: [CellModel]) -> Self {
         return insert(cellmodels, atIndex: count)
     }
     
     // MARK - Insert
     
-    func insert(cellmodel: HACellModel, atIndex index: Int) -> Self {
+    func insert(cellmodel: CellModel, atIndex index: Int) -> Self {
         return insert([cellmodel], atIndex: index)
     }
 
-    func insert(cellmodels: [HACellModel], atIndex index: Int) -> Self {
+    func insert(cellmodels: [CellModel], atIndex index: Int) -> Self {
         guard cellmodels.isNotEmpty else {
             return self
         }
@@ -112,11 +112,11 @@ public extension HASection {
         return self
     }
     
-    func insertBeforeLast(viewmodel: HACellModel) -> Self {
+    func insertBeforeLast(viewmodel: CellModel) -> Self {
         return insertBeforeLast([viewmodel])
     }
     
-    func insertBeforeLast(viewmodels: [HACellModel]) -> Self {
+    func insertBeforeLast(viewmodels: [CellModel]) -> Self {
         let index = max(cellmodels.count - 1, 0)
         return insert(viewmodels, atIndex: index)
     }
@@ -141,7 +141,7 @@ public extension HASection {
             .sort(<)
             .filter { $0 >= 0 && $0 < self.count }
         
-        var remainCellmodels: [HACellModel] = []
+        var remainCellmodels: [CellModel] = []
         var i = 0
         
         for j in 0..<count {
@@ -169,7 +169,7 @@ public extension HASection {
         return remove(index)
     }
     
-    func remove(cellmodel: HACellModel) -> Self {
+    func remove(cellmodel: CellModel) -> Self {
         guard let index = cellmodels.indexOf(cellmodel) else {
             return self
         }
@@ -191,7 +191,7 @@ public extension HASection {
 
 // MARK - Utilities
 
-public extension HASection {
+public extension Section {
     var count: Int {
         return cellmodels.count
     }
@@ -204,19 +204,19 @@ public extension HASection {
         return !isEmpty
     }
     
-    var first: HACellModel? {
+    var first: CellModel? {
         return cellmodels.first
     }
     
-    var last: HACellModel? {
+    var last: CellModel? {
         return cellmodels.last
     }
 }
 
 // MARK - Internal methods
 
-extension HASection {
-    func setup(index: Int, delegate: HASectionDelegate) {
+extension Section {
+    func setup(index: Int, delegate: SectionDelegate) {
         self.delegate = delegate
         self.index = index
         
@@ -228,9 +228,9 @@ extension HASection {
 
 // MARK - Private methods
 
-private extension HASection {
-    func setupCellmodels(cellmodels: [HACellModel], var indexFrom start: Int) {
-        guard let delegate = delegate as? HACellModelDelegate else {
+private extension Section {
+    func setupCellmodels(cellmodels: [CellModel], var indexFrom start: Int) {
+        guard let delegate = delegate as? CellModelDelegate else {
             return
         }
         
