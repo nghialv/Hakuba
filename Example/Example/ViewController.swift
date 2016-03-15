@@ -40,11 +40,14 @@ class ViewController: UIViewController {
             }
         }
         
+        let topSection = Section()
+        let centerSection = Section()
+        
         hakuba
-            .reset([Section(), Section()])
+            .reset([topSection, centerSection])
             .bump()
         
-        hakuba[ExSection.Top]
+        topSection
             .reset(topCellmodels)
             .bump()
         
@@ -64,13 +67,13 @@ class ViewController: UIViewController {
         }
         
         delay(1.5) {
-            self.hakuba[ExSection.Center]
+            centerSection
                 .append(centerCellmodels)
                 .bump(.Left)
         }
         
         delay(3) {
-            self.hakuba[ExSection.Center]
+            centerSection
                 .remove(2...4)
                 .bump(.Right)
         }
@@ -82,19 +85,19 @@ class ViewController: UIViewController {
         }
         
         delay(7.5) {
-            self.hakuba[ExSection.Center]
+            topSection
                 .remove(1)
                 .bump(.Middle)
         }
         
         delay(10) {
-            self.hakuba[ExSection.Center]
+            topSection
                 .remove(0)
                 .bump(.Right)
         }
         
         delay(12.5) {
-            self.hakuba[ExSection.Center]
+            topSection
                 .remove(0)
                 .bump(.Right)
         }
