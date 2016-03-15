@@ -385,15 +385,11 @@ extension Hakuba: UITableViewDelegate {
 
 extension Hakuba {
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let header = sections.get(section)?.header where header.isEnabled else {
-            return 0
-        }
-        
-        return header.height
+        return sections.get(section)?.header?.height ?? 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = sections.get(section)?.header where header.isEnabled else {
+        guard let header = sections.get(section)?.header else {
             return nil
         }
         
@@ -404,15 +400,11 @@ extension Hakuba {
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard let footer = sections.get(section)?.footer where footer.isEnabled else {
-            return 0
-        }
-        
-        return footer.height
+        return sections.get(section)?.footer?.height ?? 0
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footer = sections.get(section)?.footer where footer.isEnabled else {
+        guard let footer = sections.get(section)?.footer else {
             return nil
         }
         
@@ -489,6 +481,14 @@ extension Hakuba: UITableViewDataSource {
         }
         
         return cellmodel.editable || cellEditable
+    }
+    
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections.get(section)?.header?.title
+    }
+    
+    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return sections.get(section)?.footer?.title
     }
 }
 

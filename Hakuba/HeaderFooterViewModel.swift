@@ -9,23 +9,28 @@
 import UIKit
 
 public class HeaderFooterViewModel {
-    let reuseIdentifier: String
-    internal(set) var section: Int = 0
-    internal(set) var isHeader = true
-    
-    public var isEnabled = true
-    public var height: CGFloat = 0
-    
-    public init<T: HeaderFooterView>(view: T.Type, userData: AnyObject?, selectionHandler: HASelectionHandler? = nil) {
-        self.reuseIdentifier = view.reuseIdentifier
+    public enum Type {
+        case Header
+        case Footer
     }
     
-    func bump() -> Self {
-//        if isHeader {
-//            delegate?.reloadHeader(section)
-//        } else {
-//            delegate?.reloadFooter(section)
-//        }
-        return self
+    public let reuseIdentifier: String
+
+    public internal(set) var section: Int = 0
+    public internal(set) var type: Type = .Header
+    
+    public var title: String?
+    public var height: CGFloat = 0
+    
+    public var isHeader: Bool {
+        return type == .Header
+    }
+    
+    public var isFooter: Bool {
+        return type == .Footer
+    }
+    
+    public init<T where T: HeaderFooterView, T: HeaderFooterViewType>(view: T.Type) {
+        self.reuseIdentifier = view.reuseIdentifier
     }
 }

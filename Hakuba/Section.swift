@@ -26,14 +26,14 @@ public class Section {
     public var header: HeaderFooterViewModel? {
         didSet {
             header?.section = index
-            header?.isHeader = true
+            header?.type = .Header
         }
     }
     
     public var footer: HeaderFooterViewModel? {
         didSet {
             footer?.section = index
-            footer?.isHeader = false
+            footer?.type = .Footer
         }
     }
     
