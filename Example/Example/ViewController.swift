@@ -80,6 +80,24 @@ class ViewController: UIViewController {
                 .move(0, to: 1)
                 .bump()
         }
+        
+        delay(7.5) {
+            self.hakuba[Section.Center]
+                .remove(1)
+                .bump(.Middle)
+        }
+        
+        delay(10) {
+            self.hakuba[Section.Center]
+                .remove(0)
+                .bump(.Right)
+        }
+        
+        delay(12.5) {
+            self.hakuba[Section.Center]
+                .remove(0)
+                .bump(.Right)
+        }
     }
     
     func pushChildViewController() {
