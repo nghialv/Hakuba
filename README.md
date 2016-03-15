@@ -44,7 +44,7 @@ Features
 	}
 
 	hakuba[2]
-		.append(cellmodel)		// append a new cell model in datasource
+		.append(cellmodel)		// append a new cell model into datasource
 		.bump(.Fade)			// show the cell of your cell model in the table view
 
 	hakuba[1]
@@ -54,7 +54,7 @@ Features
 ``` swift
 	// your cell swift file
 
-	class YourCellModel : CellModel {
+	class YourCellModel: CellModel {
 		let title: String
 		let des: String
 
@@ -66,16 +66,17 @@ Features
 	}
 
 
-	class YourCell : TableViewCell {
+	class YourCell: Cell, CellType {
+		typealias CellModel = YourCellModel
+
 		@IBOutlet weak var titleLabel: UILabel!
 
-		override func configureCell(data: CellModel) {
-			super.configureCell(data)
-			guard let cellmodel = data as? YourCellModel else {
+		override func configure() {
+			guard let cellmodel = cellmodel else {
 				return
 			}
 
-			titleLabel.text = cellmodel.titleg
+			titleLabel.text = cellmodel.title
       	}
 	}
 ```
@@ -86,7 +87,7 @@ Usage
  * Initilization
 
 ``` swift
-	private var hakuba = Hakuba(tableView: tableView)   
+	private lazy var hakuba = Hakuba(tableView: tableView)   
 ```
 
 * Section handling
@@ -105,11 +106,15 @@ Usage
 		.bump(.Left)
 
 	hakuba
+		.remove(section)
+		.bump()
+
+	hakuba
 		.removeAll()
 		.bump()
 
 	// handing section index by enum
-	enum Section : Int, SectionIndex {
+	enum YourSection: Int, SectionIndex {
 		case Top = 0
 		case Center
 		case Bottom
@@ -118,7 +123,7 @@ Usage
 			return self.rawValue
     	}
 	}
-	let topSection = hakuba[Section.Top]
+	let topSection = hakuba[YourSection.Top]
 ```
 
 * Cell handling
@@ -130,11 +135,11 @@ Usage
 		.bump(.Fade)					// and bump with `Fade` animation
 
 	hakuba[1]
-		.append(cellmodels)			// append a list of cellmodes
+		.append(cellmodels)				// append a list of cellmodes
 		.bump(.Left)					
 
 	// by using section
-	let section = hakuba[Section.Top]
+	let section = hakuba[YourSection.Top]
 	section
 		.append(cellmodel)
 		.bump()
@@ -173,9 +178,10 @@ Usage
 
 ``` swift
 	// updating cell data
-	let section = hakuba[Section.Top]
+	let section = hakuba[YourSection.Top]
 	section[1].property = newData
-	section[1].bump()		
+	section[1]
+		.bump()		
 ```
 
 
@@ -194,47 +200,32 @@ Usage
 	section.count
 ```
 
-
-* Creating cell model
-
-``` swift
-	// create a cell model
-	let cellmodel = CellModel(cellClass: YourCell.self, userData: celldata) {
-		println("Did select")
-	}
-
-	// create a list of cell models from api results
-	let items = [...] // or your data from API
-
-    let cellmodels = items.map { item -> CellModel in
-        return CellModel(cellClass: YourCell.self, userData: item) {
-            println("Did select cell")
-        }
-    }
-```
-
 * Register cell, header, footer
 
 ``` swift
-	hakuba.registerCellNib(CellClassName)
-	hakuba.registerCellClass(CellClassName)
-	hakuba.registerHeaderFooterNib(HeaderOrFooterClassName)
-	hakuba.registerHeaderFooterClass(HeaderOrFooterClassName)
+	hakuba
+		.registerCellByNib(CellClass)
+
+	hakuba
+		.registerCell(CellClass)
+
+	hakuba
+		.registerHeaderFooterByNib(HeaderOrFooterClass)
+
+	hakuba
+		.registerHeaderFooter(HeaderOrFooterClass)
 
 	// register a list of cells by using variadic parameters
-	hakuba.registerCellNib(CellClass1.self, CellClass2.self, ..., CellClassN.self)
+	hakuba.registerCellByNibs(CellClass1.self, CellClass2.self, ..., CellClassN.self)
 ```
 
 * Section header/footer
 
 ``` swift
-	let header = HeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
+	let header = HeaderFooterViewModel(view: CustomHeaderView) {
 		println("Did select header view")
 	}
 	hakuba[Section.Top].header = header
-
-	// hide header in section 1
-	hakuba[Section.Center].header?.enabled = false
 ```
 
 * Loadmore
@@ -251,7 +242,8 @@ Usage
 
 ``` swift
 	hakuba.commitEditingHandler = { [weak self] style, indexPath in
-		self?.hakuba[indexPath.section].remove(indexPath.row)
+		self?.hakuba[indexPath.section]
+			.remove(indexPath.row)
 	}
 ```
 
