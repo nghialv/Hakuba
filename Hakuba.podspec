@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = "8.0"
   s.source       = { :git => "https://github.com/nghialv/Hakuba.git", :tag => "2.0.0" }
-  s.source_files  = "Source/*"
+  s.source_files  = "Hakuba/*"
   s.requires_arc = true
 end
