@@ -33,12 +33,12 @@ public extension Hakuba {
         return self
     }
     
-    func registerHeaderFooterByNib<T: UITableViewHeaderFooterView>(t: T.Type) -> Self {
+    func registerHeaderFooterByNib<T where T: HeaderFooterView, T: HeaderFooterViewType>(t: T.Type) -> Self {
         tableView?.registerHeaderFooterByNib(t)
         return self
     }
     
-    func registerHeaderFooter<T: UITableViewHeaderFooterView>(t: T.Type) -> Self {
+    func registerHeaderFooter<T where T: HeaderFooterView, T: HeaderFooterViewType>(t: T.Type) -> Self {
         tableView?.registerHeaderFooter(t)
         return self
     }

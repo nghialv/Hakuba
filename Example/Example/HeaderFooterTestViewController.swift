@@ -19,6 +19,7 @@ class HeaderFooterTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hakuba.registerCellByNib(CustomCell)
+            .registerHeaderFooterByNib(CustomHeaderView)
         
         // Top section
         
@@ -33,21 +34,20 @@ class HeaderFooterTestViewController: UIViewController {
         
         // Center section
         
-        let longTitle1 = "Don't have to write the code for UITableViewDelegate and UITableViewDataSource protocols"
-        let longTitle2 = "Support dynamic cell height from ios7"
-        let titles = ["title 1", "title 2", "title 3", "title 4", "title 5", longTitle1, longTitle2]
-        
-        let centerCellmodels = titles.map { [weak self] title -> CellModel in
-            let data = CustomCellModel(title: "Section 1: " + title) { _ in
-                print("Did select cell with title = \(title)")
+        let centerCellmodels = (0..<20).map { [weak self] i -> CellModel in
+            let title = "Section 1 : index \(i)"
+            
+            return CustomCellModel(title: title) { _ in
+                print("Did select new cell : \(i)")
                 self?.pushChildViewController()
             }
-            data.dynamicHeightEnabled = true
-            return data
         }
-
+        
         let topSection = Section()
+            topSection.header = CustomHeaderViewModel(text: "Top header")
+        
         let centerSection = Section()
+            centerSection.header = CustomHeaderViewModel(text: "Center header")
         
         hakuba
             .reset([topSection, centerSection])

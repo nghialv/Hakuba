@@ -30,6 +30,9 @@
 		8C5820DB1C984FDD009FB9AE /* HeaderFooterViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5820DA1C984FDD009FB9AE /* HeaderFooterViewType.swift */; };
 		8C5820DD1C9852E3009FB9AE /* HeaderFooterTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5820DC1C9852E3009FB9AE /* HeaderFooterTestViewController.swift */; };
 		8C5820DF1C9852F7009FB9AE /* CellTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5820DE1C9852F7009FB9AE /* CellTestViewController.swift */; };
+		8C5820E11C985625009FB9AE /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5820E01C985625009FB9AE /* CustomHeaderView.swift */; };
+		8C5820E31C98562F009FB9AE /* CustomHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5820E21C98562F009FB9AE /* CustomHeaderViewModel.swift */; };
+		8C5820E51C985640009FB9AE /* CustomHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C5820E41C985640009FB9AE /* CustomHeaderView.xib */; };
 		8C60BC5F1C89D4550006CE38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */; };
 		8C60BC611C89D4550006CE38 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C60BC601C89D4550006CE38 /* ViewController.swift */; };
 		8C60BC641C89D4550006CE38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C60BC621C89D4550006CE38 /* Main.storyboard */; };
@@ -82,6 +85,9 @@
 		8C5820DA1C984FDD009FB9AE /* HeaderFooterViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterViewType.swift; sourceTree = "<group>"; };
 		8C5820DC1C9852E3009FB9AE /* HeaderFooterTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterTestViewController.swift; sourceTree = "<group>"; };
 		8C5820DE1C9852F7009FB9AE /* CellTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellTestViewController.swift; sourceTree = "<group>"; };
+		8C5820E01C985625009FB9AE /* CustomHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
+		8C5820E21C98562F009FB9AE /* CustomHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderViewModel.swift; sourceTree = "<group>"; };
+		8C5820E41C985640009FB9AE /* CustomHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomHeaderView.xib; sourceTree = "<group>"; };
 		8C60BC5B1C89D4550006CE38 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C60BC601C89D4550006CE38 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +189,9 @@
 				8CFF14A51C96758A005699CE /* CustomCellModel.swift */,
 				8C3446821C8E6F97002BC8CD /* CustomCell.xib */,
 				8C3446801C8E6F97002BC8CD /* ChildViewController.swift */,
+				8C5820E01C985625009FB9AE /* CustomHeaderView.swift */,
+				8C5820E21C98562F009FB9AE /* CustomHeaderViewModel.swift */,
+				8C5820E41C985640009FB9AE /* CustomHeaderView.xib */,
 				8C60BC621C89D4550006CE38 /* Main.storyboard */,
 				8C60BC651C89D4550006CE38 /* Assets.xcassets */,
 				8C60BC671C89D4550006CE38 /* LaunchScreen.storyboard */,
@@ -312,6 +321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C5820E51C985640009FB9AE /* CustomHeaderView.xib in Resources */,
 				8C60BC691C89D4550006CE38 /* LaunchScreen.storyboard in Resources */,
 				8C60BC661C89D4550006CE38 /* Assets.xcassets in Resources */,
 				8C3446851C8E6F97002BC8CD /* CustomCell.xib in Resources */,
@@ -350,6 +360,7 @@
 				8C30CA621C8E71880008B717 /* HeaderFooterViewModel.swift in Sources */,
 				8C30CA641C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift in Sources */,
 				8C30CA631C8E71880008B717 /* Hakuba+Registration.swift in Sources */,
+				8C5820E11C985625009FB9AE /* CustomHeaderView.swift in Sources */,
 				8C30CA5E1C8E71880008B717 /* BumpTracker.swift in Sources */,
 				8C60BC611C89D4550006CE38 /* ViewController.swift in Sources */,
 				8C30CA5C1C8E71880008B717 /* ArrayExt.swift in Sources */,
@@ -365,6 +376,7 @@
 				8C60BC5F1C89D4550006CE38 /* AppDelegate.swift in Sources */,
 				8C30CA6B1C8E71880008B717 /* TableViewExt.swift in Sources */,
 				8C30CA5D1C8E71880008B717 /* Common.swift in Sources */,
+				8C5820E31C98562F009FB9AE /* CustomHeaderViewModel.swift in Sources */,
 				8C3446841C8E6F97002BC8CD /* CustomCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

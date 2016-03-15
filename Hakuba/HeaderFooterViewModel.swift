@@ -20,7 +20,7 @@ public class HeaderFooterViewModel {
     public internal(set) var type: Type = .Header
     
     public var title: String?
-    public var height: CGFloat = 0
+    public var height: CGFloat = 44
     
     public var isHeader: Bool {
         return type == .Header

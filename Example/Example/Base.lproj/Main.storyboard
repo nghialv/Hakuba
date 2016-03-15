@@ -93,7 +93,7 @@
         <!--Header Footer Test View Controller-->
         <scene sceneID="tE3-m1-Kz4">
             <objects>
-                <viewController storyboardIdentifier="HeaderFooterTestViewController" id="0u5-Cv-1cW" customClass="HeaderFooterTestViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HeaderFooterTestViewController" automaticallyAdjustsScrollViewInsets="NO" id="0u5-Cv-1cW" customClass="HeaderFooterTestViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Jt9-dd-bhj"/>
                         <viewControllerLayoutGuide type="bottom" id="XjE-bJ-DTc"/>

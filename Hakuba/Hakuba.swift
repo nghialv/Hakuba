@@ -32,7 +32,7 @@ final public class Hakuba: NSObject {
         return (tableView?.visibleCells as? [Cell]) ?? []
     }
     
-    var currentTopSection = 0
+    var currentTopSection = -1
     var willFloatingSection = -1
     
     public var sectionsCount: Int {
