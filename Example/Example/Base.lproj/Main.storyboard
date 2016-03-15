@@ -57,6 +57,72 @@
             </objects>
             <point key="canvasLocation" x="2075" y="470"/>
         </scene>
+        <!--Cell Test View Controller-->
+        <scene sceneID="jWk-E2-WcO">
+            <objects>
+                <viewController storyboardIdentifier="CellTestViewController" id="2il-9E-XWT" customClass="CellTestViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="H2Q-pa-LbX"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kkh-V3-GNh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="B9Y-XP-MI4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vaa-lv-eMm">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vaa-lv-eMm" firstAttribute="leading" secondItem="B9Y-XP-MI4" secondAttribute="leading" id="C9S-iK-Fcj"/>
+                            <constraint firstItem="vaa-lv-eMm" firstAttribute="top" secondItem="H2Q-pa-LbX" secondAttribute="bottom" id="I2Z-x8-GJF"/>
+                            <constraint firstItem="Kkh-V3-GNh" firstAttribute="top" secondItem="vaa-lv-eMm" secondAttribute="bottom" id="OAf-da-brj"/>
+                            <constraint firstAttribute="trailing" secondItem="vaa-lv-eMm" secondAttribute="trailing" id="T0k-ui-8P3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="vaa-lv-eMm" id="6DL-KD-Utn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tfk-gx-FIN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1602" y="1200"/>
+        </scene>
+        <!--Header Footer Test View Controller-->
+        <scene sceneID="tE3-m1-Kz4">
+            <objects>
+                <viewController storyboardIdentifier="HeaderFooterTestViewController" id="0u5-Cv-1cW" customClass="HeaderFooterTestViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jt9-dd-bhj"/>
+                        <viewControllerLayoutGuide type="bottom" id="XjE-bJ-DTc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="i3j-Ta-dJ3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vBw-Jz-wwf">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XjE-bJ-DTc" firstAttribute="top" secondItem="vBw-Jz-wwf" secondAttribute="bottom" id="89S-lL-CGs"/>
+                            <constraint firstAttribute="trailing" secondItem="vBw-Jz-wwf" secondAttribute="trailing" id="HlA-BC-B3Y"/>
+                            <constraint firstItem="vBw-Jz-wwf" firstAttribute="leading" secondItem="i3j-Ta-dJ3" secondAttribute="leading" id="UZV-ny-dPu"/>
+                            <constraint firstItem="vBw-Jz-wwf" firstAttribute="top" secondItem="Jt9-dd-bhj" secondAttribute="bottom" id="cZa-f2-F7M"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="vBw-Jz-wwf" id="adL-rS-n6w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="31U-3K-AwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2293" y="1223"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="TBb-Cs-Fzq">
             <objects>
