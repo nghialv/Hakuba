@@ -101,6 +101,12 @@ class ViewController: UIViewController {
                 .remove(0)
                 .bump(.Right)
         }
+        
+        delay(15) {
+            self.hakuba
+                .reset()
+                .bump()
+        }
     }
     
     func pushChildViewController() {
