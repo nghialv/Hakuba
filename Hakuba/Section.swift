@@ -170,11 +170,13 @@ public extension Section {
     }
     
     func remove(cellmodel: CellModel) -> Self {
-        guard let index = cellmodels.indexOf(cellmodel) else {
+        let index = cellmodels.indexOf { return  $0 === cellmodel }
+        
+        guard let i = index else {
             return self
         }
         
-        return remove(index)
+        return remove(i)
     }
     
     // MAKR - Move

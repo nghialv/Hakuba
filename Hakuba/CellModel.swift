@@ -15,7 +15,7 @@ protocol CellModelDelegate: class {
     func deselectCell(indexPath: NSIndexPath, animated: Bool)
 }
 
-public class CellModel: NSObject {
+public class CellModel {
     weak var delegate: CellModelDelegate?
     
     public let reuseIdentifier: String
