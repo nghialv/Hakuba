@@ -149,7 +149,7 @@ public extension Hakuba {
     // MARK - Reset
     
     func reset(listType: SectionIndexType.Type) -> Self {
-        let sections = (0...listType.count).map { _ in Section() }
+        let sections = Array(count: listType.count, repeatedValue: Section())
         return reset(sections)
     }
     
