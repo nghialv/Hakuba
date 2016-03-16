@@ -31,9 +31,9 @@ final public class Hakuba: NSObject {
     public var visibleCells: [Cell] {
         return (tableView?.visibleCells as? [Cell]) ?? []
     }
-    
-    var currentTopSection = -1
-    var willFloatingSection = -1
+
+    var currentTopSection = NSNotFound
+    var willFloatingSection = NSNotFound
     
     public var sectionsCount: Int {
         return sections.count
@@ -426,7 +426,7 @@ extension Hakuba {
         
         view.willDisplay(tableView, section: section)
         view.didChangeFloatingState(true, section: section)
-        willFloatingSection = -1
+        willFloatingSection = NSNotFound
     }
     
     public func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
