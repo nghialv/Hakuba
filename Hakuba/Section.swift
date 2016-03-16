@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SectionDelegate: class {
-    func bumpMe(type: SectionBumpType, animation: HAAnimation)
+    func bumpMe(type: SectionBumpType, animation: Animation)
 }
 
 public class Section {
@@ -50,7 +50,7 @@ public class Section {
         bumpTracker.didBump()
     }
     
-    func bump(animation: HAAnimation = .None) -> Self {
+    func bump(animation: Animation = .None) -> Self {
         let type = bumpTracker.getSectionBumpType(index)
         delegate?.bumpMe(type, animation: animation)
         bumpTracker.didBump()
