@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum SectionIndex: Int, SectionIndexType {
+    case Top
+    case Center
+    
+    static let count = 2
+}
+
 class CellTestViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
@@ -30,13 +37,13 @@ class CellTestViewController: UIViewController {
                 self?.pushChildViewController()
             }
         }
-        
-        let topSection = Section()
-        let centerSection = Section()
-        
+    
         hakuba
-            .reset([topSection, centerSection])
+            .reset(SectionIndex)
             .bump()
+        
+        let topSection = hakuba[SectionIndex.Top]
+        let centerSection = hakuba[SectionIndex.Center]
         
         topSection
             .reset(topCellmodels)

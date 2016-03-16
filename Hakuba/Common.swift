@@ -12,8 +12,15 @@ public typealias SelectionHandler = (Cell) -> ()
 
 public typealias Animation = UITableViewRowAnimation
 
-public protocol SectionIndex {
+public protocol SectionIndexType {
     var intValue: Int { get }
+    static var count: Int { get }
+}
+
+public extension SectionIndexType where Self: RawRepresentable, Self.RawValue == Int {
+    var intValue: Int {
+        return rawValue
+    }
 }
 
 public enum HakubaBumpType {
