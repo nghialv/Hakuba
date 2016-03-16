@@ -46,11 +46,7 @@ public class Section {
     public init() {
     }
     
-    func didReloadTableView() {
-        bumpTracker.didBump()
-    }
-    
-    func bump(animation: Animation = .None) -> Self {
+    public func bump(animation: Animation = .None) -> Self {
         let type = bumpTracker.getSectionBumpType(index)
         delegate?.bumpMe(type, animation: animation)
         bumpTracker.didBump()
@@ -225,6 +221,10 @@ extension Section {
         header?.section = index
         footer?.section = index
         setupCellmodels(cellmodels, indexFrom: 0)
+    }
+    
+    func didReloadTableView() {
+        bumpTracker.didBump()
     }
 }
 
