@@ -42,7 +42,7 @@ final public class Hakuba: NSObject {
     public var cellEditable = false
     public var commitEditingHandler: ((UITableViewCellEditingStyle, NSIndexPath) -> ())?
     
-    public subscript(index: SectionIndex) -> Section {
+    public subscript(index: SectionIndexType) -> Section {
         get {
             return self[index.intValue]
         }
@@ -73,7 +73,7 @@ final public class Hakuba: NSObject {
         return sections.get(index)
     }
     
-    public func getSection(index: SectionIndex) -> Section? {
+    public func getSection(index: SectionIndexType) -> Section? {
         return getSection(index.intValue)
     }
     
@@ -147,6 +147,11 @@ public extension Hakuba {
 
 public extension Hakuba {
     // MARK - Reset
+    
+    func reset(listType: SectionIndexType.Type) -> Self {
+        let sections = (0...listType.count).map { _ in Section() }
+        return reset(sections)
+    }
     
     func reset() -> Self {
         return reset([])
