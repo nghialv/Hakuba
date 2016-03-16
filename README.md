@@ -114,15 +114,14 @@ Usage
 		.bump()
 
 	// handing section index by enum
-	enum YourSection: Int, SectionIndex {
+	enum YourSection: Int, SectionIndexType {
 		case Top = 0
 		case Center
 		case Bottom
 
-		var intValue: Int {
-			return self.rawValue
-    	}
+		static let count = 3
 	}
+	
 	let topSection = hakuba[YourSection.Top]
 ```
 
