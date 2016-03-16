@@ -89,7 +89,7 @@ final public class Hakuba: NSObject {
         tableView?.dataSource = nil
     }
     
-    public func bump(animation: HAAnimation = .None) -> Self {
+    public func bump(animation: Animation = .None) -> Self {
         let changedCount = sections.reduce(0) { $0 + ($1.changed ? 1 : 0) }
         
         if changedCount == 0 {
@@ -279,7 +279,7 @@ public extension Hakuba {
 // MARK - SectionDelegate, CellModelDelegate
 
 extension Hakuba: SectionDelegate, CellModelDelegate {
-    func bumpMe(type: SectionBumpType, animation: HAAnimation) {
+    func bumpMe(type: SectionBumpType, animation: Animation) {
         switch type {
         case .Reload(let indexSet):
             tableView?.reloadSections(indexSet, withRowAnimation: animation)
@@ -295,7 +295,7 @@ extension Hakuba: SectionDelegate, CellModelDelegate {
         }
     }
     
-    func bumpMe(type: ItemBumpType, animation: HAAnimation) {
+    func bumpMe(type: ItemBumpType, animation: Animation) {
         switch type {
         case .Reload(let indexPath):
             tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)

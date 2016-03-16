@@ -8,9 +8,9 @@
 
 import UIKit
 
-public typealias HASelectionHandler = (Cell) -> ()
+public typealias SelectionHandler = (Cell) -> ()
 
-public typealias HAAnimation = UITableViewRowAnimation
+public typealias Animation = UITableViewRowAnimation
 
 public protocol SectionIndex {
     var intValue: Int { get }

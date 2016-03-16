@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CellModelDelegate: class {
-    func bumpMe(type: ItemBumpType, animation: HAAnimation)
+    func bumpMe(type: ItemBumpType, animation: Animation)
     func getOffscreenCell(identifier: String) -> Cell
     func tableViewWidth() -> CGFloat
     func deselectCell(indexPath: NSIndexPath, animated: Bool)
@@ -20,7 +20,7 @@ public class CellModel {
     
     public let reuseIdentifier: String
     public internal(set) var indexPath = NSIndexPath(forRow: 0, inSection: 0)
-    public var selectionHandler: HASelectionHandler?
+    public var selectionHandler: SelectionHandler?
 
     public var selectable = true
     public var editable = false
@@ -45,13 +45,13 @@ public class CellModel {
     private var estimatedHeight: CGFloat = 0
     private var calculatedHeight: CGFloat?
     
-    public init<T where T: Cell, T: CellType>(cell: T.Type, height: CGFloat = 44, selectionHandler: HASelectionHandler? = nil) {
+    public init<T where T: Cell, T: CellType>(cell: T.Type, height: CGFloat = 44, selectionHandler: SelectionHandler? = nil) {
         self.reuseIdentifier = cell.reuseIdentifier
         self.estimatedHeight = height
         self.selectionHandler = selectionHandler
     }
     
-    public func bump(animation: HAAnimation = .None) -> Self {
+    public func bump(animation: Animation = .None) -> Self {
         calculatedHeight = nil
         delegate?.bumpMe(ItemBumpType.Reload(indexPath), animation: animation)
         return self
