@@ -14,7 +14,7 @@ extension Array {
     }
     
     func hasIndex(index: Int) -> Bool {
-        return index >= 0 && index < count
+        return indices ~= index
     }
     
     func getSafeIndex(index: Int) -> Int {
@@ -50,7 +50,7 @@ extension Array {
     }
     
     mutating func move(fromIndex from: Int, toIndex to: Int) -> Bool {
-        if !(0..<count ~= from) || !(0..<count ~= to) || from == to {
+        if !hasIndex(from) || !hasIndex(to) || from == to {
             return false
         }
         
