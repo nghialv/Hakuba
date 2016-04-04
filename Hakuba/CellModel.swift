@@ -95,6 +95,9 @@ private extension CellModel {
         cell.layoutIfNeeded()
         
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-        return size.height + 1
+        let height = size.height + 1
+        calculatedHeight = height
+        
+        return height
     }
 }
