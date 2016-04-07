@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol HeaderFooterViewType {
-    typealias ViewModel
+    associatedtype ViewModel
     
     var viewmodel: ViewModel? { get }
 }
