@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol CellType {
-    typealias CellModel
+    associatedtype CellModel
     
     var cellmodel: CellModel? { get }
 }

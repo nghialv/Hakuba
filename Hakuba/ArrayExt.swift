@@ -25,7 +25,7 @@ extension Array {
     func getSafeRange(range: Range<Int>) -> Range<Int>? {
         let start = max(0, range.startIndex)
         let end = min(count, range.endIndex)
-        return start <= end ? Range<Int>(start: start, end: end) : nil
+        return start <= end ? start..<end : nil
     }
     
     func get(index: Int) -> Element? {
@@ -33,7 +33,7 @@ extension Array {
     }
     
     mutating func append(newArray: Array) -> Range<Int> {
-        let range = Range<Int>(start: count, end: count + newArray.count)
+        let range = count..<(count + newArray.count)
         self += newArray
         return range
     }
@@ -46,7 +46,7 @@ extension Array {
         let left = self[0..<start]
         let right = self[start..<count]
         self = left + newArray + right
-        return Range<Int>(start: start, end: end)
+        return start..<end
     }
     
     mutating func move(fromIndex from: Int, toIndex to: Int) -> Bool {
@@ -67,7 +67,7 @@ extension Array {
             return nil
         }
         removeAtIndex(index)
-        return Range<Int>(start: index, end: index + 1)
+        return index..<(index + 1)
     }
     
     mutating func remove(range: Range<Int>) -> Range<Int>? {

@@ -142,7 +142,7 @@ public extension Section {
         
         for j in 0..<count {
             if let k = sortedIndexes.get(i) where k == j {
-                i++
+                i += 1
             } else {
                 remainCellmodels.append(cellmodels[j])
             }
@@ -231,14 +231,17 @@ extension Section {
 // MARK - Private methods
 
 private extension Section {
-    func setupCellmodels(cellmodels: [CellModel], var indexFrom start: Int) {
+    func setupCellmodels(cellmodels: [CellModel], indexFrom start: Int) {
         guard let delegate = delegate as? CellModelDelegate else {
             return
         }
         
-        for cellmodel in cellmodels {
-            let indexPath = NSIndexPath(forRow: start++, inSection: index)
+        var start = start
+        
+        cellmodels.forEach { cellmodel in
+            let indexPath = NSIndexPath(forRow: start, inSection: index)
             cellmodel.setup(indexPath, delegate: delegate)
+            start += 1
         }
     }
 }
