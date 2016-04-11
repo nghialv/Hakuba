@@ -70,13 +70,13 @@ final class BumpTracker {
         }
         
         switch state {
-        case .Insert(let indexes):
+        case .Insert(let indexes) where indexes.isNotEmpty:
             return .Insert(indexes.map(toIndexPath))
             
         case .Move(let from, let to):
             return .Move(toIndexPath(from), toIndexPath(to))
             
-        case .Remove(let indexes):
+        case .Remove(let indexes) where indexes.isNotEmpty:
             return .Delete(indexes.map(toIndexPath))
             
         default:
@@ -94,13 +94,13 @@ final class BumpTracker {
         }
         
         switch state {
-        case .Insert(let indexes):
+        case .Insert(let indexes) where indexes.isNotEmpty:
             return .Insert(toIndexSet(indexes))
             
         case .Move(let from, let to):
             return .Move(from, to)
             
-        case .Remove(let indexes):
+        case .Remove(let indexes) where indexes.isNotEmpty:
             return .Delete(toIndexSet(indexes))
             
         default:
