@@ -22,7 +22,6 @@ public class CellModel {
     public internal(set) var indexPath = NSIndexPath(forRow: 0, inSection: 0)
     public var selectionHandler: SelectionHandler?
 
-    public var selectable = true
     public var editable = false
     public var editingStyle: UITableViewCellEditingStyle = .None
     public var shouldHighlight = true
