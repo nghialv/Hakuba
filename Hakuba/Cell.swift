@@ -23,7 +23,7 @@ open class Cell: UITableViewCell {
 // MARK - Cell events
 
 public extension Cell {
-    public func willDisplay(_ tableView: UITableView) {
+    open func willDisplay(_ tableView: UITableView) {
     }
     
     public func didEndDisplay(_ tableView: UITableView) {
