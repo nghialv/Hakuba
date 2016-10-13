@@ -23,35 +23,35 @@ open class Cell: UITableViewCell {
 // MARK - Cell events
 
 public extension Cell {
-    func willDisplay(_ tableView: UITableView) {
+    public func willDisplay(_ tableView: UITableView) {
     }
     
-    func didEndDisplay(_ tableView: UITableView) {
+    public func didEndDisplay(_ tableView: UITableView) {
     }
     
-    func willSelect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
+    public func willSelect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
         return indexPath
     }
     
-    func didSelect(_ tableView: UITableView) {
+    public func didSelect(_ tableView: UITableView) {
     }
     
-    func willDeselect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
+    public func willDeselect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
         return indexPath
     }
     
-    func didDeselect(_ tableView: UITableView) {
+    public func didDeselect(_ tableView: UITableView) {
     }
     
-    func willBeginEditing(_ tableView: UITableView) {
+    public func willBeginEditing(_ tableView: UITableView) {
     }
     
-    func didEndEditing(_ tableView: UITableView) {
+    public func didEndEditing(_ tableView: UITableView) {
     }
     
-    func didHighlight(_ tableView: UITableView) {
+    public func didHighlight(_ tableView: UITableView) {
     }
     
-    func didUnhighlight(_ tableView: UITableView) {
+    public func didUnhighlight(_ tableView: UITableView) {
     }
 }
