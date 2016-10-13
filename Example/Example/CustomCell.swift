@@ -18,10 +18,10 @@ class CustomCell: Cell, CellType {
             return
         }
         
-        titleLabel.text = cellmodel.title + "(\(cellmodel.indexPath.section),\(cellmodel.indexPath.row))"
+        titleLabel.text = cellmodel.title + "(\((cellmodel.indexPath as NSIndexPath).section),\((cellmodel.indexPath as NSIndexPath).row))"
     }
     
-    override func willDisplay(tableView: UITableView) {
+    override func willDisplay(_ tableView: UITableView) {
         super.willDisplay(tableView)
         
     }

@@ -8,23 +8,23 @@
 
 import UIKit
 
-public class HeaderFooterView: UITableViewHeaderFooterView {
+open class HeaderFooterView: UITableViewHeaderFooterView {
     weak var _viewmodel: HeaderFooterViewModel?
     
-    public func configureView(viewmodel: HeaderFooterViewModel) {
+    open func configureView(_ viewmodel: HeaderFooterViewModel) {
         _viewmodel = viewmodel
         configure()
     }
     
-    public func configure() {
+    open func configure() {
     }
    
-    public func didChangeFloatingState(isFloating: Bool, section: Int) {
+    open func didChangeFloatingState(_ isFloating: Bool, section: Int) {
     }
     
-    public func willDisplay(tableView: UITableView, section: Int) {
+    open func willDisplay(_ tableView: UITableView, section: Int) {
     }
     
-    public func didEndDisplaying(tableView: UITableView, section: Int) {
+    open func didEndDisplaying(_ tableView: UITableView, section: Int) {
     }
 }

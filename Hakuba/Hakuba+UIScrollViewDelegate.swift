@@ -10,17 +10,17 @@ import UIKit
 
 extension Hakuba {
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
         
         if let indexPath = tableView?.indexPathsForVisibleRows?.first {
-            let topSection = indexPath.section
+            let topSection = (indexPath as NSIndexPath).section
             
             if currentTopSection != topSection {
-                if let headerView = tableView?.headerViewForSection(currentTopSection) as? HeaderFooterView {
+                if let headerView = tableView?.headerView(forSection: currentTopSection) as? HeaderFooterView {
                     headerView.didChangeFloatingState(false, section: currentTopSection)
                 }
-                if let headerView = tableView?.headerViewForSection(topSection) as? HeaderFooterView {
+                if let headerView = tableView?.headerView(forSection: topSection) as? HeaderFooterView {
                     headerView.didChangeFloatingState(true, section: topSection)
                 }
                 if currentTopSection > topSection {
@@ -44,31 +44,31 @@ extension Hakuba {
         }
     }
     
-    public func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDecelerating?(scrollView)
     }
     
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidEndDecelerating?(scrollView)
     }
     
-    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
     }
 
-    public func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidScrollToTop?(scrollView)
     }
     
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDragging?(scrollView)
     }
     
-    public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         delegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
     }
     
-    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
 }

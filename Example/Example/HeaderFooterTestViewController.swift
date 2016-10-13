@@ -10,9 +10,9 @@ import UIKit
 
 class HeaderFooterTestViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
+    fileprivate lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         hakuba.deselectAllCells(animated: true)
     }
     
@@ -65,7 +65,7 @@ class HeaderFooterTestViewController: UIViewController {
     
     func pushChildViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ChildViewController") as! ChildViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "ChildViewController") as! ChildViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

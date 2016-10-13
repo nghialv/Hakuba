@@ -9,102 +9,102 @@
 import Foundation
 
 private enum UpdateState {
-    case Begin
-    case Reload
-    case Insert([Int])
-    case Move(Int, Int)
-    case Remove([Int])
+    case begin
+    case reload
+    case insert([Int])
+    case move(Int, Int)
+    case remove([Int])
 }
 
 final class BumpTracker {
-    private var state: UpdateState = .Begin
+    fileprivate var state: UpdateState = .begin
     
     var changed: Bool {
-        if case .Begin = state {
+        if case .begin = state {
             return false
         }
         return true
     }
     
     func didBump() {
-        state = .Begin
+        state = .begin
     }
     
     func didReset() {
-        state = .Reload
+        state = .reload
     }
     
-    func didInsert(indexes: [Int]) {
+    func didInsert(_ indexes: [Int]) {
         switch state {
-        case .Begin:
-            state = .Insert(indexes)
+        case .begin:
+            state = .insert(indexes)
             
         default:
-            state = .Reload
+            state = .reload
         }
     }
     
-    func didMove(from: Int, to: Int) {
+    func didMove(_ from: Int, to: Int) {
         switch state {
-        case .Begin:
-            state = .Move(from, to)
+        case .begin:
+            state = .move(from, to)
             
         default:
-            state = .Reload
+            state = .reload
         }
     }
     
-    func didRemove(indexes: [Int]) {
+    func didRemove(_ indexes: [Int]) {
         switch state {
-        case .Begin:
-            state = .Remove(indexes)
+        case .begin:
+            state = .remove(indexes)
             
         default:
-            state = .Reload
+            state = .reload
         }
     }
     
-    func getSectionBumpType(index: Int) -> SectionBumpType {
-        let toIndexPath = { (row: Int) -> NSIndexPath in
-            return NSIndexPath(forRow: row, inSection: index)
+    func getSectionBumpType(_ index: Int) -> SectionBumpType {
+        let toIndexPath = { (row: Int) -> IndexPath in
+            return IndexPath(row: row, section: index)
         }
         
         switch state {
-        case .Insert(let indexes) where indexes.isNotEmpty:
-            return .Insert(indexes.map(toIndexPath))
+        case .insert(let indexes) where indexes.isNotEmpty:
+            return .insert(indexes.map(toIndexPath))
             
-        case .Move(let from, let to):
-            return .Move(toIndexPath(from), toIndexPath(to))
+        case .move(let from, let to):
+            return .move(toIndexPath(from), toIndexPath(to))
             
-        case .Remove(let indexes) where indexes.isNotEmpty:
-            return .Delete(indexes.map(toIndexPath))
+        case .remove(let indexes) where indexes.isNotEmpty:
+            return .delete(indexes.map(toIndexPath))
             
         default:
-            return .Reload(NSIndexSet(index: index))
+            return .reload(IndexSet(integer: index))
         }
     }
     
     func getHakubaBumpType() -> HakubaBumpType {
-        let toIndexSet = { (indexes: [Int]) -> NSIndexSet in
+        let toIndexSet = { (indexes: [Int]) -> IndexSet in
             let indexSet = NSMutableIndexSet()
             for index in indexes {
-                indexSet.addIndex(index)
+                indexSet.add(index)
             }
-            return indexSet
+            return indexSet as IndexSet
         }
         
         switch state {
-        case .Insert(let indexes) where indexes.isNotEmpty:
-            return .Insert(toIndexSet(indexes))
+        case .insert(let indexes) where indexes.isNotEmpty:
+            return .insert(toIndexSet(indexes))
             
-        case .Move(let from, let to):
-            return .Move(from, to)
+        case .move(let from, let to):
+            return .move(from, to)
             
-        case .Remove(let indexes) where indexes.isNotEmpty:
-            return .Delete(toIndexSet(indexes))
+        case .remove(let indexes) where indexes.isNotEmpty:
+            return .delete(toIndexSet(indexes))
             
         default:
-            return .Reload
+            return .reload
         }
     }
 }

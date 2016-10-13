@@ -8,50 +8,50 @@
 
 import UIKit
 
-public class Cell: UITableViewCell {
+open class Cell: UITableViewCell {
     weak var _cellmodel: CellModel?
     
-    func configureCell(cellmodel: CellModel) {
+    func configureCell(_ cellmodel: CellModel) {
         _cellmodel = cellmodel
         configure()
     }
     
-    public func configure() {
+    open func configure() {
     }
 }
 
 // MARK - Cell events
 
 public extension Cell {
-    func willDisplay(tableView: UITableView) {
+    func willDisplay(_ tableView: UITableView) {
     }
     
-    func didEndDisplay(tableView: UITableView) {
+    func didEndDisplay(_ tableView: UITableView) {
     }
     
-    func willSelect(tableView: UITableView, indexPath: NSIndexPath) -> NSIndexPath? {
+    func willSelect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
         return indexPath
     }
     
-    func didSelect(tableView: UITableView) {
+    func didSelect(_ tableView: UITableView) {
     }
     
-    func willDeselect(tableView: UITableView, indexPath: NSIndexPath) -> NSIndexPath? {
+    func willDeselect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
         return indexPath
     }
     
-    func didDeselect(tableView: UITableView) {
+    func didDeselect(_ tableView: UITableView) {
     }
     
-    func willBeginEditing(tableView: UITableView) {
+    func willBeginEditing(_ tableView: UITableView) {
     }
     
-    func didEndEditing(tableView: UITableView) {
+    func didEndEditing(_ tableView: UITableView) {
     }
     
-    func didHighlight(tableView: UITableView) {
+    func didHighlight(_ tableView: UITableView) {
     }
     
-    func didUnhighlight(tableView: UITableView) {
+    func didUnhighlight(_ tableView: UITableView) {
     }
 }
