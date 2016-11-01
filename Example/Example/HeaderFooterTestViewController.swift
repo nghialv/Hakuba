@@ -18,8 +18,8 @@ class HeaderFooterTestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hakuba.registerCellByNib(CustomCell)
-            .registerHeaderFooterByNib(CustomHeaderView)
+        hakuba.registerCellByNib(CustomCell.self)
+            .registerHeaderFooterByNib(CustomHeaderView.self)
         
         // Top section
         

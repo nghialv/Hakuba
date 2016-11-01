@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hakuba.registerCellByNib(CustomCell)
+        hakuba.registerCellByNib(CustomCell.self)
       
         let cm1 = CustomCellModel(title: "Test cell") { [weak self] _ in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

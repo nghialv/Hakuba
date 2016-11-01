@@ -14,7 +14,7 @@ extension Hakuba {
         delegate?.scrollViewDidScroll?(scrollView)
         
         if let indexPath = tableView?.indexPathsForVisibleRows?.first {
-            let topSection = (indexPath as NSIndexPath).section
+            let topSection = indexPath.section
             
             if currentTopSection != topSection {
                 if let headerView = tableView?.headerView(forSection: currentTopSection) as? HeaderFooterView {

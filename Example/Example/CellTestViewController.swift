@@ -25,7 +25,7 @@ class CellTestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hakuba.registerCellByNib(CustomCell)
+        hakuba.registerCellByNib(CustomCell.self)
         
         // Top section
         
@@ -39,7 +39,7 @@ class CellTestViewController: UIViewController {
         }
     
         hakuba
-            .reset(SectionIndex)
+            .reset(SectionIndex.self)
             .bump()
         
         let topSection = hakuba[SectionIndex.top]

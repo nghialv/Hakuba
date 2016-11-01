@@ -62,11 +62,11 @@ final public class Hakuba: NSObject {
     }
     
     subscript(indexPath: IndexPath) -> CellModel? {
-        return self[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
+        return self[indexPath.section][(indexPath as NSIndexPath).row]
     }
     
     public func getCellmodel(_ indexPath: IndexPath) -> CellModel? {
-        return sections.get((indexPath as NSIndexPath).section)?[(indexPath as NSIndexPath).row]
+        return sections.get(indexPath.section)?[(indexPath as NSIndexPath).row]
     }
     
     public func getSection(_ index: Int) -> Section? {
@@ -89,7 +89,7 @@ final public class Hakuba: NSObject {
         tableView?.dataSource = nil
     }
     
-    public func bump(_ animation: Animation = .none) -> Self {
+    @discardableResult public func bump(_ animation: Animation = .none) -> Self {
         let changedCount = sections.reduce(0) { $0 + ($1.changed ? 1 : 0) }
         
         if changedCount == 0 {
@@ -148,20 +148,20 @@ public extension Hakuba {
 public extension Hakuba {
     // MARK - Reset
     
-    func reset(_ listType: SectionIndexType.Type) -> Self {
+    @discardableResult func reset(_ listType: SectionIndexType.Type) -> Self {
         let sections = (0..<listType.count).map { _ in Section() }
         return reset(sections)
     }
     
-    func reset() -> Self {
+    @discardableResult func reset() -> Self {
         return reset([])
     }
     
-    func reset(_ section: Section) -> Self {
+    @discardableResult func reset(_ section: Section) -> Self {
         return reset([section])
     }
     
-    func reset(_ sections: [Section]) -> Self {
+    @discardableResult func reset(_ sections: [Section]) -> Self {
         setupSections(sections, fromIndex: 0)
         self.sections = sections
         bumpTracker.didReset()
@@ -170,21 +170,21 @@ public extension Hakuba {
     
     // MARK - Append
     
-    func append(_ section: Section) -> Self {
+    @discardableResult func append(_ section: Section) -> Self {
         return append([section])
     }
     
-    func append(_ sections: [Section]) -> Self {
+    @discardableResult func append(_ sections: [Section]) -> Self {
         return insert(sections, atIndex: sectionsCount)
     }
     
     // MARK - Insert
     
-    func insert(_ section: Section, atIndex index: Int) -> Self {
+    @discardableResult func insert(_ section: Section, atIndex index: Int) -> Self {
         return insert([section], atIndex: index)
     }
     
-    func insert(_ sections: [Section], atIndex index: Int) -> Self {
+    @discardableResult func insert(_ sections: [Section], atIndex index: Int) -> Self {
         guard sections.isNotEmpty else {
             return self
         }
@@ -197,27 +197,32 @@ public extension Hakuba {
         return self
     }
     
-    func insertBeforeLast(_ section: Section) -> Self {
+    @discardableResult func insertBeforeLast(_ section: Section) -> Self {
         return insertBeforeLast([section])
     }
     
-    func insertBeforeLast(_ sections: [Section]) -> Self {
+    @discardableResult func insertBeforeLast(_ sections: [Section]) -> Self {
         let index = max(sections.count - 1, 0)
         return insert(sections, atIndex: index)
     }
     
     // MARK - Remove
     
-    func remove(_ index: Int) -> Self {
+    @discardableResult func remove(_ index: Int) -> Self {
         return remove(indexes: [index])
     }
     
-    func remove(_ range: CountableClosedRange<Int>) -> Self {
+    @discardableResult func remove(_ range: CountableRange<Int>) -> Self {
         let indexes = range.map { $0 }
         return remove(indexes: indexes)
     }
     
-    func remove(indexes: [Int]) -> Self {
+    @discardableResult func remove(_ range: CountableClosedRange<Int>) -> Self {
+        let indexes = range.map { $0 }
+        return remove(indexes: indexes)
+    }
+    
+    @discardableResult func remove(indexes: [Int]) -> Self {
         guard indexes.isNotEmpty else {
             return self
         }
@@ -230,7 +235,7 @@ public extension Hakuba {
         var i = 0
         
         for j in 0..<sectionsCount {
-            if let k = sortedIndexes.get(i) , k == j {
+            if let k = sortedIndexes.get(i), k == j {
                 i += 1
             } else {
                 remainSections.append(sections[j])
@@ -245,7 +250,7 @@ public extension Hakuba {
         return self
     }
     
-    func removeLast() -> Self {
+    @discardableResult func removeLast() -> Self {
         let index = sectionsCount - 1
         
         guard index >= 0 else {
@@ -255,7 +260,7 @@ public extension Hakuba {
         return remove(index)
     }
     
-    func remove(_ section: Section) -> Self {
+    @discardableResult func remove(_ section: Section) -> Self {
         let index = section.index
         
         guard index >= 0 && index < sectionsCount else {
@@ -265,13 +270,13 @@ public extension Hakuba {
         return remove(index)
     }
     
-    func removeAll() -> Self {
+    @discardableResult func removeAll() -> Self {
         return reset()
     }
     
     // MAKR - Move
     
-    func move(_ from: Int, to: Int) -> Self {
+    @discardableResult func move(_ from: Int, to: Int) -> Self {
         sections.move(fromIndex: from, toIndex: to)
         setupSections([sections[from]], fromIndex: from)
         setupSections([sections[to]], fromIndex: to)
@@ -420,7 +425,7 @@ extension Hakuba {
     }
     
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? HeaderFooterView , section == willFloatingSection else {
+        guard let view = view as? HeaderFooterView, section == willFloatingSection else {
             return
         }
         

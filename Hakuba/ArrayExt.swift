@@ -49,7 +49,7 @@ extension Array {
         return start..<end
     }
     
-    mutating func move(fromIndex from: Int, toIndex to: Int) -> Bool {
+    @discardableResult mutating func move(fromIndex from: Int, toIndex to: Int) -> Bool {
         if !hasIndex(from) || !hasIndex(to) || from == to {
             return false
         }

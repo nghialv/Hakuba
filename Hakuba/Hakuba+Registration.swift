@@ -9,7 +9,7 @@
 import UIKit
 
 public extension Hakuba {
-    func registerCellByNib<T>(_ cellType: T.Type) -> Self where T: Cell, T: CellType {
+    @discardableResult func registerCellByNib<T>(_ cellType: T.Type) -> Self where T: Cell, T: CellType {
         tableView?.registerCellByNib(cellType)
         return self
     }
@@ -21,7 +21,7 @@ public extension Hakuba {
         return self
     }
     
-    func registerCell<T: Cell>(_ cellType: T.Type) -> Self {
+    @discardableResult func registerCell<T: Cell>(_ cellType: T.Type) -> Self {
         tableView?.registerCell(cellType)
         return self
     }
@@ -33,7 +33,7 @@ public extension Hakuba {
         return self
     }
     
-    func registerHeaderFooterByNib<T>(_ t: T.Type) -> Self where T: HeaderFooterView, T: HeaderFooterViewType {
+    @discardableResult func registerHeaderFooterByNib<T>(_ t: T.Type) -> Self where T: HeaderFooterView, T: HeaderFooterViewType {
         tableView?.registerHeaderFooterByNib(t)
         return self
     }

@@ -46,7 +46,7 @@ open class Section {
     public init() {
     }
     
-    open func bump(_ animation: Animation = .none) -> Self {
+    @discardableResult open func bump(_ animation: Animation = .none) -> Self {
         let type = bumpTracker.getSectionBumpType(index)
         delegate?.bumpMe(type, animation: animation)
         bumpTracker.didBump()
@@ -60,15 +60,15 @@ public extension Section {
     
     // MARK - Reset
     
-    func reset() -> Self {
+    @discardableResult func reset() -> Self {
         return reset([])
     }
     
-    func reset(_ cellmodel: CellModel) -> Self {
+    @discardableResult func reset(_ cellmodel: CellModel) -> Self {
         return reset([cellmodel])
     }
     
-    func reset(_ cellmodels: [CellModel]) -> Self {
+    @discardableResult func reset(_ cellmodels: [CellModel]) -> Self {
         setupCellmodels(cellmodels, indexFrom: 0)
         self.cellmodels = cellmodels
         bumpTracker.didReset()
@@ -77,21 +77,21 @@ public extension Section {
     
     // MARK - Append
     
-    func append(_ cellmodel: CellModel) -> Self {
+    @discardableResult func append(_ cellmodel: CellModel) -> Self {
         return append([cellmodel])
     }
     
-    func append(_ cellmodels: [CellModel]) -> Self {
+    @discardableResult func append(_ cellmodels: [CellModel]) -> Self {
         return insert(cellmodels, atIndex: count)
     }
     
     // MARK - Insert
     
-    func insert(_ cellmodel: CellModel, atIndex index: Int) -> Self {
+    @discardableResult func insert(_ cellmodel: CellModel, atIndex index: Int) -> Self {
         return insert([cellmodel], atIndex: index)
     }
 
-    func insert(_ cellmodels: [CellModel], atIndex index: Int) -> Self {
+    @discardableResult func insert(_ cellmodels: [CellModel], atIndex index: Int) -> Self {
         guard cellmodels.isNotEmpty else {
             return self
         }
@@ -108,27 +108,32 @@ public extension Section {
         return self
     }
     
-    func insertBeforeLast(_ viewmodel: CellModel) -> Self {
+    @discardableResult func insertBeforeLast(_ viewmodel: CellModel) -> Self {
         return insertBeforeLast([viewmodel])
     }
     
-    func insertBeforeLast(_ viewmodels: [CellModel]) -> Self {
+    @discardableResult func insertBeforeLast(_ viewmodels: [CellModel]) -> Self {
         let index = max(cellmodels.count - 1, 0)
         return insert(viewmodels, atIndex: index)
     }
     
     // MARK - Remove
     
-    func remove(_ index: Int) -> Self {
+    @discardableResult func remove(_ index: Int) -> Self {
         return remove([index])
     }
-
-    func remove(_ range: CountableClosedRange<Int>) -> Self {
+    
+    @discardableResult func remove(_ range: CountableRange<Int>) -> Self {
         let indexes = [Int](range)
         return remove(indexes)
     }
     
-    func remove(_ indexes: [Int]) -> Self {
+    @discardableResult func remove(_ range: CountableClosedRange<Int>) -> Self {
+        let indexes = [Int](range)
+        return remove(indexes)
+    }
+    
+    @discardableResult func remove(_ indexes: [Int]) -> Self {
         guard indexes.isNotEmpty else {
             return self
         }
@@ -141,7 +146,7 @@ public extension Section {
         var i = 0
         
         for j in 0..<count {
-            if let k = sortedIndexes.get(i) , k == j {
+            if let k = sortedIndexes.get(i), k == j {
                 i += 1
             } else {
                 remainCellmodels.append(cellmodels[j])
@@ -156,7 +161,7 @@ public extension Section {
         return self
     }
 
-    func removeLast() -> Self {
+    @discardableResult func removeLast() -> Self {
         let index = cellmodels.count - 1
         guard index >= 0 else {
             return self
@@ -165,7 +170,7 @@ public extension Section {
         return remove(index)
     }
     
-    func remove(_ cellmodel: CellModel) -> Self {
+    @discardableResult func remove(_ cellmodel: CellModel) -> Self {
         let index = cellmodels.index { return  $0 === cellmodel }
         
         guard let i = index else {
@@ -177,7 +182,7 @@ public extension Section {
     
     // MAKR - Move
     
-    func move(_ from: Int, to: Int) -> Self {
+    @discardableResult func move(_ from: Int, to: Int) -> Self {
         cellmodels.move(fromIndex: from, toIndex: to)
         setupCellmodels([cellmodels[from]], indexFrom: from)
         setupCellmodels([cellmodels[to]], indexFrom: to)
