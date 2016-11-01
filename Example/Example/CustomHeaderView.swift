@@ -22,7 +22,7 @@ final class CustomHeaderView: HeaderFooterView, HeaderFooterViewType {
         label.text = vm.text
     }
     
-    override func didChangeFloatingState(isFloating: Bool, section: Int) {
+    override func didChangeFloatingState(_ isFloating: Bool, section: Int) {
         super.didChangeFloatingState(isFloating, section: section)
         
         let title = isFloating ? "F \(section)" : "n \(section)"

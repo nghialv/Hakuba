@@ -133,22 +133,22 @@
 		8C30CA4A1C8E71880008B717 /* Hakuba */ = {
 			isa = PBXGroup;
 			children = (
-				8C30CA4C1C8E71880008B717 /* Common.swift */,
+				8C30CA4B1C8E71880008B717 /* ArrayExt.swift */,
 				8C30CA4D1C8E71880008B717 /* BumpTracker.swift */,
-				8CFF14811C9568C9005699CE /* CellType.swift */,
 				8C30CA4E1C8E71880008B717 /* Cell.swift */,
 				8C30CA4F1C8E71880008B717 /* CellModel.swift */,
-				8C5820DA1C984FDD009FB9AE /* HeaderFooterViewType.swift */,
-				8C30CA501C8E71880008B717 /* HeaderFooterView.swift */,
-				8C30CA511C8E71880008B717 /* HeaderFooterViewModel.swift */,
-				8C30CA571C8E71880008B717 /* Section.swift */,
+				8CFF14811C9568C9005699CE /* CellType.swift */,
+				8C30CA4C1C8E71880008B717 /* Common.swift */,
 				8C30CA541C8E71880008B717 /* Hakuba.swift */,
 				8C30CA521C8E71880008B717 /* Hakuba+Registration.swift */,
 				8C30CA531C8E71880008B717 /* Hakuba+UIScrollViewDelegate.swift */,
 				8C30CA551C8E71880008B717 /* HakubaDelegate.swift */,
+				8C30CA501C8E71880008B717 /* HeaderFooterView.swift */,
+				8C30CA511C8E71880008B717 /* HeaderFooterViewModel.swift */,
+				8C5820DA1C984FDD009FB9AE /* HeaderFooterViewType.swift */,
 				8C30CA561C8E71880008B717 /* Label.swift */,
-				8C30CA4B1C8E71880008B717 /* ArrayExt.swift */,
 				8C30CA581C8E71880008B717 /* RangeExt.swift */,
+				8C30CA571C8E71880008B717 /* Section.swift */,
 				8C30CA591C8E71880008B717 /* TableViewCellExt.swift */,
 				8C30CA5A1C8E71880008B717 /* TableViewExt.swift */,
 				8C30CA5B1C8E71880008B717 /* TableViewHeaderFooterViewExt.swift */,
@@ -182,20 +182,20 @@
 			isa = PBXGroup;
 			children = (
 				8C60BC5E1C89D4550006CE38 /* AppDelegate.swift */,
-				8C60BC601C89D4550006CE38 /* ViewController.swift */,
-				8C5820DC1C9852E3009FB9AE /* HeaderFooterTestViewController.swift */,
-				8C5820DE1C9852F7009FB9AE /* CellTestViewController.swift */,
-				8C3446811C8E6F97002BC8CD /* CustomCell.swift */,
-				8CFF14A51C96758A005699CE /* CustomCellModel.swift */,
-				8C3446821C8E6F97002BC8CD /* CustomCell.xib */,
-				8C3446801C8E6F97002BC8CD /* ChildViewController.swift */,
-				8C5820E01C985625009FB9AE /* CustomHeaderView.swift */,
-				8C5820E21C98562F009FB9AE /* CustomHeaderViewModel.swift */,
-				8C5820E41C985640009FB9AE /* CustomHeaderView.xib */,
-				8C60BC621C89D4550006CE38 /* Main.storyboard */,
 				8C60BC651C89D4550006CE38 /* Assets.xcassets */,
-				8C60BC671C89D4550006CE38 /* LaunchScreen.storyboard */,
+				8C5820DE1C9852F7009FB9AE /* CellTestViewController.swift */,
+				8C3446801C8E6F97002BC8CD /* ChildViewController.swift */,
+				8C3446811C8E6F97002BC8CD /* CustomCell.swift */,
+				8C3446821C8E6F97002BC8CD /* CustomCell.xib */,
+				8CFF14A51C96758A005699CE /* CustomCellModel.swift */,
+				8C5820E01C985625009FB9AE /* CustomHeaderView.swift */,
+				8C5820E41C985640009FB9AE /* CustomHeaderView.xib */,
+				8C5820E21C98562F009FB9AE /* CustomHeaderViewModel.swift */,
+				8C5820DC1C9852E3009FB9AE /* HeaderFooterTestViewController.swift */,
 				8C60BC6A1C89D4550006CE38 /* Info.plist */,
+				8C60BC671C89D4550006CE38 /* LaunchScreen.storyboard */,
+				8C60BC621C89D4550006CE38 /* Main.storyboard */,
+				8C60BC601C89D4550006CE38 /* ViewController.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -281,17 +281,20 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0810;
 				TargetAttributes = {
 					8C60BC5A1C89D4550006CE38 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					8C60BC6E1C89D4550006CE38 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8C60BC5A1C89D4550006CE38;
 					};
 					8C60BC791C89D4550006CE38 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8C60BC5A1C89D4550006CE38;
 					};
 				};
@@ -445,8 +448,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -490,8 +495,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -510,6 +517,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -524,6 +532,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nghialv.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -536,6 +545,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nghialv.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -547,6 +557,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nghialv.ExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
@@ -559,6 +570,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nghialv.ExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
@@ -567,9 +579,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = ExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nghialv.ExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Example;
 				USES_XCTRUNNER = YES;
 			};
@@ -579,9 +593,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = ExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nghialv.ExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Example;
 				USES_XCTRUNNER = YES;
 			};

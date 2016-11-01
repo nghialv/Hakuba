@@ -24,25 +24,25 @@ public extension SectionIndexType where Self: RawRepresentable, Self.RawValue ==
 }
 
 public enum HakubaBumpType {
-    case Reload
-    case Insert(NSIndexSet)
-    case Move(Int, Int)
-    case Delete(NSIndexSet)
+    case reload
+    case insert(IndexSet)
+    case move(Int, Int)
+    case delete(IndexSet)
 }
 
 public enum SectionBumpType {
-    case Reload(NSIndexSet)
-    case Insert([NSIndexPath])
-    case Move(NSIndexPath, NSIndexPath)
-    case Delete([NSIndexPath])
+    case reload(IndexSet)
+    case insert([IndexPath])
+    case move(IndexPath, IndexPath)
+    case delete([IndexPath])
 }
 
 public enum ItemBumpType {
-    case Reload(NSIndexPath)
-    case ReloadHeader(Int)
-    case ReloadFooter(Int)
+    case reload(IndexPath)
+    case reloadHeader(Int)
+    case reloadFooter(Int)
 }
 
-func classNameOf(aClass: AnyClass) -> String {
-    return NSStringFromClass(aClass).componentsSeparatedByString(".").last!
+func classNameOf(_ aClass: AnyClass) -> String {
+    return NSStringFromClass(aClass).components(separatedBy: ".").last!
 }

@@ -8,50 +8,48 @@
 
 import UIKit
 
-public class Cell: UITableViewCell {
+open class Cell: UITableViewCell {
     weak var _cellmodel: CellModel?
     
-    func configureCell(cellmodel: CellModel) {
+    func configureCell(_ cellmodel: CellModel) {
         _cellmodel = cellmodel
         configure()
     }
     
-    public func configure() {
-    }
-}
-
-// MARK - Cell events
-
-public extension Cell {
-    func willDisplay(tableView: UITableView) {
+    open func configure() {
     }
     
-    func didEndDisplay(tableView: UITableView) {
+    // MARK - Cell events
+
+    open func willDisplay(_ tableView: UITableView) {
     }
     
-    func willSelect(tableView: UITableView, indexPath: NSIndexPath) -> NSIndexPath? {
+    open func didEndDisplay(_ tableView: UITableView) {
+    }
+    
+    open func willSelect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
         return indexPath
     }
     
-    func didSelect(tableView: UITableView) {
+    open func didSelect(_ tableView: UITableView) {
     }
     
-    func willDeselect(tableView: UITableView, indexPath: NSIndexPath) -> NSIndexPath? {
+    open func willDeselect(_ tableView: UITableView, indexPath: IndexPath) -> IndexPath? {
         return indexPath
     }
     
-    func didDeselect(tableView: UITableView) {
+    open func didDeselect(_ tableView: UITableView) {
     }
     
-    func willBeginEditing(tableView: UITableView) {
+    open func willBeginEditing(_ tableView: UITableView) {
     }
     
-    func didEndEditing(tableView: UITableView) {
+    open func didEndEditing(_ tableView: UITableView) {
     }
     
-    func didHighlight(tableView: UITableView) {
+    open func didHighlight(_ tableView: UITableView) {
     }
     
-    func didUnhighlight(tableView: UITableView) {
+    open func didUnhighlight(_ tableView: UITableView) {
     }
 }

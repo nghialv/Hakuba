@@ -9,23 +9,23 @@
 import UIKit
 
 enum SectionIndex: Int, SectionIndexType {
-    case Top
-    case Center
+    case top
+    case center
     
     static let count = 2
 }
 
 class CellTestViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
+    fileprivate lazy var hakuba: Hakuba = Hakuba(tableView: self.tableView)
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         hakuba.deselectAllCells(animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hakuba.registerCellByNib(CustomCell)
+        hakuba.registerCellByNib(CustomCell.self)
         
         // Top section
         
@@ -39,11 +39,11 @@ class CellTestViewController: UIViewController {
         }
     
         hakuba
-            .reset(SectionIndex)
+            .reset(SectionIndex.self)
             .bump()
         
-        let topSection = hakuba[SectionIndex.Top]
-        let centerSection = hakuba[SectionIndex.Center]
+        let topSection = hakuba[SectionIndex.top]
+        let centerSection = hakuba[SectionIndex.center]
         
         topSection
             .reset(topCellmodels)
@@ -67,13 +67,13 @@ class CellTestViewController: UIViewController {
         delay(1.5) {
             centerSection
                 .append(centerCellmodels)
-                .bump(.Left)
+                .bump(.left)
         }
         
         delay(3) {
             centerSection
                 .remove(2...4)
-                .bump(.Right)
+                .bump(.right)
         }
         
         delay(5) {
@@ -85,19 +85,19 @@ class CellTestViewController: UIViewController {
         delay(7.5) {
             topSection
                 .remove(1)
-                .bump(.Middle)
+                .bump(.middle)
         }
         
         delay(10) {
             topSection
                 .remove(0)
-                .bump(.Right)
+                .bump(.right)
         }
         
         delay(12.5) {
             topSection
                 .remove(0)
-                .bump(.Right)
+                .bump(.right)
         }
         
         delay(15) {
@@ -109,7 +109,7 @@ class CellTestViewController: UIViewController {
     
     func pushChildViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ChildViewController") as! ChildViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "ChildViewController") as! ChildViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

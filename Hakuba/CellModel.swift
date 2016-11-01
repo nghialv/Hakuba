@@ -9,24 +9,24 @@
 import UIKit
 
 protocol CellModelDelegate: class {
-    func bumpMe(type: ItemBumpType, animation: Animation)
-    func getOffscreenCell(identifier: String) -> Cell
+    func bumpMe(_ type: ItemBumpType, animation: Animation)
+    func getOffscreenCell(_ identifier: String) -> Cell
     func tableViewWidth() -> CGFloat
-    func deselectCell(indexPath: NSIndexPath, animated: Bool)
+    func deselectCell(_ indexPath: IndexPath, animated: Bool)
 }
 
-public class CellModel {
+open class CellModel {
     weak var delegate: CellModelDelegate?
     
-    public let reuseIdentifier: String
-    public internal(set) var indexPath = NSIndexPath(forRow: 0, inSection: 0)
-    public var selectionHandler: SelectionHandler?
+    open let reuseIdentifier: String
+    open internal(set) var indexPath = IndexPath(row: 0, section: 0)
+    open var selectionHandler: SelectionHandler?
 
-    public var editable = false
-    public var editingStyle: UITableViewCellEditingStyle = .None
-    public var shouldHighlight = true
+    open var editable = false
+    open var editingStyle: UITableViewCellEditingStyle = .none
+    open var shouldHighlight = true
     
-    public var height: CGFloat {
+    open var height: CGFloat {
         get {
             return dynamicHeightEnabled ? calculateHeight() : estimatedHeight
         }
@@ -35,28 +35,28 @@ public class CellModel {
         }
     }
     
-    public var dynamicHeightEnabled: Bool = false {
+    open var dynamicHeightEnabled: Bool = false {
         didSet {
             calculatedHeight = nil
         }
     }
 
-    private var estimatedHeight: CGFloat = 0
-    private var calculatedHeight: CGFloat?
+    fileprivate var estimatedHeight: CGFloat = 0
+    fileprivate var calculatedHeight: CGFloat?
     
-    public init<T where T: Cell, T: CellType>(cell: T.Type, height: CGFloat = 44, selectionHandler: SelectionHandler? = nil) {
+    public init<T>(cell: T.Type, height: CGFloat = 44, selectionHandler: SelectionHandler? = nil) where T: Cell, T: CellType {
         self.reuseIdentifier = cell.reuseIdentifier
         self.estimatedHeight = height
         self.selectionHandler = selectionHandler
     }
     
-    public func bump(animation: Animation = .None) -> Self {
+    open func bump(_ animation: Animation = .none) -> Self {
         calculatedHeight = nil
-        delegate?.bumpMe(ItemBumpType.Reload(indexPath), animation: animation)
+        delegate?.bumpMe(ItemBumpType.reload(indexPath), animation: animation)
         return self
     }
     
-    public func deselect(animated: Bool) {
+    open func deselect(_ animated: Bool) {
         delegate?.deselectCell(indexPath, animated: animated)
     }
 }
@@ -64,12 +64,12 @@ public class CellModel {
 // MARK - Internal methods
 
 extension CellModel {
-    func setup(indexPath: NSIndexPath, delegate: CellModelDelegate) {
+    func setup(_ indexPath: IndexPath, delegate: CellModelDelegate) {
         self.indexPath = indexPath
         self.delegate = delegate
     }
     
-    func didSelect(cell: Cell) {
+    func didSelect(_ cell: Cell) {
         selectionHandler?(cell)
     }
 }
@@ -88,12 +88,12 @@ private extension CellModel {
         
         cell.configureCell(self)
        
-        let width = delegate?.tableViewWidth() ?? UIScreen.mainScreen().bounds.width
-        cell.bounds = CGRectMake(0, 0, width, cell.bounds.height)
+        let width = delegate?.tableViewWidth() ?? UIScreen.main.bounds.width
+        cell.bounds = CGRect(x: 0, y: 0, width: width, height: cell.bounds.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         let height = size.height + 1
         calculatedHeight = height
         

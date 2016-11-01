@@ -21,7 +21,7 @@ class CustomCell: Cell, CellType {
         titleLabel.text = cellmodel.title + "(\(cellmodel.indexPath.section),\(cellmodel.indexPath.row))"
     }
     
-    override func willDisplay(tableView: UITableView) {
+    override func willDisplay(_ tableView: UITableView) {
         super.willDisplay(tableView)
         
     }

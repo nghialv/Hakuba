@@ -9,13 +9,13 @@
 import Foundation
 
 protocol SectionDelegate: class {
-    func bumpMe(type: SectionBumpType, animation: Animation)
+    func bumpMe(_ type: SectionBumpType, animation: Animation)
 }
 
-public class Section {
+open class Section {
     weak var delegate: SectionDelegate?
-    public private(set) var cellmodels: [CellModel] = []
-    private let bumpTracker = BumpTracker()
+    open fileprivate(set) var cellmodels: [CellModel] = []
+    fileprivate let bumpTracker = BumpTracker()
     
     internal(set) var index: Int = 0
     
@@ -23,21 +23,21 @@ public class Section {
         return bumpTracker.changed
     }
     
-    public var header: HeaderFooterViewModel? {
+    open var header: HeaderFooterViewModel? {
         didSet {
             header?.section = index
-            header?.type = .Header
+            header?.type = .header
         }
     }
     
-    public var footer: HeaderFooterViewModel? {
+    open var footer: HeaderFooterViewModel? {
         didSet {
             footer?.section = index
-            footer?.type = .Footer
+            footer?.type = .footer
         }
     }
     
-    public subscript(index: Int) -> CellModel? {
+    open subscript(index: Int) -> CellModel? {
         get {
             return cellmodels.get(index)
         }
@@ -46,7 +46,7 @@ public class Section {
     public init() {
     }
     
-    public func bump(animation: Animation = .None) -> Self {
+    @discardableResult open func bump(_ animation: Animation = .none) -> Self {
         let type = bumpTracker.getSectionBumpType(index)
         delegate?.bumpMe(type, animation: animation)
         bumpTracker.didBump()
@@ -60,15 +60,15 @@ public extension Section {
     
     // MARK - Reset
     
-    func reset() -> Self {
+    @discardableResult func reset() -> Self {
         return reset([])
     }
     
-    func reset(cellmodel: CellModel) -> Self {
+    @discardableResult func reset(_ cellmodel: CellModel) -> Self {
         return reset([cellmodel])
     }
     
-    func reset(cellmodels: [CellModel]) -> Self {
+    @discardableResult func reset(_ cellmodels: [CellModel]) -> Self {
         setupCellmodels(cellmodels, indexFrom: 0)
         self.cellmodels = cellmodels
         bumpTracker.didReset()
@@ -77,27 +77,27 @@ public extension Section {
     
     // MARK - Append
     
-    func append(cellmodel: CellModel) -> Self {
+    @discardableResult func append(_ cellmodel: CellModel) -> Self {
         return append([cellmodel])
     }
     
-    func append(cellmodels: [CellModel]) -> Self {
+    @discardableResult func append(_ cellmodels: [CellModel]) -> Self {
         return insert(cellmodels, atIndex: count)
     }
     
     // MARK - Insert
     
-    func insert(cellmodel: CellModel, atIndex index: Int) -> Self {
+    @discardableResult func insert(_ cellmodel: CellModel, atIndex index: Int) -> Self {
         return insert([cellmodel], atIndex: index)
     }
 
-    func insert(cellmodels: [CellModel], atIndex index: Int) -> Self {
+    @discardableResult func insert(_ cellmodels: [CellModel], atIndex index: Int) -> Self {
         guard cellmodels.isNotEmpty else {
             return self
         }
         
         let start = min(count, index)
-        self.cellmodels.insert(cellmodels, atIndex: start)
+        let _ = self.cellmodels.insert(cellmodels, atIndex: start)
         
         let affectedCellmodels = Array(self.cellmodels[start..<count])
         setupCellmodels(affectedCellmodels, indexFrom: start)
@@ -108,40 +108,45 @@ public extension Section {
         return self
     }
     
-    func insertBeforeLast(viewmodel: CellModel) -> Self {
+    @discardableResult func insertBeforeLast(_ viewmodel: CellModel) -> Self {
         return insertBeforeLast([viewmodel])
     }
     
-    func insertBeforeLast(viewmodels: [CellModel]) -> Self {
+    @discardableResult func insertBeforeLast(_ viewmodels: [CellModel]) -> Self {
         let index = max(cellmodels.count - 1, 0)
         return insert(viewmodels, atIndex: index)
     }
     
     // MARK - Remove
     
-    func remove(index: Int) -> Self {
+    @discardableResult func remove(_ index: Int) -> Self {
         return remove([index])
     }
-
-    func remove(range: Range<Int>) -> Self {
-        let indexes = range.map { $0 }
+    
+    @discardableResult func remove(_ range: CountableRange<Int>) -> Self {
+        let indexes = [Int](range)
         return remove(indexes)
     }
     
-    func remove(indexes: [Int]) -> Self {
+    @discardableResult func remove(_ range: CountableClosedRange<Int>) -> Self {
+        let indexes = [Int](range)
+        return remove(indexes)
+    }
+    
+    @discardableResult func remove(_ indexes: [Int]) -> Self {
         guard indexes.isNotEmpty else {
             return self
         }
         
         let sortedIndexes = indexes
-            .sort(<)
+            .sorted(by: <)
             .filter { $0 >= 0 && $0 < self.count }
         
         var remainCellmodels: [CellModel] = []
         var i = 0
         
         for j in 0..<count {
-            if let k = sortedIndexes.get(i) where k == j {
+            if let k = sortedIndexes.get(i), k == j {
                 i += 1
             } else {
                 remainCellmodels.append(cellmodels[j])
@@ -156,7 +161,7 @@ public extension Section {
         return self
     }
 
-    func removeLast() -> Self {
+    @discardableResult func removeLast() -> Self {
         let index = cellmodels.count - 1
         guard index >= 0 else {
             return self
@@ -165,8 +170,8 @@ public extension Section {
         return remove(index)
     }
     
-    func remove(cellmodel: CellModel) -> Self {
-        let index = cellmodels.indexOf { return  $0 === cellmodel }
+    @discardableResult func remove(_ cellmodel: CellModel) -> Self {
+        let index = cellmodels.index { return  $0 === cellmodel }
         
         guard let i = index else {
             return self
@@ -177,7 +182,7 @@ public extension Section {
     
     // MAKR - Move
     
-    func move(from: Int, to: Int) -> Self {
+    @discardableResult func move(_ from: Int, to: Int) -> Self {
         cellmodels.move(fromIndex: from, toIndex: to)
         setupCellmodels([cellmodels[from]], indexFrom: from)
         setupCellmodels([cellmodels[to]], indexFrom: to)
@@ -214,7 +219,7 @@ public extension Section {
 // MARK - Internal methods
 
 extension Section {
-    func setup(index: Int, delegate: SectionDelegate) {
+    func setup(_ index: Int, delegate: SectionDelegate) {
         self.delegate = delegate
         self.index = index
         
@@ -231,7 +236,7 @@ extension Section {
 // MARK - Private methods
 
 private extension Section {
-    func setupCellmodels(cellmodels: [CellModel], indexFrom start: Int) {
+    func setupCellmodels(_ cellmodels: [CellModel], indexFrom start: Int) {
         guard let delegate = delegate as? CellModelDelegate else {
             return
         }
@@ -239,7 +244,7 @@ private extension Section {
         var start = start
         
         cellmodels.forEach { cellmodel in
-            let indexPath = NSIndexPath(forRow: start, inSection: index)
+            let indexPath = IndexPath(row: start, section: index)
             cellmodel.setup(indexPath, delegate: delegate)
             start += 1
         }

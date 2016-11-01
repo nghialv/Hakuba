@@ -8,29 +8,29 @@
 
 import UIKit
 
-public class HeaderFooterViewModel {
-    public enum Type {
-        case Header
-        case Footer
+open class HeaderFooterViewModel {
+    public enum `Type` {
+        case header
+        case footer
     }
     
-    public let reuseIdentifier: String
+    open let reuseIdentifier: String
 
-    public internal(set) var section: Int = 0
-    public internal(set) var type: Type = .Header
+    open internal(set) var section: Int = 0
+    open internal(set) var type: Type = .header
     
-    public var title: String?
-    public var height: CGFloat = 44
+    open var title: String?
+    open var height: CGFloat = 44
     
-    public var isHeader: Bool {
-        return type == .Header
+    open var isHeader: Bool {
+        return type == .header
     }
     
-    public var isFooter: Bool {
-        return type == .Footer
+    open var isFooter: Bool {
+        return type == .footer
     }
     
-    public init<T where T: HeaderFooterView, T: HeaderFooterViewType>(view: T.Type) {
+    public init<T>(view: T.Type) where T: HeaderFooterView, T: HeaderFooterViewType {
         self.reuseIdentifier = view.reuseIdentifier
     }
 }

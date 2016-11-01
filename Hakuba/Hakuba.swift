@@ -11,20 +11,20 @@ import UIKit
 final public class Hakuba: NSObject {
     weak var tableView: UITableView?
     public weak var delegate: HakubaDelegate?
-    public private(set) var sections: [Section] = []
+    public fileprivate(set) var sections: [Section] = []
     
     public var loadmoreHandler: (() -> ())?
     public var loadmoreEnabled = false
     public var loadmoreThreshold: CGFloat = 25
     
-    private let bumpTracker = BumpTracker()
-    private var offscreenCells: [String: Cell] = [:]
+    fileprivate let bumpTracker = BumpTracker()
+    fileprivate var offscreenCells: [String: Cell] = [:]
     
-    public var selectedRows: [NSIndexPath] {
+    public var selectedRows: [IndexPath] {
         return tableView?.indexPathsForSelectedRows ?? []
     }
     
-    public var visibleRows: [NSIndexPath] {
+    public var visibleRows: [IndexPath] {
         return tableView?.indexPathsForVisibleRows ?? []
     }
     
@@ -40,7 +40,7 @@ final public class Hakuba: NSObject {
     }
     
     public var cellEditable = false
-    public var commitEditingHandler: ((UITableViewCellEditingStyle, NSIndexPath) -> ())?
+    public var commitEditingHandler: ((UITableViewCellEditingStyle, IndexPath) -> ())?
     
     public subscript(index: SectionIndexType) -> Section {
         get {
@@ -61,19 +61,19 @@ final public class Hakuba: NSObject {
         }
     }
     
-    subscript(indexPath: NSIndexPath) -> CellModel? {
-        return self[indexPath.section][indexPath.row]
+    subscript(indexPath: IndexPath) -> CellModel? {
+        return self[indexPath.section][(indexPath as NSIndexPath).row]
     }
     
-    public func getCellmodel(indexPath: NSIndexPath) -> CellModel? {
-        return sections.get(indexPath.section)?[indexPath.row]
+    public func getCellmodel(_ indexPath: IndexPath) -> CellModel? {
+        return sections.get(indexPath.section)?[(indexPath as NSIndexPath).row]
     }
     
-    public func getSection(index: Int) -> Section? {
+    public func getSection(_ index: Int) -> Section? {
         return sections.get(index)
     }
     
-    public func getSection(index: SectionIndexType) -> Section? {
+    public func getSection(_ index: SectionIndexType) -> Section? {
         return getSection(index.intValue)
     }
     
@@ -89,21 +89,21 @@ final public class Hakuba: NSObject {
         tableView?.dataSource = nil
     }
     
-    public func bump(animation: Animation = .None) -> Self {
+    @discardableResult public func bump(_ animation: Animation = .none) -> Self {
         let changedCount = sections.reduce(0) { $0 + ($1.changed ? 1 : 0) }
         
         if changedCount == 0 {
             switch bumpTracker.getHakubaBumpType() {
-            case .Reload:
+            case .reload:
                 tableView?.reloadData()
                 
-            case let .Insert(indexSet):
-                tableView?.insertSections(indexSet, withRowAnimation: animation)
+            case let .insert(indexSet):
+                tableView?.insertSections(indexSet, with: animation)
                 
-            case let .Delete(indexSet):
-                tableView?.deleteSections(indexSet, withRowAnimation: animation)
+            case let .delete(indexSet):
+                tableView?.deleteSections(indexSet, with: animation)
                 
-            case let .Move(from, to):
+            case let .move(from, to):
                 tableView?.moveSection(from, toSection: to)
             }
         } else {
@@ -120,26 +120,26 @@ final public class Hakuba: NSObject {
 // MARK - UITableView methods
 
 public extension Hakuba {
-    func setEditing(editing: Bool, animated: Bool) {
+    func setEditing(_ editing: Bool, animated: Bool) {
         tableView?.setEditing(editing, animated: animated)
     }
     
-    func selectCell(indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition) {
-        tableView?.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+    func selectCell(_ indexPath: IndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+        tableView?.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
     }
     
-    func deselectCell(indexPath: NSIndexPath, animated: Bool) {
-        tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
+    func deselectCell(_ indexPath: IndexPath, animated: Bool) {
+        tableView?.deselectRow(at: indexPath, animated: animated)
     }
     
-    func deselectAllCells(animated animated: Bool) {
+    func deselectAllCells(animated: Bool) {
         selectedRows.forEach {
-            tableView?.deselectRowAtIndexPath($0, animated: animated)
+            tableView?.deselectRow(at: $0, animated: animated)
         }
     }
     
-    func getCell(indexPath: NSIndexPath) -> Cell? {
-        return tableView?.cellForRowAtIndexPath(indexPath) as? Cell
+    func getCell(_ indexPath: IndexPath) -> Cell? {
+        return tableView?.cellForRow(at: indexPath) as? Cell
     }
 }
 
@@ -148,20 +148,20 @@ public extension Hakuba {
 public extension Hakuba {
     // MARK - Reset
     
-    func reset(listType: SectionIndexType.Type) -> Self {
+    @discardableResult func reset(_ listType: SectionIndexType.Type) -> Self {
         let sections = (0..<listType.count).map { _ in Section() }
         return reset(sections)
     }
     
-    func reset() -> Self {
+    @discardableResult func reset() -> Self {
         return reset([])
     }
     
-    func reset(section: Section) -> Self {
+    @discardableResult func reset(_ section: Section) -> Self {
         return reset([section])
     }
     
-    func reset(sections: [Section]) -> Self {
+    @discardableResult func reset(_ sections: [Section]) -> Self {
         setupSections(sections, fromIndex: 0)
         self.sections = sections
         bumpTracker.didReset()
@@ -170,21 +170,21 @@ public extension Hakuba {
     
     // MARK - Append
     
-    func append(section: Section) -> Self {
+    @discardableResult func append(_ section: Section) -> Self {
         return append([section])
     }
     
-    func append(sections: [Section]) -> Self {
+    @discardableResult func append(_ sections: [Section]) -> Self {
         return insert(sections, atIndex: sectionsCount)
     }
     
     // MARK - Insert
     
-    func insert(section: Section, atIndex index: Int) -> Self {
+    @discardableResult func insert(_ section: Section, atIndex index: Int) -> Self {
         return insert([section], atIndex: index)
     }
     
-    func insert(sections: [Section], atIndex index: Int) -> Self {
+    @discardableResult func insert(_ sections: [Section], atIndex index: Int) -> Self {
         guard sections.isNotEmpty else {
             return self
         }
@@ -197,40 +197,45 @@ public extension Hakuba {
         return self
     }
     
-    func insertBeforeLast(section: Section) -> Self {
+    @discardableResult func insertBeforeLast(_ section: Section) -> Self {
         return insertBeforeLast([section])
     }
     
-    func insertBeforeLast(sections: [Section]) -> Self {
+    @discardableResult func insertBeforeLast(_ sections: [Section]) -> Self {
         let index = max(sections.count - 1, 0)
         return insert(sections, atIndex: index)
     }
     
     // MARK - Remove
     
-    func remove(index: Int) -> Self {
+    @discardableResult func remove(_ index: Int) -> Self {
         return remove(indexes: [index])
     }
     
-    func remove(range: Range<Int>) -> Self {
+    @discardableResult func remove(_ range: CountableRange<Int>) -> Self {
         let indexes = range.map { $0 }
         return remove(indexes: indexes)
     }
     
-    func remove(indexes indexes: [Int]) -> Self {
+    @discardableResult func remove(_ range: CountableClosedRange<Int>) -> Self {
+        let indexes = range.map { $0 }
+        return remove(indexes: indexes)
+    }
+    
+    @discardableResult func remove(indexes: [Int]) -> Self {
         guard indexes.isNotEmpty else {
             return self
         }
         
         let sortedIndexes = indexes
-            .sort(<)
+            .sorted(by: <)
             .filter { $0 >= 0 && $0 < self.sectionsCount }
         
         var remainSections: [Section] = []
         var i = 0
         
         for j in 0..<sectionsCount {
-            if let k = sortedIndexes.get(i) where k == j {
+            if let k = sortedIndexes.get(i), k == j {
                 i += 1
             } else {
                 remainSections.append(sections[j])
@@ -245,7 +250,7 @@ public extension Hakuba {
         return self
     }
     
-    func removeLast() -> Self {
+    @discardableResult func removeLast() -> Self {
         let index = sectionsCount - 1
         
         guard index >= 0 else {
@@ -255,7 +260,7 @@ public extension Hakuba {
         return remove(index)
     }
     
-    func remove(section: Section) -> Self {
+    @discardableResult func remove(_ section: Section) -> Self {
         let index = section.index
         
         guard index >= 0 && index < sectionsCount else {
@@ -265,13 +270,13 @@ public extension Hakuba {
         return remove(index)
     }
     
-    func removeAll() -> Self {
+    @discardableResult func removeAll() -> Self {
         return reset()
     }
     
     // MAKR - Move
     
-    func move(from: Int, to: Int) -> Self {
+    @discardableResult func move(_ from: Int, to: Int) -> Self {
         sections.move(fromIndex: from, toIndex: to)
         setupSections([sections[from]], fromIndex: from)
         setupSections([sections[to]], fromIndex: to)
@@ -284,41 +289,41 @@ public extension Hakuba {
 // MARK - SectionDelegate, CellModelDelegate
 
 extension Hakuba: SectionDelegate, CellModelDelegate {
-    func bumpMe(type: SectionBumpType, animation: Animation) {
+    func bumpMe(_ type: SectionBumpType, animation: Animation) {
         switch type {
-        case .Reload(let indexSet):
-            tableView?.reloadSections(indexSet, withRowAnimation: animation)
+        case .reload(let indexSet):
+            tableView?.reloadSections(indexSet, with: animation)
         
-        case .Insert(let indexPaths):
-            tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        case .insert(let indexPaths):
+            tableView?.insertRows(at: indexPaths, with: animation)
         
-        case .Move(let ori, let des):
-            tableView?.moveRowAtIndexPath(ori, toIndexPath: des)
+        case .move(let ori, let des):
+            tableView?.moveRow(at: ori, to: des)
             
-        case .Delete(let indexPaths):
-            tableView?.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        case .delete(let indexPaths):
+            tableView?.deleteRows(at: indexPaths, with: animation)
         }
     }
     
-    func bumpMe(type: ItemBumpType, animation: Animation) {
+    func bumpMe(_ type: ItemBumpType, animation: Animation) {
         switch type {
-        case .Reload(let indexPath):
-            tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: animation)
+        case .reload(let indexPath):
+            tableView?.reloadRows(at: [indexPath], with: animation)
             
-        case .ReloadHeader:
+        case .reloadHeader:
             break
             
-        case .ReloadFooter:
+        case .reloadFooter:
             break
         }
     }
     
-    func getOffscreenCell(identifier: String) -> Cell {
+    func getOffscreenCell(_ identifier: String) -> Cell {
         if let cell = offscreenCells[identifier] {
             return cell
         }
         
-        if let cell = tableView?.dequeueReusableCellWithIdentifier(identifier) as? Cell {
+        if let cell = tableView?.dequeueReusableCell(withIdentifier: identifier) as? Cell {
             offscreenCells[identifier] = cell
             return cell
         }
@@ -333,19 +338,19 @@ extension Hakuba: SectionDelegate, CellModelDelegate {
 // MARK - UITableViewDelegate cell
 
 extension Hakuba: UITableViewDelegate {
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return getCellmodel(indexPath)?.height ?? 0
     }
     
 //  public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //  }
     
-    public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return getCell(indexPath)?.willSelect(tableView, indexPath: indexPath)
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let cellmodel = getCellmodel(indexPath), cell = getCell(indexPath) else {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cellmodel = getCellmodel(indexPath), let cell = getCell(indexPath) else {
             return
         }
         
@@ -353,35 +358,35 @@ extension Hakuba: UITableViewDelegate {
         cell.didSelect(tableView)
     }
     
-    public func tableView(tableView: UITableView, willDeselectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    public func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
         return getCell(indexPath)?.willDeselect(tableView, indexPath: indexPath)
     }
     
-    public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         getCell(indexPath)?.didDeselect(tableView)
     }
     
-    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         (cell as? Cell)?.willDisplay(tableView)
     }
     
-    public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         (cell as? Cell)?.didEndDisplay(tableView)
     }
     
-    public func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return getCellmodel(indexPath)?.editingStyle ?? .None
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return getCellmodel(indexPath)?.editingStyle ?? .none
     }
     
-    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return getCellmodel(indexPath)?.shouldHighlight ?? true
     }
     
-    public func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         getCell(indexPath)?.didHighlight(tableView)
     }
     
-    public func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         getCell(indexPath)?.didUnhighlight(tableView)
     }
 }
@@ -389,38 +394,38 @@ extension Hakuba: UITableViewDelegate {
 // MARK - UITableViewDelegate header-footer
 
 extension Hakuba {
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return sections.get(section)?.header?.height ?? 0
     }
     
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = sections.get(section)?.header else {
             return nil
         }
         
-        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(header.reuseIdentifier) as? HeaderFooterView
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: header.reuseIdentifier) as? HeaderFooterView
         headerView?.configureView(header)
         
         return headerView
     }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return sections.get(section)?.footer?.height ?? 0
     }
     
-    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard let footer = sections.get(section)?.footer else {
             return nil
         }
         
-        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(footer.reuseIdentifier) as? HeaderFooterView
+        let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: footer.reuseIdentifier) as? HeaderFooterView
         footerView?.configureView(footer)
         
         return footerView
     }
     
-    public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? HeaderFooterView where section == willFloatingSection else {
+    public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? HeaderFooterView, section == willFloatingSection else {
             return
         }
         
@@ -429,7 +434,7 @@ extension Hakuba {
         willFloatingSection = NSNotFound
     }
     
-    public func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+    public func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         guard let view = view as? HeaderFooterView else {
             return
         }
@@ -437,7 +442,7 @@ extension Hakuba {
         view.willDisplay(tableView, section: section)
     }
     
-    public func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+    public func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
         guard let view = view as? HeaderFooterView else {
             return
         }
@@ -445,7 +450,7 @@ extension Hakuba {
         view.didEndDisplaying(tableView, section: section)
     }
     
-    public func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
+    public func tableView(_ tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
         guard let view = view as? HeaderFooterView else {
             return
         }
@@ -457,17 +462,17 @@ extension Hakuba {
 // MARK - UITableViewDataSource
 
 extension Hakuba: UITableViewDataSource {
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return sectionsCount
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections.get(section)?.count ?? 0
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cellmodel = getCellmodel(indexPath),
-            cell = tableView.dequeueReusableCellWithIdentifier(cellmodel.reuseIdentifier, forIndexPath: indexPath) as? Cell else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellmodel.reuseIdentifier, for: indexPath) as? Cell else {
             return UITableViewCell()
         }
         
@@ -476,11 +481,11 @@ extension Hakuba: UITableViewDataSource {
         return cell
     }
     
-    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         commitEditingHandler?(editingStyle, indexPath)
     }
     
-    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard let cellmodel = getCellmodel(indexPath) else {
             return false
         }
@@ -488,11 +493,11 @@ extension Hakuba: UITableViewDataSource {
         return cellmodel.editable || cellEditable
     }
     
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections.get(section)?.header?.title
     }
     
-    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return sections.get(section)?.footer?.title
     }
 }
@@ -500,7 +505,7 @@ extension Hakuba: UITableViewDataSource {
 // MARK - Private methods
 
 private extension Hakuba {
-    func setupSections(sections: [Section], fromIndex start: Int) {
+    func setupSections(_ sections: [Section], fromIndex start: Int) {
         var start = start
         sections.forEach {
             $0.setup(start, delegate: self)

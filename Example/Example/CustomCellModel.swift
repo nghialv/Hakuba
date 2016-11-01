@@ -11,7 +11,7 @@ import Foundation
 class CustomCellModel: CellModel {
     let title: String
     
-    init(title: String, selectionHandler: SelectionHandler) {
+    init(title: String, selectionHandler: @escaping SelectionHandler) {
         self.title = title
         super.init(cell: CustomCell.self, selectionHandler: selectionHandler)
     }

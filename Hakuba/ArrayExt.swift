@@ -13,34 +13,34 @@ extension Array {
         return !isEmpty
     }
     
-    func hasIndex(index: Int) -> Bool {
+    func hasIndex(_ index: Int) -> Bool {
         return indices ~= index
     }
     
-    func getSafeIndex(index: Int) -> Int {
-        let mIndex = max(0, index)
-        return min(count, mIndex)
+    func getSafeIndex(_ index: Int) -> Int {
+        let mIndex = Swift.max(0, index)
+        return Swift.min(count, mIndex)
     }
     
-    func getSafeRange(range: Range<Int>) -> Range<Int>? {
-        let start = max(0, range.startIndex)
-        let end = min(count, range.endIndex)
+    func getSafeRange(_ range: Range<Int>) -> CountableRange<Int>? {
+        let start = Swift.max(0, range.lowerBound)
+        let end = Swift.min(count, range.upperBound)
         return start <= end ? start..<end : nil
     }
     
-    func get(index: Int) -> Element? {
+    func get(_ index: Int) -> Element? {
         return hasIndex(index) ? self[index] : nil
     }
     
-    mutating func append(newArray: Array) -> Range<Int> {
+    mutating func append(_ newArray: Array) -> CountableRange<Int> {
         let range = count..<(count + newArray.count)
         self += newArray
         return range
     }
     
-    mutating func insert(newArray: Array, atIndex index: Int) -> Range<Int> {
-        let mIndex = max(0, index)
-        let start = min(count, mIndex)
+    mutating func insert(_ newArray: Array, atIndex index: Int) -> CountableRange<Int> {
+        let mIndex = Swift.max(0, index)
+        let start = Swift.min(count, mIndex)
         let end = start + newArray.count
         
         let left = self[0..<start]
@@ -49,39 +49,39 @@ extension Array {
         return start..<end
     }
     
-    mutating func move(fromIndex from: Int, toIndex to: Int) -> Bool {
+    @discardableResult mutating func move(fromIndex from: Int, toIndex to: Int) -> Bool {
         if !hasIndex(from) || !hasIndex(to) || from == to {
             return false
         }
         
         if let fromItem = get(from) {
-            remove(from)
-            insert(fromItem, atIndex: to)
+            let _ = remove(from)
+            insert(fromItem, at: to)
             return true
         }
         return false
     }
     
-    mutating func remove(index: Int) -> Range<Int>? {
+    mutating func remove(_ index: Int) -> CountableRange<Int>? {
         if !hasIndex(index) {
             return nil
         }
-        removeAtIndex(index)
+        self.remove(at: index)
         return index..<(index + 1)
     }
     
-    mutating func remove(range: Range<Int>) -> Range<Int>? {
+    mutating func remove(_ range: Range<Int>) -> CountableRange<Int>? {
         if let sr = getSafeRange(range) {
-            removeRange(sr)
+            removeSubrange(sr)
             return sr
         }
         return nil
     }
     
-    mutating func remove<T: AnyObject> (element: T) {
+    mutating func remove<T: AnyObject> (_ element: T) {
         let anotherSelf = self
         
-        removeAll(keepCapacity: true)
+        removeAll(keepingCapacity: true)
         
         anotherSelf.each { (index: Int, current: Element) in
             if (current as! T) !== element {
@@ -90,12 +90,12 @@ extension Array {
         }
     }
     
-    mutating func removeLast() -> Range<Int>? {
+    mutating func removeLast() -> CountableRange<Int>? {
         return remove(count - 1)
     }
     
-    func each(exe: (Int, Element) -> ()) {
-        for (index, item) in enumerate() {
+    func each(_ exe: (Int, Element) -> ()) {
+        for (index, item) in enumerated() {
             exe(index, item)
         }
     }
