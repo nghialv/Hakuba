@@ -20,14 +20,14 @@ open class CellModel {
     
     open let reuseIdentifier: String
     open var height: CGFloat
-    open var selectionHandler: ((Cell) -> ())?
+    open var selectionHandler: ((Cell) -> Void)?
     
     open internal(set) var indexPath: IndexPath = .init(row: 0, section: 0)
     open var editable = false
     open var editingStyle: UITableViewCellEditingStyle = .none
     open var shouldHighlight = true
     
-    public init<T: Cell & CellType>(cell: T.Type, height: CGFloat = UITableViewAutomaticDimension, selectionHandler: ((Cell) -> ())? = nil) {
+    public init<T: Cell & CellType>(cell: T.Type, height: CGFloat = UITableViewAutomaticDimension, selectionHandler: ((Cell) -> Void)? = nil) {
         self.reuseIdentifier = cell.reuseIdentifier
         self.height = height
         self.selectionHandler = selectionHandler
