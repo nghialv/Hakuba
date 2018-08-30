@@ -40,7 +40,6 @@
 		8CFF14821C9568C9005699CE /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14811C9568C9005699CE /* CellType.swift */; };
 		8CFF14A61C96758A005699CE /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF14A51C96758A005699CE /* CustomCellModel.swift */; };
 		ABAB7F75211BFC3C004418CF /* BumpType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAB7F74211BFC3C004418CF /* BumpType.swift */; };
-		ABAB7F77211C0054004418CF /* Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAB7F76211C0054004418CF /* Internal.swift */; };
 		ABAB7F79211C0121004418CF /* SectionIndexType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAB7F78211C0121004418CF /* SectionIndexType.swift */; };
 		ABAB7F7B211C0146004418CF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAB7F7A211C0146004418CF /* Utilities.swift */; };
 /* End PBXBuildFile section */
@@ -102,7 +101,6 @@
 		8CFF14811C9568C9005699CE /* CellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		8CFF14A51C96758A005699CE /* CustomCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		ABAB7F74211BFC3C004418CF /* BumpType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumpType.swift; sourceTree = "<group>"; };
-		ABAB7F76211C0054004418CF /* Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Internal.swift; sourceTree = "<group>"; };
 		ABAB7F78211C0121004418CF /* SectionIndexType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionIndexType.swift; sourceTree = "<group>"; };
 		ABAB7F7A211C0146004418CF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -311,7 +309,6 @@
 		ABAB7F81211C01C6004418CF /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				ABAB7F76211C0054004418CF /* Internal.swift */,
 				ABAB7F7A211C0146004418CF /* Utilities.swift */,
 			);
 			path = Common;
@@ -476,7 +473,6 @@
 				8C60BC5F1C89D4550006CE38 /* AppDelegate.swift in Sources */,
 				8C30CA6B1C8E71880008B717 /* TableViewExt.swift in Sources */,
 				8C5820E31C98562F009FB9AE /* CustomHeaderViewModel.swift in Sources */,
-				ABAB7F77211C0054004418CF /* Internal.swift in Sources */,
 				8C3446841C8E6F97002BC8CD /* CustomCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
