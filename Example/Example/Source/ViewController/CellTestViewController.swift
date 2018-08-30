@@ -65,43 +65,43 @@ class CellTestViewController: UIViewController {
             return data
         }
         
-        delay(1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             centerSection
                 .append(centerCellmodels)
                 .bump(.left)
         }
         
-        delay(3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             centerSection
                 .remove(range: 2...4)
                 .bump(.right)
         }
         
-        delay(5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             self.hakuba
                 .move(from: 0, to: 1)
                 .bump()
         }
         
-        delay(7.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7.5) {
             topSection
                 .remove(at: 1)
                 .bump(.middle)
         }
         
-        delay(10) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             topSection
                 .remove(at: 0)
                 .bump(.right)
         }
         
-        delay(12.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 12.5) {
             topSection
                 .remove(at: 0)
                 .bump(.right)
         }
         
-        delay(15) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
             self.hakuba
                 .reset()
                 .bump()

@@ -44,10 +44,10 @@ final public class Hakuba: NSObject {
     
     public subscript<T: RawRepresentable & SectionIndexType>(index: T) -> Section {
         get {
-            return self[index.intValue]
+            return self[index.rawValue]
         }
         set {
-            self[index.intValue] = newValue
+            self[index.rawValue] = newValue
         }
     }
     
@@ -74,7 +74,7 @@ final public class Hakuba: NSObject {
     }
     
     public func getSection<T: RawRepresentable & SectionIndexType>(at index: T) -> Section? {
-        return getSection(at: index.intValue)
+        return getSection(at: index.rawValue)
     }
     
     public init(tableView: UITableView) {

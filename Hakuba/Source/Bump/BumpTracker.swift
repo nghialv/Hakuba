@@ -82,7 +82,7 @@ final class BumpTracker {
     }
     
     func getHakubaBumpType() -> HakubaBumpType {
-        let indexSet = { (indexes: [Int]) -> IndexSet in
+        let indexSet: ([Int]) -> IndexSet = { indexes in
             let indexSet = NSMutableIndexSet()
             for index in indexes {
                 indexSet.add(index)
