@@ -8,5 +8,5 @@
 import Foundation
 
 func classNameOf(_ aClass: AnyClass) -> String {
-    return String(describing: aClass).components(separatedBy: ".").last!
+    return String(describing: aClass)
 }

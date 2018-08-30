@@ -7,8 +7,7 @@
 
 import Foundation
 
-public protocol SectionIndexType {
-    var intValue: Int { get }
+public protocol SectionIndexType: RawRepresentable where Self.RawValue == Int {
     static var count: Int { get }
 }
 

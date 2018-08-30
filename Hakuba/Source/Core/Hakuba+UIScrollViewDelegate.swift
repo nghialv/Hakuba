@@ -9,7 +9,6 @@
 import UIKit
 
 extension Hakuba {
-    
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
         
@@ -29,7 +28,9 @@ extension Hakuba {
             currentTopSection = topSection
         }
         
-        guard loadmoreEnabled else { return }
+        if !loadmoreEnabled  {
+            return
+        }
         
         let offset = scrollView.contentOffset
         let y = offset.y + scrollView.bounds.height - scrollView.contentInset.bottom

@@ -8,4 +8,3 @@
 import UIKit
 
 public typealias SelectionHandler = (Cell) -> ()
-public typealias Animation = UITableViewRowAnimation

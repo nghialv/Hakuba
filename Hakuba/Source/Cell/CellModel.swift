@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CellModelDelegate: class {
-    func bumpMe(with type: ItemBumpType, animation: Animation)
+    func bumpMe(with type: ItemBumpType, animation: UITableViewRowAnimation)
     func getOffscreenCell(by identifier: String) -> Cell
     func tableViewWidth() -> CGFloat
     func deselectCell(at indexPath: IndexPath, animated: Bool)
@@ -34,7 +34,7 @@ open class CellModel {
     }
     
     @discardableResult
-    open func bump(_ animation: Animation = .none) -> Self {
+    open func bump(_ animation: UITableViewRowAnimation = .none) -> Self {
         delegate?.bumpMe(with: .reload(indexPath), animation: animation)
         return self
     }

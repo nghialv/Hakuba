@@ -42,7 +42,7 @@ final public class Hakuba: NSObject {
     public var cellEditable = false
     public var commitEditingHandler: ((UITableViewCellEditingStyle, IndexPath) -> ())?
     
-    public subscript(index: SectionIndexType) -> Section {
+    public subscript<T: RawRepresentable & SectionIndexType>(index: T) -> Section {
         get {
             return self[index.intValue]
         }
@@ -73,7 +73,7 @@ final public class Hakuba: NSObject {
         return sections.get(at: index)
     }
     
-    public func getSection(at index: SectionIndexType) -> Section? {
+    public func getSection<T: RawRepresentable & SectionIndexType>(at index: T) -> Section? {
         return getSection(at: index.intValue)
     }
     
@@ -90,7 +90,7 @@ final public class Hakuba: NSObject {
     }
     
     @discardableResult
-    public func bump(_ animation: Animation = .none) -> Self {
+    public func bump(_ animation: UITableViewRowAnimation = .none) -> Self {
         let changedCount = sections.reduce(0) { $0 + ($1.isChanged ? 1 : 0) }
         
         if changedCount == 0 {
@@ -150,7 +150,7 @@ public extension Hakuba {
     // MARK - Reset
     
     @discardableResult
-    func reset(_ listType: SectionIndexType.Type) -> Self {
+    func reset<T: RawRepresentable & SectionIndexType>(_ listType: T.Type) -> Self {
         let sections = (0..<listType.count).map { _ in Section() }
         return reset(sections)
     }
@@ -298,7 +298,7 @@ public extension Hakuba {
 // MARK - SectionDelegate, CellModelDelegate
 
 extension Hakuba: SectionDelegate, CellModelDelegate {
-    func bumpMe(with type: SectionBumpType, animation: Animation) {
+    func bumpMe(with type: SectionBumpType, animation: UITableViewRowAnimation) {
         switch type {
         case .reload(let indexSet):
             tableView?.reloadSections(indexSet, with: animation)
@@ -314,7 +314,7 @@ extension Hakuba: SectionDelegate, CellModelDelegate {
         }
     }
     
-    func bumpMe(with type: ItemBumpType, animation: Animation) {
+    func bumpMe(with type: ItemBumpType, animation: UITableViewRowAnimation) {
         switch type {
         case .reload(let indexPath):
             tableView?.reloadRows(at: [indexPath], with: animation)

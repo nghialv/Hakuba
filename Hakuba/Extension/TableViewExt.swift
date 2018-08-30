@@ -9,25 +9,25 @@
 import UIKit
 
 extension UITableView {
-    func registerCellByNib<T: UITableViewCell>(t: T.Type) {
-        let nib = UINib(nibName: t.nibName, bundle: nil)
-        register(nib, forCellReuseIdentifier: t.reuseIdentifier)
+    func registerCellByNib<T: UITableViewCell>(cellType: T.Type) {
+        let nib = UINib(nibName: cellType.nibName, bundle: nil)
+        register(nib, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
-    func registerCell<T: UITableViewCell>(t: T.Type) {
-        register(t, forCellReuseIdentifier: t.reuseIdentifier)
+    func registerCell<T: UITableViewCell>(cellType: T.Type) {
+        register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
-    func registerHeaderFooterByNib<T: UITableViewHeaderFooterView>(t: T.Type) {
-        let nib = UINib(nibName: t.nibName, bundle: nil)
-        register(nib, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
+    func registerHeaderFooterByNib<T: UITableViewHeaderFooterView>(viewType: T.Type) {
+        let nib = UINib(nibName: viewType.nibName, bundle: nil)
+        register(nib, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
     }
     
-    func registerHeaderFooter<T: UITableViewHeaderFooterView>(t: T.Type) {
-        register(t, forHeaderFooterViewReuseIdentifier: t.reuseIdentifier)
+    func registerHeaderFooter<T: UITableViewHeaderFooterView>(viewType: T.Type) {
+        register(viewType, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
     }
     
-    func dequeueCell<T: UITableViewCell>(t: T.Type, forIndexPath indexPath: IndexPath) -> T {
-        return dequeueReusableCell(withIdentifier: t.reuseIdentifier, for: indexPath) as! T
+    func dequeueCell<T: UITableViewCell>(cellType: T.Type, for indexPath: IndexPath) -> T {
+        return dequeueReusableCell(withIdentifier: cellType.reuseIdentifier, for: indexPath) as! T
     }
 }

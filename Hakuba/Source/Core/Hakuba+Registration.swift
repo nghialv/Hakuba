@@ -11,7 +11,7 @@ import UIKit
 public extension Hakuba {
     @discardableResult
     func registerCellByNib<T: Cell & CellType>(_ cellType: T.Type) -> Self {
-        tableView?.registerCellByNib(t: cellType)
+        tableView?.registerCellByNib(cellType: cellType)
         return self
     }
     
@@ -25,7 +25,7 @@ public extension Hakuba {
     
     @discardableResult
     func registerCell<T: Cell>(_ cellType: T.Type) -> Self {
-        tableView?.registerCell(t: cellType)
+        tableView?.registerCell(cellType: cellType)
         return self
     }
     
@@ -38,14 +38,14 @@ public extension Hakuba {
     }
     
     @discardableResult
-    func registerHeaderFooterByNib<T: HeaderFooterView & HeaderFooterViewType>(_ t: T.Type) -> Self {
-        tableView?.registerHeaderFooterByNib(t: t)
+    func registerHeaderFooterByNib<T: HeaderFooterView & HeaderFooterViewType>(_ viewTypet: T.Type) -> Self {
+        tableView?.registerHeaderFooterByNib(viewType: viewTypet)
         return self
     }
     
     @discardableResult
-    func registerHeaderFooter<T: HeaderFooterView & HeaderFooterViewType>(_ t: T.Type) -> Self {
-        tableView?.registerHeaderFooter(t: t)
+    func registerHeaderFooter<T: HeaderFooterView & HeaderFooterViewType>(_ viewTypet: T.Type) -> Self {
+        tableView?.registerHeaderFooter(viewType: viewTypet)
         return self
     }
 }
