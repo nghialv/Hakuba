@@ -59,7 +59,7 @@ class YourCellModel: CellModel {
 	let title: String
 	let des: String
 
-	init(title: String, des: String, selectionHandler: @escaping SelectionHandler) {
+	init(title: String, des: String, selectionHandler: @escaping (Cell) -> Void) {
 		self.title = title
 		self.des = des
 		super.init(YourCell.self, selectionHandler: selectionHandler)
