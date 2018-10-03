@@ -22,7 +22,7 @@ Features
 -----
 * Don't have to write the code for `UITableViewDelegate` and `UITableViewDataSource` protocols
 * Easy to manage your sections and cells (append/reset/insert/remove/update)
-* Support dynamic cell height from **ios7**
+* Support UITableViewAutomaticDimension
 * Don't have to worry about cell identifier
 * Handling cell selection by trailing closure
 * Easy to implement header/footer view (floating callback)
