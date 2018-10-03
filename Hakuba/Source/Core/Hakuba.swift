@@ -351,10 +351,6 @@ extension Hakuba: UITableViewDelegate {
         return getCellmodel(at: indexPath)?.height ?? 0
     }
     
-    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.tableView(tableView, heightForRowAt: indexPath)
-    }
-    
     public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return cellForRow(at: indexPath)?.willSelect(tableView, at: indexPath)
     }
