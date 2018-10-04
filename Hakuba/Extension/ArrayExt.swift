@@ -36,7 +36,7 @@ extension Array {
     mutating func append(_ newArray: Array) -> Range<Int> {
         let range = count..<(count + newArray.count)
         self += newArray
-        return .init(range)
+        return range
     }
     
     @discardableResult

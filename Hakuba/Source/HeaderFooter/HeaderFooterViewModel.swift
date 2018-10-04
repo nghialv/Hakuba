@@ -20,7 +20,7 @@ open class HeaderFooterViewModel {
     open internal(set) var type: Type = .header
     
     open var title: String?
-    open var height: CGFloat = UITableViewAutomaticDimension
+    open var height: CGFloat = UITableView.automaticDimension
     
     open var isHeader: Bool {
         return type == .header

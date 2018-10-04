@@ -40,7 +40,7 @@ final public class Hakuba: NSObject {
     }
     
     public var cellEditable = false
-    public var commitEditingHandler: ((UITableViewCellEditingStyle, IndexPath) -> ())?
+    public var commitEditingHandler: ((UITableViewCell.EditingStyle, IndexPath) -> ())?
     
     public subscript<T: RawRepresentable & SectionIndexType>(index: T) -> Section {
         get {
@@ -90,7 +90,7 @@ final public class Hakuba: NSObject {
     }
     
     @discardableResult
-    public func bump(_ animation: UITableViewRowAnimation = .none) -> Self {
+    public func bump(_ animation: UITableView.RowAnimation = .none) -> Self {
         let changedCount = sections.reduce(0) { $0 + ($1.isChanged ? 1 : 0) }
         
         if changedCount == 0 {
@@ -125,7 +125,7 @@ public extension Hakuba {
         tableView?.setEditing(editing, animated: animated)
     }
     
-    func selectCell(at indexPath: IndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+    func selectCell(at indexPath: IndexPath, animated: Bool, scrollPosition: UITableView.ScrollPosition) {
         tableView?.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
     }
     
@@ -298,7 +298,7 @@ public extension Hakuba {
 // MARK - SectionDelegate, CellModelDelegate
 
 extension Hakuba: SectionDelegate, CellModelDelegate {
-    func bumpMe(with type: SectionBumpType, animation: UITableViewRowAnimation) {
+    func bumpMe(with type: SectionBumpType, animation: UITableView.RowAnimation) {
         switch type {
         case .reload(let indexSet):
             tableView?.reloadSections(indexSet, with: animation)
@@ -314,7 +314,7 @@ extension Hakuba: SectionDelegate, CellModelDelegate {
         }
     }
     
-    func bumpMe(with type: ItemBumpType, animation: UITableViewRowAnimation) {
+    func bumpMe(with type: ItemBumpType, animation: UITableView.RowAnimation) {
         switch type {
         case .reload(let indexPath):
             tableView?.reloadRows(at: [indexPath], with: animation)
@@ -386,7 +386,7 @@ extension Hakuba: UITableViewDelegate {
         cell.didEndDisplay(tableView)
     }
     
-    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return getCellmodel(at: indexPath)?.editingStyle ?? .none
     }
     
@@ -485,7 +485,7 @@ extension Hakuba: UITableViewDataSource {
         return cell
     }
     
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         commitEditingHandler?(editingStyle, indexPath)
     }
     
