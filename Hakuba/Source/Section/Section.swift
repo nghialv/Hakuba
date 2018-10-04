@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol SectionDelegate: class {
-    func bumpMe(with type: SectionBumpType, animation: UITableViewRowAnimation)
+    func bumpMe(with type: SectionBumpType, animation: UITableView.RowAnimation)
 }
 
 open class Section {
@@ -45,7 +45,7 @@ open class Section {
     public init() {}
     
     @discardableResult
-    open func bump(_ animation: UITableViewRowAnimation = .none) -> Self {
+    open func bump(_ animation: UITableView.RowAnimation = .none) -> Self {
         let type = bumpTracker.getSectionBumpType(at: index)
         delegate?.bumpMe(with: type, animation: animation)
         bumpTracker.didBump()

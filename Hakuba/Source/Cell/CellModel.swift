@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CellModelDelegate: class {
-    func bumpMe(with type: ItemBumpType, animation: UITableViewRowAnimation)
+    func bumpMe(with type: ItemBumpType, animation: UITableView.RowAnimation)
     func getOffscreenCell(by identifier: String) -> Cell
     func tableViewWidth() -> CGFloat
     func deselectCell(at indexPath: IndexPath, animated: Bool)
@@ -18,23 +18,23 @@ protocol CellModelDelegate: class {
 open class CellModel {
     weak var delegate: CellModelDelegate?
     
-    open let reuseIdentifier: String
+    public let reuseIdentifier: String
     open var height: CGFloat
     open var selectionHandler: ((Cell) -> Void)?
     
     open internal(set) var indexPath: IndexPath = .init(row: 0, section: 0)
     open var editable = false
-    open var editingStyle: UITableViewCellEditingStyle = .none
+    open var editingStyle: UITableViewCell.EditingStyle = .none
     open var shouldHighlight = true
     
-    public init<T: Cell & CellType>(cell: T.Type, height: CGFloat = UITableViewAutomaticDimension, selectionHandler: ((Cell) -> Void)? = nil) {
+    public init<T: Cell & CellType>(cell: T.Type, height: CGFloat = UITableView.automaticDimension, selectionHandler: ((Cell) -> Void)? = nil) {
         self.reuseIdentifier = cell.reuseIdentifier
         self.height = height
         self.selectionHandler = selectionHandler
     }
     
     @discardableResult
-    open func bump(_ animation: UITableViewRowAnimation = .none) -> Self {
+    open func bump(_ animation: UITableView.RowAnimation = .none) -> Self {
         delegate?.bumpMe(with: .reload(indexPath), animation: animation)
         return self
     }

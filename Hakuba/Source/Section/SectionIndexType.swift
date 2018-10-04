@@ -7,6 +7,4 @@
 
 import Foundation
 
-public protocol SectionIndexType: RawRepresentable where Self.RawValue == Int {
-    static var count: Int { get }
-}
+public protocol SectionIndexType: CaseIterable, RawRepresentable where Self.RawValue == Int {}

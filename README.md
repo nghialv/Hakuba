@@ -119,8 +119,6 @@ enum YourSection: Int, SectionIndexType {
 	case top
 	case center
 	case bottom
-
-	static let count = 3
 }
 	
 let topSection = hakuba[YourSection.top]
@@ -271,8 +269,8 @@ pod 'Hakuba'
 Requirements
 -----
 - iOS 9.0+
-- Xcode 9+
-- Swift 4
+- Xcode 10+
+- Swift 4.2
 
 License
 -----
