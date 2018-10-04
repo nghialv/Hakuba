@@ -11,8 +11,6 @@ import UIKit
 enum SectionIndex: Int, SectionIndexType {
     case top
     case center
-    
-    static let count = 2
 }
 
 class CellTestViewController: UIViewController {

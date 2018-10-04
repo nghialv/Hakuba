@@ -151,7 +151,7 @@ public extension Hakuba {
     
     @discardableResult
     func reset<T: RawRepresentable & SectionIndexType>(_ listType: T.Type) -> Self {
-        let sections = (0..<listType.count).map { _ in Section() }
+        let sections = (0..<listType.allCases.count).map { _ in Section() }
         return reset(sections)
     }
     

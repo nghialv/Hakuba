@@ -119,8 +119,6 @@ enum YourSection: Int, SectionIndexType {
 	case top
 	case center
 	case bottom
-
-	static let count = 3
 }
 	
 let topSection = hakuba[YourSection.top]
