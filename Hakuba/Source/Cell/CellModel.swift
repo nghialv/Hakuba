@@ -18,7 +18,7 @@ protocol CellModelDelegate: class {
 open class CellModel {
     weak var delegate: CellModelDelegate?
     
-    open let reuseIdentifier: String
+    public let reuseIdentifier: String
     open var height: CGFloat
     open var selectionHandler: ((Cell) -> Void)?
     

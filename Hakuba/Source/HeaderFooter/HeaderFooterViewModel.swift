@@ -14,7 +14,7 @@ open class HeaderFooterViewModel {
         case footer
     }
     
-    open let reuseIdentifier: String
+    public let reuseIdentifier: String
     
     open internal(set) var section: Int = 0
     open internal(set) var type: Type = .header
